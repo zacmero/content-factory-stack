@@ -21,11 +21,6 @@ http://localhost:8080/ --> correct address
 
 n8n API: check .env file
 
-user: admin
-
-pass:password
-
-
 
 ### Connecting an AI Assistant to a Local n8n Instance: The Direct API Method
 
