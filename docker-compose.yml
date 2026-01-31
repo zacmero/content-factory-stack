@@ -1,0 +1,22 @@
+services:
+  n8n:
+    image: n8nio/n8n:latest
+    container_name: n8n
+    restart: unless-stopped
+    ports:
+      - "0.0.0.0:8080:5678"
+    environment:
+      N8N_BASIC_AUTH_ACTIVE: "true"
+      N8N_BASIC_AUTH_USER: "${N8N_BASIC_AUTH_USER}"
+      N8N_BASIC_AUTH_PASSWORD: "${N8N_BASIC_AUTH_PASSWORD}"
+      N8N_UI_THEME: "dark"
+      N8N_HOST: "0.0.0.0"
+      N8N_PORT: "5678"
+      N8N_PROTOCOL: "http"
+      NODE_ENV: "production"
+      EXECUTIONS_PROCESS: "main"
+      DB_TYPE: "sqlite"
+      DB_SQLITE_POOL_SIZE: 5
+      N8N_RUNNERS_ENABLED: "true"
+    volumes:
+      - ./n8n_data:/home/node/.n8n

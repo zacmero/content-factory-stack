@@ -1,0 +1,5 @@
+.env
+n8n_data/
+n8n_data_backup/
+node_modules/
+n8n-mcp-server/node_modules/
