@@ -1,0 +1,30 @@
+node:internal/modules/cjs/loader:1242
+  throw err;
+  ^
+
+Error: Cannot find module './sentry_cpu_profiler-linux-x64-glibc-131.node'
+Require stack:
+- /home/zacmero/content-factory-stack/postiz-source/node_modules/@sentry-internal/node-cpu-profiler/lib/index.js
+- /home/zacmero/content-factory-stack/postiz-source/node_modules/@sentry/profiling-node/build/cjs/index.js
+- /home/zacmero/content-factory-stack/postiz-source/apps/backend/dist/libraries/nestjs-libraries/src/sentry/initialize.sentry.js
+- /home/zacmero/content-factory-stack/postiz-source/apps/backend/dist/apps/backend/src/main.js
+    at Function._resolveFilename (node:internal/modules/cjs/loader:1239:15)
+    at Function._load (node:internal/modules/cjs/loader:1064:27)
+    at TracingChannel.traceSync (node:diagnostics_channel:322:14)
+    at wrapModuleLoad (node:internal/modules/cjs/loader:218:24)
+    at Module.require (node:internal/modules/cjs/loader:1325:12)
+    at require (node:internal/modules/helpers:136:16)
+    at importCppBindingsModule (/home/zacmero/content-factory-stack/postiz-source/node_modules/@sentry-internal/node-cpu-profiler/lib/index.js:165:12)
+    at Object.<anonymous> (/home/zacmero/content-factory-stack/postiz-source/node_modules/@sentry-internal/node-cpu-profiler/lib/index.js:167:38)
+    at Module._compile (node:internal/modules/cjs/loader:1546:14)
+    at Object..js (node:internal/modules/cjs/loader:1698:10) {
+  code: 'MODULE_NOT_FOUND',
+  requireStack: [
+    '/home/zacmero/content-factory-stack/postiz-source/node_modules/@sentry-internal/node-cpu-profiler/lib/index.js',
+    '/home/zacmero/content-factory-stack/postiz-source/node_modules/@sentry/profiling-node/build/cjs/index.js',
+    '/home/zacmero/content-factory-stack/postiz-source/apps/backend/dist/libraries/nestjs-libraries/src/sentry/initialize.sentry.js',
+    '/home/zacmero/content-factory-stack/postiz-source/apps/backend/dist/apps/backend/src/main.js'
+  ]
+}
+
+Node.js v23.3.0

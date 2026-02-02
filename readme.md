@@ -1,5 +1,11 @@
 http://localhost:8080/ --> correct address 
 
+when asking for general credentials(on browser side) on setting up new machines:
+
+user: admin
+pass: supersecretpassword
+
+
 
 ✦ Yes, your docker-compose.yml file is well-configured for regular use.
 

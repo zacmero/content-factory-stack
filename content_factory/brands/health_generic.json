@@ -1,0 +1,25 @@
+{
+  "brand_name": "Health Generic",
+  "tone": "informative, encouraging, calm",
+  "niche_topics": [
+    "hydration",
+    "sleep hygiene",
+    "walking",
+    "posture",
+    "breathing exercises"
+  ],
+  "forbidden_topics": [
+    "politics",
+    "religion",
+    "controversial medical advice"
+  ],
+  "visual_style": {
+    "text_overlay": true,
+    "font": "Sans-Serif",
+    "color_palette": ["#FFFFFF", "#4CAF50"]
+  },
+  "cta": {
+    "text": "Link in bio for more",
+    "link": "https://example.com/health-hub"
+  }
+}

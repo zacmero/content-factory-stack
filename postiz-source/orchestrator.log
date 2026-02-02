@@ -1,0 +1,607 @@
+(node:7648) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+(Use `node --trace-deprecation ...` to show where the warning was created)
+[32m[Nest] 7648  - [39m02/02/2026, 6:03:17 PM [32m    LOG[39m [38;5;3m[NestFactory] [39m[32mStarting Nest application...[39m
+[32m[Nest] 7648  - [39m02/02/2026, 6:03:17 PM [32m    LOG[39m [38;5;3m[TemporalConnectionFactory] [39m[32mCreating new client connection to localhost:7233 (attempt 1)[39m
+[32m[Nest] 7648  - [39m02/02/2026, 6:03:17 PM [32m    LOG[39m [38;5;3m[TemporalConnectionFactory] [39m[32mTemporalConnectionFactory[39m
+[32m[Nest] 7648  - [39m02/02/2026, 6:03:17 PM [32m    LOG[39m [38;5;3m[TemporalConnectionFactory] [39m[32mSuccessfully connected to localhost:7233[39m
+[32m[Nest] 7648  - [39m02/02/2026, 6:03:17 PM [32m    LOG[39m [38;5;3m[TemporalConnectionFactory] [39m[32mTemporalConnectionFactory[39m
+[32m[Nest] 7648  - [39m02/02/2026, 6:03:17 PM [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mDiscoveryModule dependencies initialized[39m[38;5;3m +24ms[39m
+[32m[Nest] 7648  - [39m02/02/2026, 6:03:17 PM [32m    LOG[39m [38;5;3m[TemporalConnectionFactory] [39m[32mWorker connection established to localhost:7233[39m
+[32m[Nest] 7648  - [39m02/02/2026, 6:03:17 PM [32m    LOG[39m [38;5;3m[TemporalConnectionFactory] [39m[32mTemporalConnectionFactory[39m
+[32m[Nest] 7648  - [39m02/02/2026, 6:03:17 PM [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mTemporalModule dependencies initialized[39m[38;5;3m +0ms[39m
+Email service provider: no provider
+[32m[Nest] 7648  - [39m02/02/2026, 6:03:17 PM [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mDatabaseModule dependencies initialized[39m[38;5;3m +2ms[39m
+[32m[Nest] 7648  - [39m02/02/2026, 6:03:17 PM [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mAppModule dependencies initialized[39m[38;5;3m +0ms[39m
+2026-02-02T21:03:19.942Z [INFO] asset workflow-bundle-d4b010fc81b67a2cb152.js 2.83 MiB [emitted] [immutable] (name: main)
+runtime modules 1010 bytes 5 modules
+modules by path ./node_modules/ 952 KiB
+  modules by path ./node_modules/@temporalio/ 321 KiB 55 modules
+  modules by path ./node_modules/nexus-rpc/lib/ 25.6 KiB 17 modules
+  + 4 modules
+modules by path ./apps/orchestrator/dist/ 19 KiB
+  modules by path ./apps/orchestrator/dist/apps/orchestrator/src/workflows/ 17.7 KiB 9 modules
+  modules by path ./apps/orchestrator/dist/libraries/nestjs-libraries/src/ 803 bytes 2 modules
+  modules by path ./apps/orchestrator/dist/apps/orchestrator/src/signals/*.js 452 bytes 2 modules
+optional modules 30 bytes [optional]
+  __temporal_custom_payload_converter (ignored) 15 bytes [optional] [built] [code generated]
+  __temporal_custom_failure_converter (ignored) 15 bytes [optional] [built] [code generated]
+webpack 5.104.1 compiled successfully in 1192 ms { sdkComponent: 'worker', taskQueue: 'main' }
+2026-02-02T21:03:19.958Z [INFO] Workflow bundle created { sdkComponent: 'worker', taskQueue: 'main', size: '2.83MB' }
+[2m2026-02-02T21:03:20.434410Z[0m [33m WARN[0m [2mtemporalio_sdk_core::worker::heartbeat[0m[2m:[0m Worker heartbeating configured for runtime, but server version does not support it.
+2026-02-02T21:03:21.146Z [INFO] asset workflow-bundle-d4b010fc81b67a2cb152.js 2.83 MiB [emitted] [immutable] (name: main)
+runtime modules 1010 bytes 5 modules
+modules by path ./node_modules/ 952 KiB
+  modules by path ./node_modules/@temporalio/ 321 KiB 55 modules
+  modules by path ./node_modules/nexus-rpc/lib/ 25.6 KiB 17 modules
+  + 4 modules
+modules by path ./apps/orchestrator/dist/ 19 KiB
+  modules by path ./apps/orchestrator/dist/apps/orchestrator/src/workflows/ 17.7 KiB 9 modules
+  modules by path ./apps/orchestrator/dist/libraries/nestjs-libraries/src/ 803 bytes 2 modules
+  modules by path ./apps/orchestrator/dist/apps/orchestrator/src/signals/*.js 452 bytes 2 modules
+optional modules 30 bytes [optional]
+  __temporal_custom_payload_converter (ignored) 15 bytes [optional] [built] [code generated]
+  __temporal_custom_failure_converter (ignored) 15 bytes [optional] [built] [code generated]
+webpack 5.104.1 compiled successfully in 690 ms { sdkComponent: 'worker', taskQueue: 'x' }
+2026-02-02T21:03:21.159Z [INFO] Workflow bundle created { sdkComponent: 'worker', taskQueue: 'x', size: '2.83MB' }
+2026-02-02T21:03:22.070Z [INFO] asset workflow-bundle-d4b010fc81b67a2cb152.js 2.83 MiB [emitted] [immutable] (name: main)
+runtime modules 1010 bytes 5 modules
+modules by path ./node_modules/ 952 KiB
+  modules by path ./node_modules/@temporalio/ 321 KiB 55 modules
+  modules by path ./node_modules/nexus-rpc/lib/ 25.6 KiB 17 modules
+  + 4 modules
+modules by path ./apps/orchestrator/dist/ 19 KiB
+  modules by path ./apps/orchestrator/dist/apps/orchestrator/src/workflows/ 17.7 KiB 9 modules
+  modules by path ./apps/orchestrator/dist/libraries/nestjs-libraries/src/ 803 bytes 2 modules
+  modules by path ./apps/orchestrator/dist/apps/orchestrator/src/signals/*.js 452 bytes 2 modules
+optional modules 30 bytes [optional]
+  __temporal_custom_payload_converter (ignored) 15 bytes [optional] [built] [code generated]
+  __temporal_custom_failure_converter (ignored) 15 bytes [optional] [built] [code generated]
+webpack 5.104.1 compiled successfully in 622 ms { sdkComponent: 'worker', taskQueue: 'linkedin' }
+2026-02-02T21:03:22.082Z [INFO] Workflow bundle created { sdkComponent: 'worker', taskQueue: 'linkedin', size: '2.83MB' }
+2026-02-02T21:03:22.996Z [INFO] asset workflow-bundle-d4b010fc81b67a2cb152.js 2.83 MiB [emitted] [immutable] (name: main)
+runtime modules 1010 bytes 5 modules
+modules by path ./node_modules/ 952 KiB
+  modules by path ./node_modules/@temporalio/ 321 KiB 55 modules
+  modules by path ./node_modules/nexus-rpc/lib/ 25.6 KiB 17 modules
+  + 4 modules
+modules by path ./apps/orchestrator/dist/ 19 KiB
+  modules by path ./apps/orchestrator/dist/apps/orchestrator/src/workflows/ 17.7 KiB 9 modules
+  modules by path ./apps/orchestrator/dist/libraries/nestjs-libraries/src/ 803 bytes 2 modules
+  modules by path ./apps/orchestrator/dist/apps/orchestrator/src/signals/*.js 452 bytes 2 modules
+optional modules 30 bytes [optional]
+  __temporal_custom_payload_converter (ignored) 15 bytes [optional] [built] [code generated]
+  __temporal_custom_failure_converter (ignored) 15 bytes [optional] [built] [code generated]
+webpack 5.104.1 compiled successfully in 626 ms { sdkComponent: 'worker', taskQueue: 'reddit' }
+2026-02-02T21:03:23.008Z [INFO] Workflow bundle created { sdkComponent: 'worker', taskQueue: 'reddit', size: '2.83MB' }
+2026-02-02T21:03:23.917Z [INFO] asset workflow-bundle-d4b010fc81b67a2cb152.js 2.83 MiB [emitted] [immutable] (name: main)
+runtime modules 1010 bytes 5 modules
+modules by path ./node_modules/ 952 KiB
+  modules by path ./node_modules/@temporalio/ 321 KiB 55 modules
+  modules by path ./node_modules/nexus-rpc/lib/ 25.6 KiB 17 modules
+  + 4 modules
+modules by path ./apps/orchestrator/dist/ 19 KiB
+  modules by path ./apps/orchestrator/dist/apps/orchestrator/src/workflows/ 17.7 KiB 9 modules
+  modules by path ./apps/orchestrator/dist/libraries/nestjs-libraries/src/ 803 bytes 2 modules
+  modules by path ./apps/orchestrator/dist/apps/orchestrator/src/signals/*.js 452 bytes 2 modules
+optional modules 30 bytes [optional]
+  __temporal_custom_payload_converter (ignored) 15 bytes [optional] [built] [code generated]
+  __temporal_custom_failure_converter (ignored) 15 bytes [optional] [built] [code generated]
+webpack 5.104.1 compiled successfully in 626 ms { sdkComponent: 'worker', taskQueue: 'instagram' }
+2026-02-02T21:03:23.931Z [INFO] Workflow bundle created { sdkComponent: 'worker', taskQueue: 'instagram', size: '2.83MB' }
+2026-02-02T21:03:24.925Z [INFO] asset workflow-bundle-d4b010fc81b67a2cb152.js 2.83 MiB [emitted] [immutable] (name: main)
+runtime modules 1010 bytes 5 modules
+modules by path ./node_modules/ 952 KiB
+  modules by path ./node_modules/@temporalio/ 321 KiB 55 modules
+  modules by path ./node_modules/nexus-rpc/lib/ 25.6 KiB 17 modules
+  + 4 modules
+modules by path ./apps/orchestrator/dist/ 19 KiB
+  modules by path ./apps/orchestrator/dist/apps/orchestrator/src/workflows/ 17.7 KiB 9 modules
+  modules by path ./apps/orchestrator/dist/libraries/nestjs-libraries/src/ 803 bytes 2 modules
+  modules by path ./apps/orchestrator/dist/apps/orchestrator/src/signals/*.js 452 bytes 2 modules
+optional modules 30 bytes [optional]
+  __temporal_custom_payload_converter (ignored) 15 bytes [optional] [built] [code generated]
+  __temporal_custom_failure_converter (ignored) 15 bytes [optional] [built] [code generated]
+webpack 5.104.1 compiled successfully in 685 ms { sdkComponent: 'worker', taskQueue: 'facebook' }
+2026-02-02T21:03:24.964Z [INFO] Workflow bundle created { sdkComponent: 'worker', taskQueue: 'facebook', size: '2.83MB' }
+2026-02-02T21:04:11.520Z [INFO] asset workflow-bundle-d4b010fc81b67a2cb152.js 2.83 MiB [emitted] [immutable] (name: main)
+runtime modules 1010 bytes 5 modules
+modules by path ./node_modules/ 952 KiB
+  modules by path ./node_modules/@temporalio/ 321 KiB 55 modules
+  modules by path ./node_modules/nexus-rpc/lib/ 25.6 KiB 17 modules
+  + 4 modules
+modules by path ./apps/orchestrator/dist/ 19 KiB
+  modules by path ./apps/orchestrator/dist/apps/orchestrator/src/workflows/ 17.7 KiB 9 modules
+  modules by path ./apps/orchestrator/dist/libraries/nestjs-libraries/src/ 803 bytes 2 modules
+  modules by path ./apps/orchestrator/dist/apps/orchestrator/src/signals/*.js 452 bytes 2 modules
+optional modules 30 bytes [optional]
+  __temporal_custom_payload_converter (ignored) 15 bytes [optional] [built] [code generated]
+  __temporal_custom_failure_converter (ignored) 15 bytes [optional] [built] [code generated]
+webpack 5.104.1 compiled successfully in 46079 ms { sdkComponent: 'worker', taskQueue: 'threads' }
+2026-02-02T21:04:11.529Z [INFO] Workflow bundle created { sdkComponent: 'worker', taskQueue: 'threads', size: '2.83MB' }
+2026-02-02T21:03:27.167Z [INFO] asset workflow-bundle-d4b010fc81b67a2cb152.js 2.83 MiB [emitted] [immutable] (name: main)
+runtime modules 1010 bytes 5 modules
+modules by path ./node_modules/ 952 KiB
+  modules by path ./node_modules/@temporalio/ 321 KiB 55 modules
+  modules by path ./node_modules/nexus-rpc/lib/ 25.6 KiB 17 modules
+  + 4 modules
+modules by path ./apps/orchestrator/dist/ 19 KiB
+  modules by path ./apps/orchestrator/dist/apps/orchestrator/src/workflows/ 17.7 KiB 9 modules
+  modules by path ./apps/orchestrator/dist/libraries/nestjs-libraries/src/ 803 bytes 2 modules
+  modules by path ./apps/orchestrator/dist/apps/orchestrator/src/signals/*.js 452 bytes 2 modules
+optional modules 30 bytes [optional]
+  __temporal_custom_payload_converter (ignored) 15 bytes [optional] [built] [code generated]
+  __temporal_custom_failure_converter (ignored) 15 bytes [optional] [built] [code generated]
+webpack 5.104.1 compiled successfully in 737 ms { sdkComponent: 'worker', taskQueue: 'youtube' }
+2026-02-02T21:03:27.177Z [INFO] Workflow bundle created { sdkComponent: 'worker', taskQueue: 'youtube', size: '2.83MB' }
+2026-02-02T21:03:28.022Z [INFO] asset workflow-bundle-d4b010fc81b67a2cb152.js 2.83 MiB [emitted] [immutable] (name: main)
+runtime modules 1010 bytes 5 modules
+modules by path ./node_modules/ 952 KiB
+  modules by path ./node_modules/@temporalio/ 321 KiB 55 modules
+  modules by path ./node_modules/nexus-rpc/lib/ 25.6 KiB 17 modules
+  + 4 modules
+modules by path ./apps/orchestrator/dist/ 19 KiB
+  modules by path ./apps/orchestrator/dist/apps/orchestrator/src/workflows/ 17.7 KiB 9 modules
+  modules by path ./apps/orchestrator/dist/libraries/nestjs-libraries/src/ 803 bytes 2 modules
+  modules by path ./apps/orchestrator/dist/apps/orchestrator/src/signals/*.js 452 bytes 2 modules
+optional modules 30 bytes [optional]
+  __temporal_custom_payload_converter (ignored) 15 bytes [optional] [built] [code generated]
+  __temporal_custom_failure_converter (ignored) 15 bytes [optional] [built] [code generated]
+webpack 5.104.1 compiled successfully in 556 ms { sdkComponent: 'worker', taskQueue: 'gmb' }
+2026-02-02T21:03:28.032Z [INFO] Workflow bundle created { sdkComponent: 'worker', taskQueue: 'gmb', size: '2.83MB' }
+2026-02-02T21:03:28.840Z [INFO] asset workflow-bundle-d4b010fc81b67a2cb152.js 2.83 MiB [emitted] [immutable] (name: main)
+runtime modules 1010 bytes 5 modules
+modules by path ./node_modules/ 952 KiB
+  modules by path ./node_modules/@temporalio/ 321 KiB 55 modules
+  modules by path ./node_modules/nexus-rpc/lib/ 25.6 KiB 17 modules
+  + 4 modules
+modules by path ./apps/orchestrator/dist/ 19 KiB
+  modules by path ./apps/orchestrator/dist/apps/orchestrator/src/workflows/ 17.7 KiB 9 modules
+  modules by path ./apps/orchestrator/dist/libraries/nestjs-libraries/src/ 803 bytes 2 modules
+  modules by path ./apps/orchestrator/dist/apps/orchestrator/src/signals/*.js 452 bytes 2 modules
+optional modules 30 bytes [optional]
+  __temporal_custom_payload_converter (ignored) 15 bytes [optional] [built] [code generated]
+  __temporal_custom_failure_converter (ignored) 15 bytes [optional] [built] [code generated]
+webpack 5.104.1 compiled successfully in 558 ms { sdkComponent: 'worker', taskQueue: 'tiktok' }
+2026-02-02T21:03:28.849Z [INFO] Workflow bundle created { sdkComponent: 'worker', taskQueue: 'tiktok', size: '2.83MB' }
+2026-02-02T21:03:29.694Z [INFO] asset workflow-bundle-d4b010fc81b67a2cb152.js 2.83 MiB [emitted] [immutable] (name: main)
+runtime modules 1010 bytes 5 modules
+modules by path ./node_modules/ 952 KiB
+  modules by path ./node_modules/@temporalio/ 321 KiB 55 modules
+  modules by path ./node_modules/nexus-rpc/lib/ 25.6 KiB 17 modules
+  + 4 modules
+modules by path ./apps/orchestrator/dist/ 19 KiB
+  modules by path ./apps/orchestrator/dist/apps/orchestrator/src/workflows/ 17.7 KiB 9 modules
+  modules by path ./apps/orchestrator/dist/libraries/nestjs-libraries/src/ 803 bytes 2 modules
+  modules by path ./apps/orchestrator/dist/apps/orchestrator/src/signals/*.js 452 bytes 2 modules
+optional modules 30 bytes [optional]
+  __temporal_custom_payload_converter (ignored) 15 bytes [optional] [built] [code generated]
+  __temporal_custom_failure_converter (ignored) 15 bytes [optional] [built] [code generated]
+webpack 5.104.1 compiled successfully in 587 ms { sdkComponent: 'worker', taskQueue: 'pinterest' }
+2026-02-02T21:03:29.706Z [INFO] Workflow bundle created { sdkComponent: 'worker', taskQueue: 'pinterest', size: '2.83MB' }
+2026-02-02T21:03:30.572Z [INFO] asset workflow-bundle-d4b010fc81b67a2cb152.js 2.83 MiB [emitted] [immutable] (name: main)
+runtime modules 1010 bytes 5 modules
+modules by path ./node_modules/ 952 KiB
+  modules by path ./node_modules/@temporalio/ 321 KiB 55 modules
+  modules by path ./node_modules/nexus-rpc/lib/ 25.6 KiB 17 modules
+  + 4 modules
+modules by path ./apps/orchestrator/dist/ 19 KiB
+  modules by path ./apps/orchestrator/dist/apps/orchestrator/src/workflows/ 17.7 KiB 9 modules
+  modules by path ./apps/orchestrator/dist/libraries/nestjs-libraries/src/ 803 bytes 2 modules
+  modules by path ./apps/orchestrator/dist/apps/orchestrator/src/signals/*.js 452 bytes 2 modules
+optional modules 30 bytes [optional]
+  __temporal_custom_payload_converter (ignored) 15 bytes [optional] [built] [code generated]
+  __temporal_custom_failure_converter (ignored) 15 bytes [optional] [built] [code generated]
+webpack 5.104.1 compiled successfully in 598 ms { sdkComponent: 'worker', taskQueue: 'dribbble' }
+2026-02-02T21:03:30.581Z [INFO] Workflow bundle created { sdkComponent: 'worker', taskQueue: 'dribbble', size: '2.83MB' }
+2026-02-02T21:03:31.353Z [INFO] asset workflow-bundle-d4b010fc81b67a2cb152.js 2.83 MiB [emitted] [immutable] (name: main)
+runtime modules 1010 bytes 5 modules
+modules by path ./node_modules/ 952 KiB
+  modules by path ./node_modules/@temporalio/ 321 KiB 55 modules
+  modules by path ./node_modules/nexus-rpc/lib/ 25.6 KiB 17 modules
+  + 4 modules
+modules by path ./apps/orchestrator/dist/ 19 KiB
+  modules by path ./apps/orchestrator/dist/apps/orchestrator/src/workflows/ 17.7 KiB 9 modules
+  modules by path ./apps/orchestrator/dist/libraries/nestjs-libraries/src/ 803 bytes 2 modules
+  modules by path ./apps/orchestrator/dist/apps/orchestrator/src/signals/*.js 452 bytes 2 modules
+optional modules 30 bytes [optional]
+  __temporal_custom_payload_converter (ignored) 15 bytes [optional] [built] [code generated]
+  __temporal_custom_failure_converter (ignored) 15 bytes [optional] [built] [code generated]
+webpack 5.104.1 compiled successfully in 532 ms { sdkComponent: 'worker', taskQueue: 'discord' }
+2026-02-02T21:03:31.366Z [INFO] Workflow bundle created { sdkComponent: 'worker', taskQueue: 'discord', size: '2.83MB' }
+2026-02-02T21:03:32.168Z [INFO] asset workflow-bundle-d4b010fc81b67a2cb152.js 2.83 MiB [emitted] [immutable] (name: main)
+runtime modules 1010 bytes 5 modules
+modules by path ./node_modules/ 952 KiB
+  modules by path ./node_modules/@temporalio/ 321 KiB 55 modules
+  modules by path ./node_modules/nexus-rpc/lib/ 25.6 KiB 17 modules
+  + 4 modules
+modules by path ./apps/orchestrator/dist/ 19 KiB
+  modules by path ./apps/orchestrator/dist/apps/orchestrator/src/workflows/ 17.7 KiB 9 modules
+  modules by path ./apps/orchestrator/dist/libraries/nestjs-libraries/src/ 803 bytes 2 modules
+  modules by path ./apps/orchestrator/dist/apps/orchestrator/src/signals/*.js 452 bytes 2 modules
+optional modules 30 bytes [optional]
+  __temporal_custom_payload_converter (ignored) 15 bytes [optional] [built] [code generated]
+  __temporal_custom_failure_converter (ignored) 15 bytes [optional] [built] [code generated]
+webpack 5.104.1 compiled successfully in 555 ms { sdkComponent: 'worker', taskQueue: 'slack' }
+2026-02-02T21:03:32.178Z [INFO] Workflow bundle created { sdkComponent: 'worker', taskQueue: 'slack', size: '2.83MB' }
+2026-02-02T21:03:33.010Z [INFO] asset workflow-bundle-d4b010fc81b67a2cb152.js 2.83 MiB [emitted] [immutable] (name: main)
+runtime modules 1010 bytes 5 modules
+modules by path ./node_modules/ 952 KiB
+  modules by path ./node_modules/@temporalio/ 321 KiB 55 modules
+  modules by path ./node_modules/nexus-rpc/lib/ 25.6 KiB 17 modules
+  + 4 modules
+modules by path ./apps/orchestrator/dist/ 19 KiB
+  modules by path ./apps/orchestrator/dist/apps/orchestrator/src/workflows/ 17.7 KiB 9 modules
+  modules by path ./apps/orchestrator/dist/libraries/nestjs-libraries/src/ 803 bytes 2 modules
+  modules by path ./apps/orchestrator/dist/apps/orchestrator/src/signals/*.js 452 bytes 2 modules
+optional modules 30 bytes [optional]
+  __temporal_custom_payload_converter (ignored) 15 bytes [optional] [built] [code generated]
+  __temporal_custom_failure_converter (ignored) 15 bytes [optional] [built] [code generated]
+webpack 5.104.1 compiled successfully in 569 ms { sdkComponent: 'worker', taskQueue: 'kick' }
+2026-02-02T21:03:33.019Z [INFO] Workflow bundle created { sdkComponent: 'worker', taskQueue: 'kick', size: '2.83MB' }
+2026-02-02T21:03:33.777Z [INFO] asset workflow-bundle-d4b010fc81b67a2cb152.js 2.83 MiB [emitted] [immutable] (name: main)
+runtime modules 1010 bytes 5 modules
+modules by path ./node_modules/ 952 KiB
+  modules by path ./node_modules/@temporalio/ 321 KiB 55 modules
+  modules by path ./node_modules/nexus-rpc/lib/ 25.6 KiB 17 modules
+  + 4 modules
+modules by path ./apps/orchestrator/dist/ 19 KiB
+  modules by path ./apps/orchestrator/dist/apps/orchestrator/src/workflows/ 17.7 KiB 9 modules
+  modules by path ./apps/orchestrator/dist/libraries/nestjs-libraries/src/ 803 bytes 2 modules
+  modules by path ./apps/orchestrator/dist/apps/orchestrator/src/signals/*.js 452 bytes 2 modules
+optional modules 30 bytes [optional]
+  __temporal_custom_payload_converter (ignored) 15 bytes [optional] [built] [code generated]
+  __temporal_custom_failure_converter (ignored) 15 bytes [optional] [built] [code generated]
+webpack 5.104.1 compiled successfully in 506 ms { sdkComponent: 'worker', taskQueue: 'twitch' }
+2026-02-02T21:03:33.789Z [INFO] Workflow bundle created { sdkComponent: 'worker', taskQueue: 'twitch', size: '2.83MB' }
+2026-02-02T21:03:34.614Z [INFO] asset workflow-bundle-d4b010fc81b67a2cb152.js 2.83 MiB [emitted] [immutable] (name: main)
+runtime modules 1010 bytes 5 modules
+modules by path ./node_modules/ 952 KiB
+  modules by path ./node_modules/@temporalio/ 321 KiB 55 modules
+  modules by path ./node_modules/nexus-rpc/lib/ 25.6 KiB 17 modules
+  + 4 modules
+modules by path ./apps/orchestrator/dist/ 19 KiB
+  modules by path ./apps/orchestrator/dist/apps/orchestrator/src/workflows/ 17.7 KiB 9 modules
+  modules by path ./apps/orchestrator/dist/libraries/nestjs-libraries/src/ 803 bytes 2 modules
+  modules by path ./apps/orchestrator/dist/apps/orchestrator/src/signals/*.js 452 bytes 2 modules
+optional modules 30 bytes [optional]
+  __temporal_custom_payload_converter (ignored) 15 bytes [optional] [built] [code generated]
+  __temporal_custom_failure_converter (ignored) 15 bytes [optional] [built] [code generated]
+webpack 5.104.1 compiled successfully in 563 ms { sdkComponent: 'worker', taskQueue: 'mastodon' }
+2026-02-02T21:03:34.626Z [INFO] Workflow bundle created { sdkComponent: 'worker', taskQueue: 'mastodon', size: '2.83MB' }
+2026-02-02T21:03:35.467Z [INFO] asset workflow-bundle-d4b010fc81b67a2cb152.js 2.83 MiB [emitted] [immutable] (name: main)
+runtime modules 1010 bytes 5 modules
+modules by path ./node_modules/ 952 KiB
+  modules by path ./node_modules/@temporalio/ 321 KiB 55 modules
+  modules by path ./node_modules/nexus-rpc/lib/ 25.6 KiB 17 modules
+  + 4 modules
+modules by path ./apps/orchestrator/dist/ 19 KiB
+  modules by path ./apps/orchestrator/dist/apps/orchestrator/src/workflows/ 17.7 KiB 9 modules
+  modules by path ./apps/orchestrator/dist/libraries/nestjs-libraries/src/ 803 bytes 2 modules
+  modules by path ./apps/orchestrator/dist/apps/orchestrator/src/signals/*.js 452 bytes 2 modules
+optional modules 30 bytes [optional]
+  __temporal_custom_payload_converter (ignored) 15 bytes [optional] [built] [code generated]
+  __temporal_custom_failure_converter (ignored) 15 bytes [optional] [built] [code generated]
+webpack 5.104.1 compiled successfully in 562 ms { sdkComponent: 'worker', taskQueue: 'bluesky' }
+2026-02-02T21:03:35.477Z [INFO] Workflow bundle created { sdkComponent: 'worker', taskQueue: 'bluesky', size: '2.83MB' }
+2026-02-02T21:03:36.254Z [INFO] asset workflow-bundle-d4b010fc81b67a2cb152.js 2.83 MiB [emitted] [immutable] (name: main)
+runtime modules 1010 bytes 5 modules
+modules by path ./node_modules/ 952 KiB
+  modules by path ./node_modules/@temporalio/ 321 KiB 55 modules
+  modules by path ./node_modules/nexus-rpc/lib/ 25.6 KiB 17 modules
+  + 4 modules
+modules by path ./apps/orchestrator/dist/ 19 KiB
+  modules by path ./apps/orchestrator/dist/apps/orchestrator/src/workflows/ 17.7 KiB 9 modules
+  modules by path ./apps/orchestrator/dist/libraries/nestjs-libraries/src/ 803 bytes 2 modules
+  modules by path ./apps/orchestrator/dist/apps/orchestrator/src/signals/*.js 452 bytes 2 modules
+optional modules 30 bytes [optional]
+  __temporal_custom_payload_converter (ignored) 15 bytes [optional] [built] [code generated]
+  __temporal_custom_failure_converter (ignored) 15 bytes [optional] [built] [code generated]
+webpack 5.104.1 compiled successfully in 540 ms { sdkComponent: 'worker', taskQueue: 'lemmy' }
+2026-02-02T21:03:36.263Z [INFO] Workflow bundle created { sdkComponent: 'worker', taskQueue: 'lemmy', size: '2.83MB' }
+2026-02-02T21:03:37.033Z [INFO] asset workflow-bundle-d4b010fc81b67a2cb152.js 2.83 MiB [emitted] [immutable] (name: main)
+runtime modules 1010 bytes 5 modules
+modules by path ./node_modules/ 952 KiB
+  modules by path ./node_modules/@temporalio/ 321 KiB 55 modules
+  modules by path ./node_modules/nexus-rpc/lib/ 25.6 KiB 17 modules
+  + 4 modules
+modules by path ./apps/orchestrator/dist/ 19 KiB
+  modules by path ./apps/orchestrator/dist/apps/orchestrator/src/workflows/ 17.7 KiB 9 modules
+  modules by path ./apps/orchestrator/dist/libraries/nestjs-libraries/src/ 803 bytes 2 modules
+  modules by path ./apps/orchestrator/dist/apps/orchestrator/src/signals/*.js 452 bytes 2 modules
+optional modules 30 bytes [optional]
+  __temporal_custom_payload_converter (ignored) 15 bytes [optional] [built] [code generated]
+  __temporal_custom_failure_converter (ignored) 15 bytes [optional] [built] [code generated]
+webpack 5.104.1 compiled successfully in 521 ms { sdkComponent: 'worker', taskQueue: 'wrapcast' }
+2026-02-02T21:03:37.043Z [INFO] Workflow bundle created { sdkComponent: 'worker', taskQueue: 'wrapcast', size: '2.83MB' }
+2026-02-02T21:03:37.822Z [INFO] asset workflow-bundle-d4b010fc81b67a2cb152.js 2.83 MiB [emitted] [immutable] (name: main)
+runtime modules 1010 bytes 5 modules
+modules by path ./node_modules/ 952 KiB
+  modules by path ./node_modules/@temporalio/ 321 KiB 55 modules
+  modules by path ./node_modules/nexus-rpc/lib/ 25.6 KiB 17 modules
+  + 4 modules
+modules by path ./apps/orchestrator/dist/ 19 KiB
+  modules by path ./apps/orchestrator/dist/apps/orchestrator/src/workflows/ 17.7 KiB 9 modules
+  modules by path ./apps/orchestrator/dist/libraries/nestjs-libraries/src/ 803 bytes 2 modules
+  modules by path ./apps/orchestrator/dist/apps/orchestrator/src/signals/*.js 452 bytes 2 modules
+optional modules 30 bytes [optional]
+  __temporal_custom_payload_converter (ignored) 15 bytes [optional] [built] [code generated]
+  __temporal_custom_failure_converter (ignored) 15 bytes [optional] [built] [code generated]
+webpack 5.104.1 compiled successfully in 518 ms { sdkComponent: 'worker', taskQueue: 'telegram' }
+2026-02-02T21:03:37.834Z [INFO] Workflow bundle created { sdkComponent: 'worker', taskQueue: 'telegram', size: '2.83MB' }
+2026-02-02T21:03:38.708Z [INFO] asset workflow-bundle-d4b010fc81b67a2cb152.js 2.83 MiB [emitted] [immutable] (name: main)
+runtime modules 1010 bytes 5 modules
+modules by path ./node_modules/ 952 KiB
+  modules by path ./node_modules/@temporalio/ 321 KiB 55 modules
+  modules by path ./node_modules/nexus-rpc/lib/ 25.6 KiB 17 modules
+  + 4 modules
+modules by path ./apps/orchestrator/dist/ 19 KiB
+  modules by path ./apps/orchestrator/dist/apps/orchestrator/src/workflows/ 17.7 KiB 9 modules
+  modules by path ./apps/orchestrator/dist/libraries/nestjs-libraries/src/ 803 bytes 2 modules
+  modules by path ./apps/orchestrator/dist/apps/orchestrator/src/signals/*.js 452 bytes 2 modules
+optional modules 30 bytes [optional]
+  __temporal_custom_payload_converter (ignored) 15 bytes [optional] [built] [code generated]
+  __temporal_custom_failure_converter (ignored) 15 bytes [optional] [built] [code generated]
+webpack 5.104.1 compiled successfully in 583 ms { sdkComponent: 'worker', taskQueue: 'nostr' }
+2026-02-02T21:03:38.718Z [INFO] Workflow bundle created { sdkComponent: 'worker', taskQueue: 'nostr', size: '2.83MB' }
+2026-02-02T21:03:39.565Z [INFO] asset workflow-bundle-d4b010fc81b67a2cb152.js 2.83 MiB [emitted] [immutable] (name: main)
+runtime modules 1010 bytes 5 modules
+modules by path ./node_modules/ 952 KiB
+  modules by path ./node_modules/@temporalio/ 321 KiB 55 modules
+  modules by path ./node_modules/nexus-rpc/lib/ 25.6 KiB 17 modules
+  + 4 modules
+modules by path ./apps/orchestrator/dist/ 19 KiB
+  modules by path ./apps/orchestrator/dist/apps/orchestrator/src/workflows/ 17.7 KiB 9 modules
+  modules by path ./apps/orchestrator/dist/libraries/nestjs-libraries/src/ 803 bytes 2 modules
+  modules by path ./apps/orchestrator/dist/apps/orchestrator/src/signals/*.js 452 bytes 2 modules
+optional modules 30 bytes [optional]
+  __temporal_custom_payload_converter (ignored) 15 bytes [optional] [built] [code generated]
+  __temporal_custom_failure_converter (ignored) 15 bytes [optional] [built] [code generated]
+webpack 5.104.1 compiled successfully in 565 ms { sdkComponent: 'worker', taskQueue: 'vk' }
+2026-02-02T21:03:39.574Z [INFO] Workflow bundle created { sdkComponent: 'worker', taskQueue: 'vk', size: '2.83MB' }
+2026-02-02T21:03:40.405Z [INFO] asset workflow-bundle-d4b010fc81b67a2cb152.js 2.83 MiB [emitted] [immutable] (name: main)
+runtime modules 1010 bytes 5 modules
+modules by path ./node_modules/ 952 KiB
+  modules by path ./node_modules/@temporalio/ 321 KiB 55 modules
+  modules by path ./node_modules/nexus-rpc/lib/ 25.6 KiB 17 modules
+  + 4 modules
+modules by path ./apps/orchestrator/dist/ 19 KiB
+  modules by path ./apps/orchestrator/dist/apps/orchestrator/src/workflows/ 17.7 KiB 9 modules
+  modules by path ./apps/orchestrator/dist/libraries/nestjs-libraries/src/ 803 bytes 2 modules
+  modules by path ./apps/orchestrator/dist/apps/orchestrator/src/signals/*.js 452 bytes 2 modules
+optional modules 30 bytes [optional]
+  __temporal_custom_payload_converter (ignored) 15 bytes [optional] [built] [code generated]
+  __temporal_custom_failure_converter (ignored) 15 bytes [optional] [built] [code generated]
+webpack 5.104.1 compiled successfully in 589 ms { sdkComponent: 'worker', taskQueue: 'medium' }
+2026-02-02T21:03:40.415Z [INFO] Workflow bundle created { sdkComponent: 'worker', taskQueue: 'medium', size: '2.83MB' }
+2026-02-02T21:03:41.237Z [INFO] asset workflow-bundle-d4b010fc81b67a2cb152.js 2.83 MiB [emitted] [immutable] (name: main)
+runtime modules 1010 bytes 5 modules
+modules by path ./node_modules/ 952 KiB
+  modules by path ./node_modules/@temporalio/ 321 KiB 55 modules
+  modules by path ./node_modules/nexus-rpc/lib/ 25.6 KiB 17 modules
+  + 4 modules
+modules by path ./apps/orchestrator/dist/ 19 KiB
+  modules by path ./apps/orchestrator/dist/apps/orchestrator/src/workflows/ 17.7 KiB 9 modules
+  modules by path ./apps/orchestrator/dist/libraries/nestjs-libraries/src/ 803 bytes 2 modules
+  modules by path ./apps/orchestrator/dist/apps/orchestrator/src/signals/*.js 452 bytes 2 modules
+optional modules 30 bytes [optional]
+  __temporal_custom_payload_converter (ignored) 15 bytes [optional] [built] [code generated]
+  __temporal_custom_failure_converter (ignored) 15 bytes [optional] [built] [code generated]
+webpack 5.104.1 compiled successfully in 555 ms { sdkComponent: 'worker', taskQueue: 'devto' }
+2026-02-02T21:03:41.247Z [INFO] Workflow bundle created { sdkComponent: 'worker', taskQueue: 'devto', size: '2.83MB' }
+2026-02-02T21:03:42.008Z [INFO] asset workflow-bundle-d4b010fc81b67a2cb152.js 2.83 MiB [emitted] [immutable] (name: main)
+runtime modules 1010 bytes 5 modules
+modules by path ./node_modules/ 952 KiB
+  modules by path ./node_modules/@temporalio/ 321 KiB 55 modules
+  modules by path ./node_modules/nexus-rpc/lib/ 25.6 KiB 17 modules
+  + 4 modules
+modules by path ./apps/orchestrator/dist/ 19 KiB
+  modules by path ./apps/orchestrator/dist/apps/orchestrator/src/workflows/ 17.7 KiB 9 modules
+  modules by path ./apps/orchestrator/dist/libraries/nestjs-libraries/src/ 803 bytes 2 modules
+  modules by path ./apps/orchestrator/dist/apps/orchestrator/src/signals/*.js 452 bytes 2 modules
+optional modules 30 bytes [optional]
+  __temporal_custom_payload_converter (ignored) 15 bytes [optional] [built] [code generated]
+  __temporal_custom_failure_converter (ignored) 15 bytes [optional] [built] [code generated]
+webpack 5.104.1 compiled successfully in 514 ms { sdkComponent: 'worker', taskQueue: 'hashnode' }
+2026-02-02T21:03:42.018Z [INFO] Workflow bundle created { sdkComponent: 'worker', taskQueue: 'hashnode', size: '2.83MB' }
+2026-02-02T21:03:42.845Z [INFO] asset workflow-bundle-d4b010fc81b67a2cb152.js 2.83 MiB [emitted] [immutable] (name: main)
+runtime modules 1010 bytes 5 modules
+modules by path ./node_modules/ 952 KiB
+  modules by path ./node_modules/@temporalio/ 321 KiB 55 modules
+  modules by path ./node_modules/nexus-rpc/lib/ 25.6 KiB 17 modules
+  + 4 modules
+modules by path ./apps/orchestrator/dist/ 19 KiB
+  modules by path ./apps/orchestrator/dist/apps/orchestrator/src/workflows/ 17.7 KiB 9 modules
+  modules by path ./apps/orchestrator/dist/libraries/nestjs-libraries/src/ 803 bytes 2 modules
+  modules by path ./apps/orchestrator/dist/apps/orchestrator/src/signals/*.js 452 bytes 2 modules
+optional modules 30 bytes [optional]
+  __temporal_custom_payload_converter (ignored) 15 bytes [optional] [built] [code generated]
+  __temporal_custom_failure_converter (ignored) 15 bytes [optional] [built] [code generated]
+webpack 5.104.1 compiled successfully in 564 ms { sdkComponent: 'worker', taskQueue: 'wordpress' }
+2026-02-02T21:03:42.855Z [INFO] Workflow bundle created { sdkComponent: 'worker', taskQueue: 'wordpress', size: '2.83MB' }
+2026-02-02T21:03:43.655Z [INFO] asset workflow-bundle-d4b010fc81b67a2cb152.js 2.83 MiB [emitted] [immutable] (name: main)
+runtime modules 1010 bytes 5 modules
+modules by path ./node_modules/ 952 KiB
+  modules by path ./node_modules/@temporalio/ 321 KiB 55 modules
+  modules by path ./node_modules/nexus-rpc/lib/ 25.6 KiB 17 modules
+  + 4 modules
+modules by path ./apps/orchestrator/dist/ 19 KiB
+  modules by path ./apps/orchestrator/dist/apps/orchestrator/src/workflows/ 17.7 KiB 9 modules
+  modules by path ./apps/orchestrator/dist/libraries/nestjs-libraries/src/ 803 bytes 2 modules
+  modules by path ./apps/orchestrator/dist/apps/orchestrator/src/signals/*.js 452 bytes 2 modules
+optional modules 30 bytes [optional]
+  __temporal_custom_payload_converter (ignored) 15 bytes [optional] [built] [code generated]
+  __temporal_custom_failure_converter (ignored) 15 bytes [optional] [built] [code generated]
+webpack 5.104.1 compiled successfully in 529 ms { sdkComponent: 'worker', taskQueue: 'listmonk' }
+2026-02-02T21:03:43.666Z [INFO] Workflow bundle created { sdkComponent: 'worker', taskQueue: 'listmonk', size: '2.83MB' }
+2026-02-02T21:03:43.915Z [INFO] Worker state changed { sdkComponent: 'worker', taskQueue: 'main', state: 'RUNNING' }
+2026-02-02T21:03:43.917Z [INFO] No Nexus services registered, not polling for Nexus tasks { sdkComponent: 'worker', taskQueue: 'main' }
+2026-02-02T21:03:43.919Z [INFO] Worker state changed { sdkComponent: 'worker', taskQueue: 'x', state: 'RUNNING' }
+2026-02-02T21:03:43.920Z [INFO] No Nexus services registered, not polling for Nexus tasks { sdkComponent: 'worker', taskQueue: 'x' }
+2026-02-02T21:03:43.920Z [INFO] Worker state changed { sdkComponent: 'worker', taskQueue: 'linkedin', state: 'RUNNING' }
+2026-02-02T21:03:43.920Z [INFO] No Nexus services registered, not polling for Nexus tasks { sdkComponent: 'worker', taskQueue: 'linkedin' }
+2026-02-02T21:03:43.921Z [INFO] Worker state changed { sdkComponent: 'worker', taskQueue: 'reddit', state: 'RUNNING' }
+2026-02-02T21:03:43.921Z [INFO] No Nexus services registered, not polling for Nexus tasks { sdkComponent: 'worker', taskQueue: 'reddit' }
+2026-02-02T21:03:43.922Z [INFO] Worker state changed { sdkComponent: 'worker', taskQueue: 'instagram', state: 'RUNNING' }
+2026-02-02T21:03:43.922Z [INFO] No Nexus services registered, not polling for Nexus tasks { sdkComponent: 'worker', taskQueue: 'instagram' }
+2026-02-02T21:03:43.922Z [INFO] Worker state changed { sdkComponent: 'worker', taskQueue: 'facebook', state: 'RUNNING' }
+2026-02-02T21:03:43.923Z [INFO] No Nexus services registered, not polling for Nexus tasks { sdkComponent: 'worker', taskQueue: 'facebook' }
+2026-02-02T21:03:43.923Z [INFO] Worker state changed { sdkComponent: 'worker', taskQueue: 'threads', state: 'RUNNING' }
+2026-02-02T21:03:43.923Z [INFO] No Nexus services registered, not polling for Nexus tasks { sdkComponent: 'worker', taskQueue: 'threads' }
+2026-02-02T21:03:43.924Z [INFO] Worker state changed { sdkComponent: 'worker', taskQueue: 'youtube', state: 'RUNNING' }
+2026-02-02T21:03:43.924Z [INFO] No Nexus services registered, not polling for Nexus tasks { sdkComponent: 'worker', taskQueue: 'youtube' }
+2026-02-02T21:03:43.925Z [INFO] Worker state changed { sdkComponent: 'worker', taskQueue: 'gmb', state: 'RUNNING' }
+2026-02-02T21:03:43.925Z [INFO] No Nexus services registered, not polling for Nexus tasks { sdkComponent: 'worker', taskQueue: 'gmb' }
+2026-02-02T21:03:43.925Z [INFO] Worker state changed { sdkComponent: 'worker', taskQueue: 'tiktok', state: 'RUNNING' }
+2026-02-02T21:03:43.926Z [INFO] No Nexus services registered, not polling for Nexus tasks { sdkComponent: 'worker', taskQueue: 'tiktok' }
+2026-02-02T21:03:43.926Z [INFO] Worker state changed { sdkComponent: 'worker', taskQueue: 'pinterest', state: 'RUNNING' }
+2026-02-02T21:03:43.926Z [INFO] No Nexus services registered, not polling for Nexus tasks { sdkComponent: 'worker', taskQueue: 'pinterest' }
+2026-02-02T21:03:43.926Z [INFO] Worker state changed { sdkComponent: 'worker', taskQueue: 'dribbble', state: 'RUNNING' }
+2026-02-02T21:03:43.927Z [INFO] No Nexus services registered, not polling for Nexus tasks { sdkComponent: 'worker', taskQueue: 'dribbble' }
+2026-02-02T21:03:43.927Z [INFO] Worker state changed { sdkComponent: 'worker', taskQueue: 'discord', state: 'RUNNING' }
+2026-02-02T21:03:43.927Z [INFO] No Nexus services registered, not polling for Nexus tasks { sdkComponent: 'worker', taskQueue: 'discord' }
+2026-02-02T21:03:43.927Z [INFO] Worker state changed { sdkComponent: 'worker', taskQueue: 'slack', state: 'RUNNING' }
+2026-02-02T21:03:43.928Z [INFO] No Nexus services registered, not polling for Nexus tasks { sdkComponent: 'worker', taskQueue: 'slack' }
+2026-02-02T21:03:43.928Z [INFO] Worker state changed { sdkComponent: 'worker', taskQueue: 'kick', state: 'RUNNING' }
+2026-02-02T21:03:43.928Z [INFO] No Nexus services registered, not polling for Nexus tasks { sdkComponent: 'worker', taskQueue: 'kick' }
+2026-02-02T21:03:43.929Z [INFO] Worker state changed { sdkComponent: 'worker', taskQueue: 'twitch', state: 'RUNNING' }
+2026-02-02T21:03:43.929Z [INFO] No Nexus services registered, not polling for Nexus tasks { sdkComponent: 'worker', taskQueue: 'twitch' }
+2026-02-02T21:03:43.930Z [INFO] Worker state changed { sdkComponent: 'worker', taskQueue: 'mastodon', state: 'RUNNING' }
+2026-02-02T21:03:43.930Z [INFO] No Nexus services registered, not polling for Nexus tasks { sdkComponent: 'worker', taskQueue: 'mastodon' }
+2026-02-02T21:03:43.930Z [INFO] Worker state changed { sdkComponent: 'worker', taskQueue: 'bluesky', state: 'RUNNING' }
+2026-02-02T21:03:43.931Z [INFO] No Nexus services registered, not polling for Nexus tasks { sdkComponent: 'worker', taskQueue: 'bluesky' }
+2026-02-02T21:03:43.931Z [INFO] Worker state changed { sdkComponent: 'worker', taskQueue: 'lemmy', state: 'RUNNING' }
+2026-02-02T21:03:43.931Z [INFO] No Nexus services registered, not polling for Nexus tasks { sdkComponent: 'worker', taskQueue: 'lemmy' }
+2026-02-02T21:03:43.931Z [INFO] Worker state changed { sdkComponent: 'worker', taskQueue: 'wrapcast', state: 'RUNNING' }
+2026-02-02T21:03:43.932Z [INFO] No Nexus services registered, not polling for Nexus tasks { sdkComponent: 'worker', taskQueue: 'wrapcast' }
+2026-02-02T21:03:43.932Z [INFO] Worker state changed { sdkComponent: 'worker', taskQueue: 'telegram', state: 'RUNNING' }
+2026-02-02T21:03:43.932Z [INFO] No Nexus services registered, not polling for Nexus tasks { sdkComponent: 'worker', taskQueue: 'telegram' }
+2026-02-02T21:03:43.932Z [INFO] Worker state changed { sdkComponent: 'worker', taskQueue: 'nostr', state: 'RUNNING' }
+2026-02-02T21:03:43.932Z [INFO] No Nexus services registered, not polling for Nexus tasks { sdkComponent: 'worker', taskQueue: 'nostr' }
+2026-02-02T21:03:43.933Z [INFO] Worker state changed { sdkComponent: 'worker', taskQueue: 'vk', state: 'RUNNING' }
+2026-02-02T21:03:43.933Z [INFO] No Nexus services registered, not polling for Nexus tasks { sdkComponent: 'worker', taskQueue: 'vk' }
+2026-02-02T21:03:43.933Z [INFO] Worker state changed { sdkComponent: 'worker', taskQueue: 'medium', state: 'RUNNING' }
+2026-02-02T21:03:43.933Z [INFO] No Nexus services registered, not polling for Nexus tasks { sdkComponent: 'worker', taskQueue: 'medium' }
+2026-02-02T21:03:43.933Z [INFO] Worker state changed { sdkComponent: 'worker', taskQueue: 'devto', state: 'RUNNING' }
+2026-02-02T21:03:43.934Z [INFO] No Nexus services registered, not polling for Nexus tasks { sdkComponent: 'worker', taskQueue: 'devto' }
+2026-02-02T21:03:43.935Z [INFO] Worker state changed { sdkComponent: 'worker', taskQueue: 'hashnode', state: 'RUNNING' }
+2026-02-02T21:03:43.936Z [INFO] No Nexus services registered, not polling for Nexus tasks { sdkComponent: 'worker', taskQueue: 'hashnode' }
+2026-02-02T21:03:43.936Z [INFO] Worker state changed { sdkComponent: 'worker', taskQueue: 'wordpress', state: 'RUNNING' }
+2026-02-02T21:03:43.936Z [INFO] No Nexus services registered, not polling for Nexus tasks { sdkComponent: 'worker', taskQueue: 'wordpress' }
+2026-02-02T21:03:43.936Z [INFO] Worker state changed { sdkComponent: 'worker', taskQueue: 'listmonk', state: 'RUNNING' }
+2026-02-02T21:03:43.937Z [INFO] No Nexus services registered, not polling for Nexus tasks { sdkComponent: 'worker', taskQueue: 'listmonk' }
+2026-02-02T21:08:11.138Z [INFO] Worker state changed { sdkComponent: 'worker', taskQueue: 'main', state: 'STOPPING' }
+2026-02-02T21:08:11.138Z [INFO] Worker state changed { sdkComponent: 'worker', taskQueue: 'main', state: 'DRAINING' }
+2026-02-02T21:08:11.139Z [INFO] Worker state changed { sdkComponent: 'worker', taskQueue: 'x', state: 'STOPPING' }
+2026-02-02T21:08:11.139Z [INFO] Worker state changed { sdkComponent: 'worker', taskQueue: 'x', state: 'DRAINING' }
+2026-02-02T21:08:11.139Z [INFO] Worker state changed { sdkComponent: 'worker', taskQueue: 'linkedin', state: 'STOPPING' }
+2026-02-02T21:08:11.139Z [INFO] Worker state changed { sdkComponent: 'worker', taskQueue: 'linkedin', state: 'DRAINING' }
+2026-02-02T21:08:11.139Z [INFO] Worker state changed { sdkComponent: 'worker', taskQueue: 'reddit', state: 'STOPPING' }
+2026-02-02T21:08:11.139Z [INFO] Worker state changed { sdkComponent: 'worker', taskQueue: 'reddit', state: 'DRAINING' }
+2026-02-02T21:08:11.139Z [INFO] Worker state changed { sdkComponent: 'worker', taskQueue: 'instagram', state: 'STOPPING' }
+2026-02-02T21:08:11.139Z [INFO] Worker state changed { sdkComponent: 'worker', taskQueue: 'instagram', state: 'DRAINING' }
+2026-02-02T21:08:11.140Z [INFO] Worker state changed { sdkComponent: 'worker', taskQueue: 'facebook', state: 'STOPPING' }
+2026-02-02T21:08:11.140Z [INFO] Worker state changed { sdkComponent: 'worker', taskQueue: 'facebook', state: 'DRAINING' }
+2026-02-02T21:08:11.140Z [INFO] Worker state changed { sdkComponent: 'worker', taskQueue: 'threads', state: 'STOPPING' }
+2026-02-02T21:08:11.140Z [INFO] Worker state changed { sdkComponent: 'worker', taskQueue: 'threads', state: 'DRAINING' }
+2026-02-02T21:08:11.140Z [INFO] Worker state changed { sdkComponent: 'worker', taskQueue: 'youtube', state: 'STOPPING' }
+2026-02-02T21:08:11.140Z [INFO] Worker state changed { sdkComponent: 'worker', taskQueue: 'youtube', state: 'DRAINING' }
+2026-02-02T21:08:11.140Z [INFO] Worker state changed { sdkComponent: 'worker', taskQueue: 'gmb', state: 'STOPPING' }
+2026-02-02T21:08:11.140Z [INFO] Worker state changed { sdkComponent: 'worker', taskQueue: 'gmb', state: 'DRAINING' }
+2026-02-02T21:08:11.141Z [INFO] Worker state changed { sdkComponent: 'worker', taskQueue: 'tiktok', state: 'STOPPING' }
+2026-02-02T21:08:11.141Z [INFO] Worker state changed { sdkComponent: 'worker', taskQueue: 'tiktok', state: 'DRAINING' }
+2026-02-02T21:08:11.141Z [INFO] Worker state changed { sdkComponent: 'worker', taskQueue: 'pinterest', state: 'STOPPING' }
+2026-02-02T21:08:11.141Z [INFO] Worker state changed { sdkComponent: 'worker', taskQueue: 'pinterest', state: 'DRAINING' }
+2026-02-02T21:08:11.141Z [INFO] Worker state changed { sdkComponent: 'worker', taskQueue: 'dribbble', state: 'STOPPING' }
+2026-02-02T21:08:11.141Z [INFO] Worker state changed { sdkComponent: 'worker', taskQueue: 'dribbble', state: 'DRAINING' }
+2026-02-02T21:08:11.141Z [INFO] Worker state changed { sdkComponent: 'worker', taskQueue: 'discord', state: 'STOPPING' }
+2026-02-02T21:08:11.141Z [INFO] Worker state changed { sdkComponent: 'worker', taskQueue: 'discord', state: 'DRAINING' }
+2026-02-02T21:08:11.141Z [INFO] Worker state changed { sdkComponent: 'worker', taskQueue: 'slack', state: 'STOPPING' }
+2026-02-02T21:08:11.141Z [INFO] Worker state changed { sdkComponent: 'worker', taskQueue: 'slack', state: 'DRAINING' }
+2026-02-02T21:08:11.142Z [INFO] Worker state changed { sdkComponent: 'worker', taskQueue: 'kick', state: 'STOPPING' }
+2026-02-02T21:08:11.142Z [INFO] Worker state changed { sdkComponent: 'worker', taskQueue: 'kick', state: 'DRAINING' }
+2026-02-02T21:08:11.142Z [INFO] Worker state changed { sdkComponent: 'worker', taskQueue: 'twitch', state: 'STOPPING' }
+2026-02-02T21:08:11.142Z [INFO] Worker state changed { sdkComponent: 'worker', taskQueue: 'twitch', state: 'DRAINING' }
+2026-02-02T21:08:11.142Z [INFO] Worker state changed { sdkComponent: 'worker', taskQueue: 'mastodon', state: 'STOPPING' }
+2026-02-02T21:08:11.142Z [INFO] Worker state changed { sdkComponent: 'worker', taskQueue: 'mastodon', state: 'DRAINING' }
+2026-02-02T21:08:11.142Z [INFO] Worker state changed { sdkComponent: 'worker', taskQueue: 'bluesky', state: 'STOPPING' }
+2026-02-02T21:08:11.142Z [INFO] Worker state changed { sdkComponent: 'worker', taskQueue: 'bluesky', state: 'DRAINING' }
+2026-02-02T21:08:11.142Z [INFO] Worker state changed { sdkComponent: 'worker', taskQueue: 'lemmy', state: 'STOPPING' }
+2026-02-02T21:08:11.142Z [INFO] Worker state changed { sdkComponent: 'worker', taskQueue: 'lemmy', state: 'DRAINING' }
+2026-02-02T21:08:11.143Z [INFO] Worker state changed { sdkComponent: 'worker', taskQueue: 'wrapcast', state: 'STOPPING' }
+2026-02-02T21:08:11.143Z [INFO] Worker state changed { sdkComponent: 'worker', taskQueue: 'wrapcast', state: 'DRAINING' }
+2026-02-02T21:08:11.143Z [INFO] Worker state changed { sdkComponent: 'worker', taskQueue: 'telegram', state: 'STOPPING' }
+2026-02-02T21:08:11.143Z [INFO] Worker state changed { sdkComponent: 'worker', taskQueue: 'telegram', state: 'DRAINING' }
+2026-02-02T21:08:11.143Z [INFO] Worker state changed { sdkComponent: 'worker', taskQueue: 'nostr', state: 'STOPPING' }
+2026-02-02T21:08:11.143Z [INFO] Worker state changed { sdkComponent: 'worker', taskQueue: 'nostr', state: 'DRAINING' }
+2026-02-02T21:08:11.143Z [INFO] Worker state changed { sdkComponent: 'worker', taskQueue: 'vk', state: 'STOPPING' }
+2026-02-02T21:08:11.144Z [INFO] Worker state changed { sdkComponent: 'worker', taskQueue: 'vk', state: 'DRAINING' }
+2026-02-02T21:08:11.144Z [INFO] Worker state changed { sdkComponent: 'worker', taskQueue: 'medium', state: 'STOPPING' }
+2026-02-02T21:08:11.145Z [INFO] Worker state changed { sdkComponent: 'worker', taskQueue: 'medium', state: 'DRAINING' }
+2026-02-02T21:08:11.145Z [INFO] Worker state changed { sdkComponent: 'worker', taskQueue: 'devto', state: 'STOPPING' }
+2026-02-02T21:08:11.145Z [INFO] Worker state changed { sdkComponent: 'worker', taskQueue: 'devto', state: 'DRAINING' }
+2026-02-02T21:08:11.145Z [INFO] Worker state changed { sdkComponent: 'worker', taskQueue: 'hashnode', state: 'STOPPING' }
+2026-02-02T21:08:11.146Z [INFO] Worker state changed { sdkComponent: 'worker', taskQueue: 'hashnode', state: 'DRAINING' }
+2026-02-02T21:08:11.146Z [INFO] Worker state changed { sdkComponent: 'worker', taskQueue: 'wordpress', state: 'STOPPING' }
+2026-02-02T21:08:11.146Z [INFO] Worker state changed { sdkComponent: 'worker', taskQueue: 'wordpress', state: 'DRAINING' }
+2026-02-02T21:08:11.146Z [INFO] Worker state changed { sdkComponent: 'worker', taskQueue: 'listmonk', state: 'STOPPING' }
+2026-02-02T21:08:11.146Z [INFO] Worker state changed { sdkComponent: 'worker', taskQueue: 'listmonk', state: 'DRAINING' }
+2026-02-02T21:08:11.152Z [INFO] Worker state changed { sdkComponent: 'worker', taskQueue: 'main', state: 'DRAINED' }
+2026-02-02T21:08:11.153Z [INFO] Worker state changed { sdkComponent: 'worker', taskQueue: 'main', state: 'STOPPED' }
+2026-02-02T21:08:11.155Z [INFO] Worker state changed { sdkComponent: 'worker', taskQueue: 'reddit', state: 'DRAINED' }
+2026-02-02T21:08:11.155Z [INFO] Worker state changed { sdkComponent: 'worker', taskQueue: 'reddit', state: 'STOPPED' }
+2026-02-02T21:08:11.156Z [INFO] Worker state changed { sdkComponent: 'worker', taskQueue: 'instagram', state: 'DRAINED' }
+2026-02-02T21:08:11.156Z [INFO] Worker state changed { sdkComponent: 'worker', taskQueue: 'instagram', state: 'STOPPED' }
+2026-02-02T21:08:11.156Z [INFO] Worker state changed { sdkComponent: 'worker', taskQueue: 'facebook', state: 'DRAINED' }
+2026-02-02T21:08:11.157Z [INFO] Worker state changed { sdkComponent: 'worker', taskQueue: 'facebook', state: 'STOPPED' }
+2026-02-02T21:08:11.159Z [INFO] Worker state changed { sdkComponent: 'worker', taskQueue: 'lemmy', state: 'DRAINED' }
+2026-02-02T21:08:11.159Z [INFO] Worker state changed { sdkComponent: 'worker', taskQueue: 'lemmy', state: 'STOPPED' }
+2026-02-02T21:08:11.160Z [INFO] Worker state changed { sdkComponent: 'worker', taskQueue: 'bluesky', state: 'DRAINED' }
+2026-02-02T21:08:11.160Z [INFO] Worker state changed { sdkComponent: 'worker', taskQueue: 'bluesky', state: 'STOPPED' }
+2026-02-02T21:08:11.160Z [INFO] Worker state changed { sdkComponent: 'worker', taskQueue: 'wrapcast', state: 'DRAINED' }
+2026-02-02T21:08:11.160Z [INFO] Worker state changed { sdkComponent: 'worker', taskQueue: 'wrapcast', state: 'STOPPED' }
+2026-02-02T21:08:11.161Z [INFO] Worker state changed { sdkComponent: 'worker', taskQueue: 'vk', state: 'DRAINED' }
+2026-02-02T21:08:11.161Z [INFO] Worker state changed { sdkComponent: 'worker', taskQueue: 'vk', state: 'STOPPED' }
+2026-02-02T21:08:11.161Z [INFO] Worker state changed { sdkComponent: 'worker', taskQueue: 'devto', state: 'DRAINED' }
+2026-02-02T21:08:11.161Z [INFO] Worker state changed { sdkComponent: 'worker', taskQueue: 'devto', state: 'STOPPED' }
+2026-02-02T21:08:11.161Z [INFO] Worker state changed { sdkComponent: 'worker', taskQueue: 'wordpress', state: 'DRAINED' }
+2026-02-02T21:08:11.162Z [INFO] Worker state changed { sdkComponent: 'worker', taskQueue: 'wordpress', state: 'STOPPED' }
+2026-02-02T21:08:11.163Z [INFO] Worker state changed { sdkComponent: 'worker', taskQueue: 'linkedin', state: 'DRAINED' }
+2026-02-02T21:08:11.163Z [INFO] Worker state changed { sdkComponent: 'worker', taskQueue: 'linkedin', state: 'STOPPED' }
+2026-02-02T21:08:11.163Z [INFO] Worker state changed { sdkComponent: 'worker', taskQueue: 'listmonk', state: 'DRAINED' }
+2026-02-02T21:08:11.163Z [INFO] Worker state changed { sdkComponent: 'worker', taskQueue: 'listmonk', state: 'STOPPED' }
+2026-02-02T21:08:11.163Z [INFO] Worker state changed { sdkComponent: 'worker', taskQueue: 'gmb', state: 'DRAINED' }
+2026-02-02T21:08:11.164Z [INFO] Worker state changed { sdkComponent: 'worker', taskQueue: 'gmb', state: 'STOPPED' }
+2026-02-02T21:08:11.164Z [INFO] Worker state changed { sdkComponent: 'worker', taskQueue: 'x', state: 'DRAINED' }
+2026-02-02T21:08:11.164Z [INFO] Worker state changed { sdkComponent: 'worker', taskQueue: 'x', state: 'STOPPED' }
+2026-02-02T21:08:11.164Z [INFO] Worker state changed { sdkComponent: 'worker', taskQueue: 'twitch', state: 'DRAINED' }
+2026-02-02T21:08:11.164Z [INFO] Worker state changed { sdkComponent: 'worker', taskQueue: 'twitch', state: 'STOPPED' }
+2026-02-02T21:08:11.165Z [INFO] Worker state changed { sdkComponent: 'worker', taskQueue: 'telegram', state: 'DRAINED' }
+2026-02-02T21:08:11.165Z [INFO] Worker state changed { sdkComponent: 'worker', taskQueue: 'telegram', state: 'STOPPED' }
+2026-02-02T21:08:11.165Z [INFO] Worker state changed { sdkComponent: 'worker', taskQueue: 'pinterest', state: 'DRAINED' }
+2026-02-02T21:08:11.167Z [INFO] Worker state changed { sdkComponent: 'worker', taskQueue: 'pinterest', state: 'STOPPED' }
+2026-02-02T21:08:11.168Z [INFO] Worker state changed { sdkComponent: 'worker', taskQueue: 'kick', state: 'DRAINED' }
+2026-02-02T21:08:11.169Z [INFO] Worker state changed { sdkComponent: 'worker', taskQueue: 'kick', state: 'STOPPED' }
+2026-02-02T21:08:11.169Z [INFO] Worker state changed { sdkComponent: 'worker', taskQueue: 'threads', state: 'DRAINED' }
+2026-02-02T21:08:11.170Z [INFO] Worker state changed { sdkComponent: 'worker', taskQueue: 'threads', state: 'STOPPED' }
+2026-02-02T21:08:11.172Z [INFO] Worker state changed { sdkComponent: 'worker', taskQueue: 'youtube', state: 'DRAINED' }
+2026-02-02T21:08:11.172Z [INFO] Worker state changed { sdkComponent: 'worker', taskQueue: 'youtube', state: 'STOPPED' }
+2026-02-02T21:08:11.173Z [INFO] Worker state changed { sdkComponent: 'worker', taskQueue: 'hashnode', state: 'DRAINED' }
+2026-02-02T21:08:11.173Z [INFO] Worker state changed { sdkComponent: 'worker', taskQueue: 'hashnode', state: 'STOPPED' }
+2026-02-02T21:08:11.174Z [INFO] Worker state changed { sdkComponent: 'worker', taskQueue: 'medium', state: 'DRAINED' }
+2026-02-02T21:08:11.174Z [INFO] Worker state changed { sdkComponent: 'worker', taskQueue: 'medium', state: 'STOPPED' }
+2026-02-02T21:08:11.176Z [INFO] Worker state changed { sdkComponent: 'worker', taskQueue: 'discord', state: 'DRAINED' }
+2026-02-02T21:08:11.176Z [INFO] Worker state changed { sdkComponent: 'worker', taskQueue: 'discord', state: 'STOPPED' }
+2026-02-02T21:08:11.176Z [INFO] Worker state changed { sdkComponent: 'worker', taskQueue: 'mastodon', state: 'DRAINED' }
+2026-02-02T21:08:11.176Z [INFO] Worker state changed { sdkComponent: 'worker', taskQueue: 'mastodon', state: 'STOPPED' }
+2026-02-02T21:08:11.176Z [INFO] Worker state changed { sdkComponent: 'worker', taskQueue: 'nostr', state: 'DRAINED' }
+2026-02-02T21:08:11.176Z [INFO] Worker state changed { sdkComponent: 'worker', taskQueue: 'nostr', state: 'STOPPED' }
+2026-02-02T21:08:11.177Z [INFO] Worker state changed { sdkComponent: 'worker', taskQueue: 'slack', state: 'DRAINED' }
+2026-02-02T21:08:11.177Z [INFO] Worker state changed { sdkComponent: 'worker', taskQueue: 'slack', state: 'STOPPED' }
+2026-02-02T21:08:11.177Z [INFO] Worker state changed { sdkComponent: 'worker', taskQueue: 'tiktok', state: 'DRAINED' }
+2026-02-02T21:08:11.177Z [INFO] Worker state changed { sdkComponent: 'worker', taskQueue: 'tiktok', state: 'STOPPED' }
+2026-02-02T21:08:11.177Z [INFO] Worker state changed { sdkComponent: 'worker', taskQueue: 'dribbble', state: 'DRAINED' }
+2026-02-02T21:08:11.177Z [INFO] Worker state changed { sdkComponent: 'worker', taskQueue: 'dribbble', state: 'STOPPED' }
+[32m[Nest] 7648  - [39m02/02/2026, 6:08:11 PM [32m    LOG[39m [38;5;3m[TemporalConnectionFactory] [39m[32mCleaning up all connections...[39m
+[32m[Nest] 7648  - [39m02/02/2026, 6:08:11 PM [32m    LOG[39m [38;5;3m[TemporalConnectionFactory] [39m[32mTemporalConnectionFactory[39m
+[32m[Nest] 7648  - [39m02/02/2026, 6:08:11 PM [32m    LOG[39m [38;5;3m[TemporalConnectionFactory] [39m[32mConnection cleanup completed[39m
+[32m[Nest] 7648  - [39m02/02/2026, 6:08:11 PM [32m    LOG[39m [38;5;3m[TemporalConnectionFactory] [39m[32mTemporalConnectionFactory[39m

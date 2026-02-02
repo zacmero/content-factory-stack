@@ -1,22 +1,143 @@
 services:
+  # --------------------------------------------------------------------------------
+  # CACHE (Shared)
+  # --------------------------------------------------------------------------------
+  redis:
+    image: redis:7-alpine
+    container_name: content_factory_redis
+    restart: always
+    volumes:
+      - redis_data:/data
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+  # --------------------------------------------------------------------------------
+  # DATABASE: n8n (Dedicated)
+  # --------------------------------------------------------------------------------
+  n8n_db:
+    image: postgres:16-alpine
+    container_name: n8n_db
+    restart: always
+    environment:
+      - POSTGRES_USER=n8n
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD:-postgres}
+      - POSTGRES_DB=n8n
+    volumes:
+      - n8n_db_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U n8n"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+  # --------------------------------------------------------------------------------
+  # DATABASE: Postiz (Dedicated)
+  # --------------------------------------------------------------------------------
+  postiz_db:
+    image: postgres:16-alpine
+    container_name: postiz_db
+    restart: always
+    environment:
+      - POSTGRES_USER=postiz
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD:-postgres}
+      - POSTGRES_DB=postiz
+    volumes:
+      - postiz_db_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postiz"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+  # --------------------------------------------------------------------------------
+  # APP: n8n
+  # --------------------------------------------------------------------------------
   n8n:
-    image: n8nio/n8n:latest
+    build:
+      context: .
+      dockerfile: n8n.Dockerfile
     container_name: n8n
     restart: unless-stopped
     ports:
-      - "0.0.0.0:8080:5678"
+      - "8080:5678"
     environment:
-      N8N_BASIC_AUTH_ACTIVE: "true"
-      N8N_BASIC_AUTH_USER: "${N8N_BASIC_AUTH_USER}"
-      N8N_BASIC_AUTH_PASSWORD: "${N8N_BASIC_AUTH_PASSWORD}"
-      N8N_UI_THEME: "dark"
-      N8N_HOST: "0.0.0.0"
-      N8N_PORT: "5678"
-      N8N_PROTOCOL: "http"
-      NODE_ENV: "production"
-      EXECUTIONS_PROCESS: "main"
-      DB_TYPE: "sqlite"
-      DB_SQLITE_POOL_SIZE: 5
-      N8N_RUNNERS_ENABLED: "true"
+      - N8N_HOST=${N8N_HOST:-localhost}
+      - N8N_PORT=5678
+      - N8N_PROTOCOL=http
+      - NODE_ENV=production
+      - WEBHOOK_URL=http://${N8N_HOST:-localhost}:8080/
+      - GENERIC_TIMEZONE=${GENERIC_TIMEZONE:-America/New_York}
+      # Reverting to SQLite to restore user data
+      # - DB_TYPE=postgresdb
+      # - DB_POSTGRESDB_HOST=n8n_db
+      # - DB_POSTGRESDB_PORT=5432
+      # - DB_POSTGRESDB_DATABASE=n8n
+      # - DB_POSTGRESDB_USER=n8n
+      # - DB_POSTGRESDB_PASSWORD=${POSTGRES_PASSWORD:-postgres}
+      # Auth
+      - N8N_BASIC_AUTH_ACTIVE=true
+      - N8N_BASIC_AUTH_USER=${N8N_BASIC_AUTH_USER}
+      - N8N_BASIC_AUTH_PASSWORD=${N8N_BASIC_AUTH_PASSWORD}
     volumes:
       - ./n8n_data:/home/node/.n8n
+      - ./content_factory:/files
+    depends_on:
+      n8n_db:
+        condition: service_healthy
+
+  # --------------------------------------------------------------------------------
+  # WORKFLOW ENGINE: Temporal (Required for Postiz)
+  # --------------------------------------------------------------------------------
+  temporal:
+    image: temporalio/auto-setup:latest
+    container_name: temporal
+    restart: always
+    environment:
+      - DB=postgres12
+      - DB_PORT=5432
+      - POSTGRES_USER=postiz
+      - POSTGRES_PWD=${POSTGRES_PASSWORD:-postgres}
+      - POSTGRES_SEEDS=postiz_db
+      - DBNAME=temporal
+    depends_on:
+      postiz_db:
+        condition: service_healthy
+
+  # --------------------------------------------------------------------------------
+  # APP: Postiz
+  # --------------------------------------------------------------------------------
+  postiz:
+    image: ghcr.io/gitroomhq/postiz-app:latest
+    container_name: postiz
+    restart: always
+    ports:
+      - "5000:5000"
+    environment:
+      - MAIN_URL=http://localhost:5000
+      - FRONTEND_URL=http://localhost:5000
+      - NEXT_PUBLIC_BACKEND_URL=http://localhost:5000
+      - TEMPORAL_ADDRESS=temporal:7233
+      - IS_GENERAL=true
+      # Database Connection (To Dedicated DB)
+      - DATABASE_URL=postgresql://postiz:${POSTGRES_PASSWORD:-postgres}@postiz_db:5432/postiz
+      - REDIS_URL=redis://redis:6379
+      - JWT_SECRET=${POSTIZ_JWT_SECRET:-randomsecret123}
+    depends_on:
+      postiz_db:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+      temporal:
+        condition: service_started
+    volumes:
+      - postiz_data:/app/uploads
+
+volumes:
+  n8n_data:
+  n8n_db_data:      # New dedicated volume
+  postiz_db_data:   # New dedicated volume
+  redis_data:
+  postiz_data:
