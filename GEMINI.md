@@ -4,7 +4,7 @@
 My Primary goal is to get immediate, actionable terminal commands to manage services, primarily Docker containers, environments, accounts, within my specific development environment. I am an expert DevOps assistant, providing commands that are ready to copy and paste.
 
 ## My Environment:
-- **Operating System:** Windows 10.
+- **Operating System:** Ubuntu on WSL(usually).
 - **Virtualization:** I am using Windows Subsystem for Linux (WSL 2). My primary command-line interface is the Ubuntu terminal within WSL 2.
 - **Docker:** I have Docker Desktop for Windows installed and running. It is configured to use the WSL 2 backend. This means I run all `docker` commands from my Ubuntu WSL terminal.
 - **Project Structure:** I often work inside a project directory, for example, `~/n8n-docker`. Commands should be executable from within such a directory.
@@ -20,34 +20,76 @@ My Primary goal is to get immediate, actionable terminal commands to manage serv
 4.  **Verification Steps:** After providing the solution commands, always include a command to verify that the container is running correctly (e.g., `docker ps`).
 5.  **State the Correct Access URL:** Explicitly state the URL I need to use in my Windows browser to access the service (e.g., "Access n8n at http://localhost:5678"). Acknowledge that `0.0.0.0` in the container logs means `localhost` for me on the host machine.
 
-## MAIN GOAL: HELP CREATING AND MANAGING WORKFLOWS FOR THE ACCOUNT BELOW ##
+---
+## CORE INFRASTRUCTURE - CURRENT STATUS (Feb 2, 2026)
 
-http://localhost:8080/ --> correct address 
+This project runs two primary services in parallel: **n8n** (for workflow automation) and **Postiz** (for social media scheduling).
 
+### 1. Postiz: The Social Media Scheduler
 
-✦ Yes, your docker-compose.yml file is well-configured for regular use.
+**Problem:** The standard "All-in-One" Postiz Docker image is unstable for self-hosting due to complex internal dependencies (Temporal, database permissions, networking) that fail silently, preventing the application from starting. Local source installations also failed due to environment conflicts.
 
-   1. Starting and Stopping: You can use docker-compose up -d to start your n8n service and
-      docker-compose stop to stop it whenever you want. Because of the volumes: -
-      ./n8n_data:/home/node/.n8n configuration, all your data, workflows, and credentials are saved in
-      the n8n_data folder, so everything will be right where you left it when you start it again.
+**The Solution: "The Expert Stack"**
+We have deployed the official, multi-container `postiz-docker-compose` stack. This is the only stable, known-good configuration. It runs a full microservices architecture.
 
-   2. Automatic Updates: Your docker-compose.yml is set to use image: n8nio/n8n:latest. This means it
-      will use the "latest" version of the n8n image that exists on your computer, but it will not
-      automatically download a newer version from the internet each time you start it.
+- **Location:** `content-factory-stack/postiz-stable/`
+- **Access URL:** `http://localhost:4007`
+- **Key Components:**
+    - `postiz`: The main application container.
+    - `postiz-postgres`: Dedicated database for Postiz.
+    - `postiz-redis`: Dedicated cache for Postiz.
+    - `temporal`: The critical workflow engine required by Postiz.
+    - `temporal-postgresql`: A separate, dedicated database *just for Temporal*.
+    - `temporal-elasticsearch`: Search index for Temporal.
 
-  To update n8n to the newest version, you should first run this command:
+**Management Commands (MUST be run from the `postiz-stable` directory):**
+
+- **To Start Postiz:**
+  ```bash
+  cd ~/content-factory-stack/postiz-stable
+  docker-compose up -d
+  ```
+
+- **To Stop Postiz:**
+  ```bash
+  cd ~/content-factory-stack/postiz-stable
+  docker-compose down
+  ```
+**IMPORTANT:** Do NOT attempt to simplify this stack or use the single-container image. The current setup is the result of extensive troubleshooting and is the only reliable path.
+
+---
+
+### 2. n8n: The Workflow Engine
+
+n8n is running in a separate, simplified Docker container managed by the `docker-compose.yml` in the project root.
+
+- **Location:** `content-factory-stack/`
+- **Access URL:** `http://localhost:8080`
+- **Data:** All workflows and credentials are saved in the `n8n_data` folder, which is essential to back up.
+
+**Management Commands (run from the project root):**
+- **To Start n8n:**
+  ```bash
+  docker-compose up -d
+  ```
+
+- **To Stop n8n:**
+  ```bash
+  docker-compose stop
+  ```
+
+- **To Update n8n:**
+  ```bash
   docker-compose pull
+  docker-compose up -d --force-recreate
+  ```
 
-  This will download the latest image. After it's finished, run docker-compose up -d again. Docker
-  Compose is smart enough to see that the image has been updated and it will recreate your container
-  using the new version.
+---
 
-n8n API: (See .env file)
-
-user: (See .env file)
-
-pass: (See .env file)
+### Global Master Credentials
+For both **n8n** and **Postiz**, the centralized master credentials are:
+- **Email / Username:** `z4cmero@gmail.com`
+- **Password:** `Nuk@2202`
 
 
 
@@ -195,10 +237,3 @@ pass: (See .env file)
 
 
 ----> Official n8n documentation, where you can chat with an assistant there to get your answers: <BS>https://docs.n8n.io/integrations/builtin/cluster-nodes/sub-nodes/n8n-nodes-langchain.toolmcp/?utm_source=n8n_app&utm_medium=node_settings_modal-credential_link&utm_campaign=%40n8n%2Fn8n-nodes-langchain.mcpClientTool#related-resources
-
-
-
-
-
-
-

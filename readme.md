@@ -1,11 +1,39 @@
-http://localhost:8080/ --> correct address 
+# Content Factory Stack: Instructions
 
-when asking for general credentials(on browser side) on setting up new machines:
+## Running the Multiple Containers Stack
 
-user: admin
-pass: supersecretpassword
+This project uses a multi-container architecture to ensure stability and separation of concerns. You have two main applications: **Postiz** (Social Media Scheduler) and **n8n** (Workflow Automation).
 
+*(Note: The root `docker-compose.yml` has been surgically cleaned. All obsolete, conflicting database and redis containers previously clashing with Postiz have been removed. The stack now strictly uses `n8n` in the root and the full microservice stack in `postiz-stable`.)*
 
+### 1. Starting Postiz (Social Media Scheduler)
+Postiz runs as a microservices stack (PostgreSQL, Redis, Temporal, ElasticSearch). 
+To start it, open a terminal and run:
+```bash
+cd /home/zacmero/content-factory-stack/postiz-stable
+docker-compose up -d
+```
+- **Access Postiz:** `http://localhost:4007`
+- **To Stop Postiz:** `docker-compose down` (from the same directory)
+
+### 2. Starting n8n (Workflow Automation)
+n8n runs as its own service with a dedicated data volume.
+To start it, open a terminal and run:
+```bash
+cd /home/zacmero/content-factory-stack
+docker-compose up -d
+```
+- **Access n8n:** `http://localhost:8080`
+- **To Stop n8n:** `docker-compose stop`
+
+---
+
+### Global Master Credentials
+For both **n8n** and **Postiz**, the centralized master credentials are:
+- **Email / Username:** `z4cmero@gmail.com`
+- **Password:** `Nuk@2202`
+
+---
 
 ✦ Yes, your docker-compose.yml file is well-configured for regular use.
 

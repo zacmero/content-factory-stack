@@ -11,8 +11,8 @@ const mcpEnv = {
     ...process.env,
     N8N_API_URL: 'http://localhost:5678/api/v1',
     N8N_API_KEY: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2OTg0YTliYi1mMmM5LTRjMTUtYmY3NC1jZDVmZDVjYmQ1YWQiLCJpc3MiOiJuOG4iLCJhdWQiOiJwdWJsaWMtYXBpIiwiaWF0IjoxNzU5Nzk1MTg2fQ.7ui0fuFgZ0zm5xew5COKoLVbYDNl49G6Iy2M2IUtj-g',
-    N8N_WEBHOOK_USERNAME: 'admin',
-    N8N_WEBHOOK_PASSWORD: 'password'
+    N8N_WEBHOOK_USERNAME: 'z4cmero@gmail.com',
+    N8N_WEBHOOK_PASSWORD: 'Nuk@2202'
 };
 
 console.log('Starting MCP Wrapper...');
