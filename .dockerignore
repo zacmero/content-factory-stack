@@ -1,0 +1,19 @@
+# Security: Never copy secrets or environment variables into the Docker image
+.env
+.env.*
+docker-compose.yml
+
+# Databases and persistent data
+n8n_data/
+n8n_data_backup/
+postgres_data/
+content_factory/
+
+# Node modules and temporary files
+node_modules/
+npm-debug.log
+yarn-error.log
+
+# Git repository
+.git/
+.gitignore

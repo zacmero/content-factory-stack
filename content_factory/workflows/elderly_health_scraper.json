@@ -1,0 +1,212 @@
+{
+  "name": "Elderly Health Reposter (Pinterest & YouTube)",
+  "nodes": [
+    {
+      "parameters": {
+        "rule": {
+          "interval": [
+            {
+              "field": "hours",
+              "hoursInterval": 24
+            }
+          ]
+        }
+      },
+      "id": "e30f140d-d4a9-4fb6-af1b-8f3e5b30b42c",
+      "name": "Daily Trigger",
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1.2,
+      "position": [
+        200,
+        300
+      ]
+    },
+    {
+      "parameters": {
+        "url": "https://medlineplus.gov/feeds/topics/seniorshealth.xml",
+        "options": {}
+      },
+      "id": "7632bb06-6962-4309-8874-9b2f2d96c429",
+      "name": "Seniors Health RSS",
+      "type": "n8n-nodes-base.rssFeedRead",
+      "typeVersion": 1.2,
+      "position": [
+        420,
+        300
+      ]
+    },
+    {
+      "parameters": {
+        "maxItems": 1
+      },
+      "id": "dc8f1be4-59e5-4f40-aba8-b570d65b746f",
+      "name": "Get Latest Article",
+      "type": "n8n-nodes-base.limit",
+      "typeVersion": 1,
+      "position": [
+        640,
+        300
+      ]
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "=You are an expert copywriter for 'Sarah Nutri', a health and nutrition brand focusing on elderly care.\nRewrite the following news article into two formats:\n1. A highly engaging Pinterest Pin description (include SEO keywords, hashtags, and a call to action leading to a product/landing page).\n2. A script for a 30-second YouTube Short / Instagram Reel.\n\nOriginal Title: {{ $json.title }}\nOriginal Content: {{ $json.contentSnippet }}\nLink: {{ $json.link }}",
+        "batching": {}
+      },
+      "id": "d0c0a377-50a1-4228-a3f1-f096d2138b39",
+      "name": "AI Content Creator",
+      "type": "@n8n/n8n-nodes-langchain.chainLlm",
+      "typeVersion": 1.7,
+      "position": [
+        860,
+        300
+      ]
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "id": "90e71dcb-1025-4fc1-a1e6-237435f92275",
+      "name": "Google Gemini Chat Model",
+      "type": "@n8n/n8n-nodes-langchain.lmChatGoogleGemini",
+      "typeVersion": 1,
+      "position": [
+        860,
+        500
+      ],
+      "credentials": {
+        "googlePalmApi": {
+          "id": "ZYtHRqXd2R1ruL4K",
+          "name": "Google Gemini(PaLM) Api account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "2bc9837f-6de5-47d3-98af-48a5146c21a4",
+              "name": "GeneratedContent",
+              "value": "={{ $json.text }}",
+              "type": "string"
+            },
+            {
+              "id": "3b28f72a-0a2d-4234-921a-e7c6af948b88",
+              "name": "OriginalTitle",
+              "value": "={{ $('Get Latest Article').item.json.title }}",
+              "type": "string"
+            },
+            {
+              "id": "4c69811e-0a56-424a-95eb-e3d8f8e12015",
+              "name": "SourceLink",
+              "value": "={{ $('Get Latest Article').item.json.link }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "18f9104b-32a7-4786-bb21-2a6c8de1e220",
+      "name": "Format Output",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        1080,
+        300
+      ]
+    },
+    {
+      "parameters": {
+        "content": "=**New Content Ready to Post!**\n\n**Source:** {{ $json.OriginalTitle }}\n**Link:** {{ $json.SourceLink }}\n\n**AI Generated Captions & Script:**\n{{ $json.GeneratedContent }}\n\n*Review this content and post it via Postiz!*"
+      },
+      "id": "e98e72c8-89c5-41c4-90a4-b0a70ec8b7de",
+      "name": "Send to Discord / Approval",
+      "type": "n8n-nodes-base.discord",
+      "typeVersion": 2,
+      "position": [
+        1300,
+        300
+      ],
+      "credentials": {
+        "discordWebhookApi": {
+          "id": "7i15uQZ2xyb2Y3zH",
+          "name": "Discord Webhook account"
+        }
+      }
+    }
+  ],
+  "connections": {
+    "Daily Trigger": {
+      "main": [
+        [
+          {
+            "node": "Seniors Health RSS",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Seniors Health RSS": {
+      "main": [
+        [
+          {
+            "node": "Get Latest Article",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get Latest Article": {
+      "main": [
+        [
+          {
+            "node": "AI Content Creator",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "AI Content Creator": {
+      "main": [
+        [
+          {
+            "node": "Format Output",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Format Output": {
+      "main": [
+        [
+          {
+            "node": "Send to Discord / Approval",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Gemini Chat Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "AI Content Creator",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "pinData": {}
+}

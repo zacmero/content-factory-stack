@@ -1,0 +1,18 @@
+# Security: Never copy secrets or environment variables into the Docker image
+.env
+.env.*
+docker-compose.yaml
+
+# Persistent data volumes
+postgres-volume/
+postiz-redis-data/
+postiz-config/
+postiz-uploads/
+
+# Node modules and temporary files
+node_modules/
+npm-debug.log
+
+# Git repository
+.git/
+.gitignore
