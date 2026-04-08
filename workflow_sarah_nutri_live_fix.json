@@ -1,0 +1,403 @@
+{
+  "name": "Sarah Nutri - RSS -> Discord -> Postiz (LOOP)",
+  "nodes": [
+    {
+      "parameters": {
+        "httpMethod": "GET",
+        "path": "test-loop-trigger",
+        "options": {}
+      },
+      "id": "trigger-id",
+      "name": "Webhook Trigger",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 1,
+      "position": [-700, 0],
+      "webhookId": "6ea031bd-9a6f-4f14-be2d-66fdbcfc12cb"
+    },
+    {
+      "parameters": {
+        "url": "https://www.who.int/rss-feeds/news-english.xml"
+      },
+      "id": "rss-id",
+      "name": "RSS Health News",
+      "type": "n8n-nodes-base.rssFeedRead",
+      "typeVersion": 1.2,
+      "position": [-500, 0]
+    },
+    {
+      "parameters": {
+        "maxItems": 1
+      },
+      "id": "limit-id",
+      "name": "Latest Article",
+      "type": "n8n-nodes-base.limit",
+      "typeVersion": 1,
+      "position": [-300, 0]
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "a1",
+              "name": "instruction",
+              "value": "={{ `Summarize this health news into a punchy Pinterest post for seniors. Include 5 hashtags. News: ${$json.title} - ${$json.contentSnippet}` }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "set-initial",
+      "name": "Set Initial Prompt",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [-100, 0]
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "={{ `You are an expert social media manager for Sarah Nutri. ${$json.instruction}` }}"
+      },
+      "id": "rewrite-id",
+      "name": "Gemini: Rewrite",
+      "type": "@n8n/n8n-nodes-langchain.chainLlm",
+      "typeVersion": 1.4,
+      "position": [100, 0]
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "id": "model-id",
+      "name": "Gemini Model",
+      "type": "@n8n/n8n-nodes-langchain.lmChatGoogleGemini",
+      "typeVersion": 1,
+      "position": [0, 200],
+      "credentials": {
+        "googlePalmApi": {
+          "id": "ZYtHRqXd2R1ruL4K"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "={{ `Nano Banana 2.0: Create a detailed photorealistic AI image prompt of a healthy elderly person enjoying life based on this text: ${$json.text}` }}"
+      },
+      "id": "nano-id",
+      "name": "Nano Banana AI",
+      "type": "@n8n/n8n-nodes-langchain.chainLlm",
+      "typeVersion": 1.4,
+      "position": [300, 0]
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "id": "model-id-2",
+      "name": "Gemini Model 2",
+      "type": "@n8n/n8n-nodes-langchain.lmChatGoogleGemini",
+      "typeVersion": 1,
+      "position": [200, 200],
+      "credentials": {
+        "googlePalmApi": {
+          "id": "ZYtHRqXd2R1ruL4K"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "approval-message",
+              "name": "discordMessage",
+              "value": "={{ `Sarah Nutri approval request\n\nSource title:\n${$node[\"Latest Article\"].json.title || \"Untitled\"}\n\nSource URL:\n${$node[\"Latest Article\"].json.link || \"\"}\n\nPost preview:\n${($node[\"Gemini: Rewrite\"].json.text || \"\").substring(0, 550)}${($node[\"Gemini: Rewrite\"].json.text || \"\").length > 550 ? \"...\" : \"\"}\n\nImage prompt preview:\n${($json.text || \"\").substring(0, 350)}${($json.text || \"\").length > 350 ? \"...\" : \"\"}\n\nApprove:\n<${$execution.resumeUrl}&approved=true>\n\nReject:\n<${$execution.resumeUrl}&approved=false&feedback=Needs+revision>\n\nCustom reject feedback:\nCopy this URL, replace YOUR_FEEDBACK, then open it:\n<${$execution.resumeUrl}&approved=false&feedback=YOUR_FEEDBACK>` }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "set-approval",
+      "name": "Prepare Approval Message",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [500, 0]
+    },
+    {
+      "parameters": {
+        "authentication": "webhook",
+        "content": "={{ $json.discordMessage }}",
+        "options": {}
+      },
+      "id": "discord-id",
+      "name": "Discord Notify",
+      "type": "n8n-nodes-base.discord",
+      "typeVersion": 2,
+      "position": [700, 0],
+      "credentials": {
+        "discordWebhookApi": {
+          "id": "7i15uQZ2xyb2Y3zH"
+        }
+      },
+      "webhookId": "22b9c018-1f86-4c68-a7d0-0f460e5aca19"
+    },
+    {
+      "parameters": {
+        "resume": "webhook",
+        "options": {
+          "ignoreBots": true,
+          "respondWith": "text",
+          "responseBody": "Feedback received. Returning to workflow."
+        }
+      },
+      "id": "wait-id",
+      "name": "Wait Approval",
+      "type": "n8n-nodes-base.wait",
+      "typeVersion": 1.1,
+      "position": [900, 0],
+      "webhookId": "4dbf5dfd-3501-4890-b61d-1714058b0c05"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict"
+          },
+          "conditions": [
+            {
+              "id": "c1",
+              "leftValue": "={{ ($json.query.approved || '').toString().toLowerCase() }}",
+              "rightValue": "true",
+              "operator": {
+                "type": "string",
+                "operation": "equals"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "id": "if-id",
+      "name": "If Approved?",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [1100, 0]
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "a2",
+              "name": "instruction",
+              "value": "={{ `The user rejected the previous draft with this feedback: \"${$json.query.feedback || 'Needs revision'}\". Rewrite the social post so it addresses that feedback while keeping the Sarah Nutri tone for seniors. Previous draft: ${($node[\"Gemini: Rewrite\"].json.text || '').substring(0, 700)}` }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "set-loop",
+      "name": "Set Loop Prompt",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [1100, -200]
+    },
+    {
+      "parameters": {
+        "url": "http://postiz:5000/api/posts",
+        "method": "POST",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Content-Type",
+              "value": "application/json"
+            }
+          ]
+        },
+        "sendBody": true,
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "content",
+              "value": "={{ $node['Gemini: Rewrite'].json.text }}"
+            }
+          ]
+        }
+      },
+      "id": "postiz-id",
+      "name": "Post to Postiz",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.1,
+      "position": [1300, 0],
+      "credentials": {
+        "httpBearerAuth": {
+          "id": "PQBPODFShCWLqouN"
+        }
+      }
+    }
+  ],
+  "connections": {
+    "Webhook Trigger": {
+      "main": [
+        [
+          {
+            "node": "RSS Health News",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "RSS Health News": {
+      "main": [
+        [
+          {
+            "node": "Latest Article",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Latest Article": {
+      "main": [
+        [
+          {
+            "node": "Set Initial Prompt",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Set Initial Prompt": {
+      "main": [
+        [
+          {
+            "node": "Gemini: Rewrite",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Gemini Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "Gemini: Rewrite",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Gemini: Rewrite": {
+      "main": [
+        [
+          {
+            "node": "Nano Banana AI",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Gemini Model 2": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "Nano Banana AI",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Nano Banana AI": {
+      "main": [
+        [
+          {
+            "node": "Prepare Approval Message",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Prepare Approval Message": {
+      "main": [
+        [
+          {
+            "node": "Discord Notify",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Discord Notify": {
+      "main": [
+        [
+          {
+            "node": "Wait Approval",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Wait Approval": {
+      "main": [
+        [
+          {
+            "node": "If Approved?",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If Approved?": {
+      "main": [
+        [
+          {
+            "node": "Post to Postiz",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Set Loop Prompt",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Set Loop Prompt": {
+      "main": [
+        [
+          {
+            "node": "Gemini: Rewrite",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "settings": {
+    "callerPolicy": "workflowsFromSameOwner",
+    "availableInMCP": false
+  }
+}

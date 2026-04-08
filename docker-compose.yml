@@ -24,3 +24,5 @@ services:
     volumes:
       - ./n8n_data:/home/node/.n8n
       - ./content_factory:/files
+    extra_hosts:
+      - "host.docker.internal:host-gateway"

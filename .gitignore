@@ -1,5 +1,6 @@
 .env
-n8n_data/
+.codex/
+n8n_dataa/
 n8n_data_backup/
 node_modules/
 n8n-mcp-server/node_modules/
