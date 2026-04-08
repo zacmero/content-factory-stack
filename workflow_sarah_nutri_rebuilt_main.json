@@ -1,0 +1,651 @@
+{
+  "name": "Sarah Nutri - RSS -> Discord -> Postiz (LOOP)",
+  "nodes": [
+    {
+      "parameters": {
+        "httpMethod": "GET",
+        "path": "sarah-nutri-run",
+        "responseMode": "lastNode",
+        "responseData": "firstEntryJson",
+        "options": {}
+      },
+      "id": "api-trigger",
+      "name": "API Trigger",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 1,
+      "position": [
+        -900,
+        -180
+      ],
+      "webhookId": "sarah-nutri-run"
+    },
+    {
+      "parameters": {},
+      "id": "manual-trigger",
+      "name": "Manual Trigger",
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [
+        -900,
+        0
+      ]
+    },
+    {
+      "parameters": {
+        "url": "https://www.who.int/rss-feeds/news-english.xml",
+        "options": {}
+      },
+      "id": "rss-id",
+      "name": "RSS Health News",
+      "type": "n8n-nodes-base.rssFeedRead",
+      "typeVersion": 1.2,
+      "position": [
+        -700,
+        0
+      ]
+    },
+    {
+      "parameters": {
+        "maxItems": 1,
+        "keep": "firstItems"
+      },
+      "id": "limit-id",
+      "name": "Latest Article",
+      "type": "n8n-nodes-base.limit",
+      "typeVersion": 1,
+      "position": [
+        -500,
+        0
+      ]
+    },
+    {
+      "parameters": {
+        "url": "={{ $json.link }}",
+        "options": {
+          "response": {
+            "response": {
+              "responseFormat": "text"
+            }
+          }
+        }
+      },
+      "id": "fetch-source-page",
+      "name": "Fetch Source Page",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.1,
+      "position": [
+        -400,
+        0
+      ]
+    },
+    {
+      "parameters": {
+        "extractionValues": {
+          "values": [
+            {
+              "key": "sourceImageUrl",
+              "cssSelector": "meta[property=\"og:image\"]",
+              "returnValue": "attribute",
+              "attribute": "content"
+            },
+            {
+              "key": "sourceVideoUrl",
+              "cssSelector": "meta[property=\"og:video\"]",
+              "returnValue": "attribute",
+              "attribute": "content"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "extract-source-media",
+      "name": "Extract Source Media",
+      "type": "n8n-nodes-base.htmlExtract",
+      "typeVersion": 1,
+      "position": [
+        -300,
+        0
+      ]
+    },
+    {
+      "parameters": {
+        "mode": "manual",
+        "duplicateItem": false,
+        "assignments": {
+          "assignments": [
+            {
+              "id": "source-title",
+              "name": "sourceTitle",
+              "value": "={{ $node[\"Latest Article\"].json.title || '' }}",
+              "type": "string"
+            },
+            {
+              "id": "source-link",
+              "name": "sourceLink",
+              "value": "={{ $node[\"Latest Article\"].json.link || '' }}",
+              "type": "string"
+            },
+            {
+              "id": "source-snippet",
+              "name": "sourceSnippet",
+              "value": "={{ $node[\"Latest Article\"].json.contentSnippet || '' }}",
+              "type": "string"
+            },
+            {
+              "id": "source-image",
+              "name": "sourceImageUrl",
+              "value": "={{ $node[\"Extract Source Media\"].json.sourceImageUrl || '' }}",
+              "type": "string"
+            },
+            {
+              "id": "source-video",
+              "name": "sourceVideoUrl",
+              "value": "={{ $node[\"Extract Source Media\"].json.sourceVideoUrl || '' }}",
+              "type": "string"
+            },
+            {
+              "id": "instruction",
+              "name": "instruction",
+              "value": "={{ `Write a concise Sarah Nutri social media post for adults and seniors based on this article. Keep it practical, warm, clear, and ready to approve. Include 3 to 5 relevant hashtags. Article: ${$node[\"Latest Article\"].json.title || ''} - ${$node[\"Latest Article\"].json.contentSnippet || ''}` }}",
+              "type": "string"
+            }
+          ]
+        },
+        "includeOtherFields": true,
+        "options": {}
+      },
+      "id": "build-context",
+      "name": "Build Draft Context",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        -300,
+        0
+      ]
+    },
+    {
+      "parameters": {
+        "notice": "",
+        "promptType": "define",
+        "text": "={{ `You are an expert social media manager for Sarah Nutri. ${$json.instruction}` }}",
+        "hasOutputParser": false,
+        "needsFallback": false,
+        "messages": {}
+      },
+      "id": "rewrite-id",
+      "name": "Gemini: Rewrite",
+      "type": "@n8n/n8n-nodes-langchain.chainLlm",
+      "typeVersion": 1.4,
+      "position": [
+        -100,
+        0
+      ]
+    },
+    {
+      "parameters": {
+        "notice": "",
+        "modelName": "models/gemini-2.5-flash",
+        "options": {}
+      },
+      "id": "model-id",
+      "name": "Gemini Model",
+      "type": "@n8n/n8n-nodes-langchain.lmChatGoogleGemini",
+      "typeVersion": 1,
+      "position": [
+        -200,
+        200
+      ],
+      "credentials": {
+        "googlePalmApi": {
+          "id": "ZYtHRqXd2R1ruL4K",
+          "name": "Google Gemini(PaLM) Api account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "notice": "",
+        "promptType": "define",
+        "text": "={{ `Create a detailed photorealistic social media image prompt for adults and seniors based on this post. Describe the subject, scene, lighting, mood, framing, and realism. Do not mention the model name. Do not mention bananas unless the text explicitly requires bananas. Post text: ${$json.text}` }}",
+        "hasOutputParser": false,
+        "needsFallback": false,
+        "messages": {}
+      },
+      "id": "nano-id",
+      "name": "Nano Banana AI",
+      "type": "@n8n/n8n-nodes-langchain.chainLlm",
+      "typeVersion": 1.4,
+      "position": [
+        100,
+        0
+      ]
+    },
+    {
+      "parameters": {
+        "notice": "",
+        "modelName": "models/gemini-2.5-flash",
+        "options": {}
+      },
+      "id": "model-id-2",
+      "name": "Gemini Model 2",
+      "type": "@n8n/n8n-nodes-langchain.lmChatGoogleGemini",
+      "typeVersion": 1,
+      "position": [
+        0,
+        200
+      ],
+      "credentials": {
+        "googlePalmApi": {
+          "id": "ZYtHRqXd2R1ruL4K",
+          "name": "Google Gemini(PaLM) Api account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "mode": "manual",
+        "duplicateItem": false,
+        "assignments": {
+          "assignments": [
+            {
+              "id": "draft-title",
+              "name": "sourceTitle",
+              "value": "={{ $node[\"Build Draft Context\"].json.sourceTitle }}",
+              "type": "string"
+            },
+            {
+              "id": "draft-link",
+              "name": "sourceLink",
+              "value": "={{ $node[\"Build Draft Context\"].json.sourceLink }}",
+              "type": "string"
+            },
+            {
+              "id": "draft-snippet",
+              "name": "sourceSnippet",
+              "value": "={{ $node[\"Build Draft Context\"].json.sourceSnippet }}",
+              "type": "string"
+            },
+            {
+              "id": "draft-image",
+              "name": "sourceImageUrl",
+              "value": "={{ $node[\"Build Draft Context\"].json.sourceImageUrl || '' }}",
+              "type": "string"
+            },
+            {
+              "id": "draft-video",
+              "name": "sourceVideoUrl",
+              "value": "={{ $node[\"Build Draft Context\"].json.sourceVideoUrl || '' }}",
+              "type": "string"
+            },
+            {
+              "id": "post-text",
+              "name": "postText",
+              "value": "={{ $node[\"Gemini: Rewrite\"].json.text }}",
+              "type": "string"
+            },
+            {
+              "id": "image-prompt",
+              "name": "imagePrompt",
+              "value": "={{ $node[\"Nano Banana AI\"].json.text || \"\" }}",
+              "type": "string"
+            },
+            {
+              "id": "generated-media-id",
+              "name": "generatedMediaId",
+              "value": "={{ $node[\"Upload Generated Image\"].json.id || \"\" }}",
+              "type": "string"
+            },
+            {
+              "id": "generated-media-path",
+              "name": "generatedMediaPath",
+              "value": "={{ $node[\"Upload Generated Image\"].json.path || \"\" }}",
+              "type": "string"
+            },
+            {
+              "id": "generated-media-url",
+              "name": "generatedMediaUrl",
+              "value": "={{ $node[\"Upload Generated Image\"].json.path || \"\" }}",
+              "type": "string"
+            },
+            {
+              "id": "generated-media-name",
+              "name": "generatedMediaName",
+              "value": "={{ $node[\"Upload Generated Image\"].json.name || \"\" }}",
+              "type": "string"
+            }
+          ]
+        },
+        "includeOtherFields": false,
+        "options": {}
+      },
+      "id": "assemble-draft",
+      "name": "Assemble Draft",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        980,
+        0
+      ]
+    },
+    {
+      "parameters": {
+        "mode": "manual",
+        "duplicateItem": false,
+        "assignments": {
+          "assignments": [
+            {
+              "id": "approval-message",
+              "name": "discordMessage",
+              "value": "={{ `Sarah Nutri approval request\\n\\nSource title:\\n${$json.sourceTitle || \"Untitled\"}\\n\\nSource link:\\n${$json.sourceLink || \"\"}\\n\\nSource media preview:\\n${$json.sourceVideoUrl || $json.sourceImageUrl || \"No source media preview available\"}\\n\\nAI image fallback:\\n${$json.generatedMediaPath || \"AI image generation unavailable\"}\\n\\nDraft post:\\n${($json.postText || \"\").substring(0, 900)}${($json.postText || \"\").length > 900 ? \"...\" : \"\"}\\n\\nImage prompt:\\n${($json.imagePrompt || \"\").substring(0, 350)}${($json.imagePrompt || \"\").length > 350 ? \"...\" : \"\"}\\n\\nReview page:\\n<http://192.168.1.59:8080/webhook/sarah-nutri-review?executionId=${$execution.id}>` }}",
+              "type": "string"
+            }
+          ]
+        },
+        "includeOtherFields": true,
+        "options": {}
+      },
+      "id": "prepare-approval",
+      "name": "Prepare Approval Message",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        1180,
+        0
+      ]
+    },
+    {
+      "parameters": {
+        "authentication": "webhook",
+        "operation": "sendLegacy",
+        "content": "={{ $json.discordMessage }}",
+        "options": {},
+        "embeds": {},
+        "files": {}
+      },
+      "id": "discord-id",
+      "name": "Discord Notify",
+      "type": "n8n-nodes-base.discord",
+      "typeVersion": 2,
+      "position": [
+        1380,
+        0
+      ],
+      "credentials": {
+        "discordWebhookApi": {
+          "id": "7i15uQZ2xyb2Y3zH",
+          "name": "Discord Webhook account"
+        }
+      },
+      "webhookId": "sarah-discord-main"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-image:generateContent",
+        "authentication": "predefinedCredentialType",
+        "nodeCredentialType": "googlePalmApi",
+        "sendHeaders": true,
+        "specifyHeaders": "keypair",
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Content-Type",
+              "value": "application/json"
+            }
+          ]
+        },
+        "sendBody": true,
+        "contentType": "json",
+        "specifyBody": "json",
+        "jsonBody": "={{ JSON.stringify({ contents: [{ parts: [{ text: `Create a photorealistic vertical 4:5 social media image. No text overlay. Follow this prompt closely: ${$json.text}` }] }] }) }}",
+        "options": {}
+      },
+      "id": "nano-image-http-id",
+      "name": "Generate Nano Banana Image",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.1,
+      "position": [
+        320,
+        0
+      ],
+      "credentials": {
+        "googlePalmApi": {
+          "id": "ZYtHRqXd2R1ruL4K",
+          "name": "Google Gemini(PaLM) Api account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsCode": "const candidate = $json.candidates?.[0];\nconst imagePart = candidate?.content?.parts?.find((part) => part.inlineData?.data);\nif (!imagePart) {\n  throw new Error('No inline image data returned by Gemini');\n}\nconst mimeType = imagePart.inlineData.mimeType || 'image/png';\nconst extension = (mimeType.split('/')[1] || 'png').split(';')[0];\nreturn [{\n  json: { mimeType, extension },\n  binary: {\n    image: {\n      data: imagePart.inlineData.data,\n      mimeType,\n      fileName: `generated.${extension}`\n    }\n  }\n}];"
+      },
+      "id": "nano-image-binary-id",
+      "name": "Build Generated Image Binary",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        540,
+        0
+      ]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "http://192.168.1.59:4007/api/public/v1/upload",
+        "authentication": "none",
+        "sendHeaders": true,
+        "specifyHeaders": "keypair",
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Authorization",
+              "value": "66809b7288bee402dcf00e1eb8d33b26567844a576f3684a5b1f72aa3d0e97b5"
+            }
+          ]
+        },
+        "sendBody": true,
+        "contentType": "multipart-form-data",
+        "bodyParameters": {
+          "parameters": [
+            {
+              "parameterType": "formBinaryData",
+              "name": "file",
+              "inputDataFieldName": "image"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "nano-image-upload-id",
+      "name": "Upload Generated Image",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.1,
+      "position": [
+        760,
+        0
+      ]
+    }
+  ],
+  "connections": {
+    "Manual Trigger": {
+      "main": [
+        [
+          {
+            "node": "RSS Health News",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "RSS Health News": {
+      "main": [
+        [
+          {
+            "node": "Latest Article",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Latest Article": {
+      "main": [
+        [
+          {
+            "node": "Fetch Source Page",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Fetch Source Page": {
+      "main": [
+        [
+          {
+            "node": "Extract Source Media",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Extract Source Media": {
+      "main": [
+        [
+          {
+            "node": "Build Draft Context",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Build Draft Context": {
+      "main": [
+        [
+          {
+            "node": "Gemini: Rewrite",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Gemini Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "Gemini: Rewrite",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Gemini: Rewrite": {
+      "main": [
+        [
+          {
+            "node": "Nano Banana AI",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Gemini Model 2": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "Nano Banana AI",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Nano Banana AI": {
+      "main": [
+        [
+          {
+            "node": "Generate Nano Banana Image",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Assemble Draft": {
+      "main": [
+        [
+          {
+            "node": "Prepare Approval Message",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Prepare Approval Message": {
+      "main": [
+        [
+          {
+            "node": "Discord Notify",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Generate Nano Banana Image": {
+      "main": [
+        [
+          {
+            "node": "Build Generated Image Binary",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Build Generated Image Binary": {
+      "main": [
+        [
+          {
+            "node": "Upload Generated Image",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Upload Generated Image": {
+      "main": [
+        [
+          {
+            "node": "Assemble Draft",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "API Trigger": {
+      "main": [
+        [
+          {
+            "node": "RSS Health News",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "settings": {
+    "callerPolicy": "workflowsFromSameOwner",
+    "availableInMCP": false
+  }
+}

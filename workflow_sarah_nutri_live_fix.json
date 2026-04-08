@@ -2,17 +2,12 @@
   "name": "Sarah Nutri - RSS -> Discord -> Postiz (LOOP)",
   "nodes": [
     {
-      "parameters": {
-        "httpMethod": "GET",
-        "path": "test-loop-trigger",
-        "options": {}
-      },
+      "parameters": {},
       "id": "trigger-id",
-      "name": "Webhook Trigger",
-      "type": "n8n-nodes-base.webhook",
+      "name": "Manual Trigger",
+      "type": "n8n-nodes-base.manualTrigger",
       "typeVersion": 1,
-      "position": [-700, 0],
-      "webhookId": "6ea031bd-9a6f-4f14-be2d-66fdbcfc12cb"
+      "position": [-700, 0]
     },
     {
       "parameters": {
@@ -41,7 +36,7 @@
             {
               "id": "a1",
               "name": "instruction",
-              "value": "={{ `Summarize this health news into a punchy Pinterest post for seniors. Include 5 hashtags. News: ${$json.title} - ${$json.contentSnippet}` }}",
+              "value": "={{ `Write a concise Sarah Nutri social media post for adults and seniors based on this article. Keep it practical, warm, and clear. Include 3 to 5 relevant hashtags. Article: ${$json.title} - ${$json.contentSnippet}` }}",
               "type": "string"
             }
           ]
@@ -113,7 +108,7 @@
             {
               "id": "approval-message",
               "name": "discordMessage",
-              "value": "={{ `Sarah Nutri approval request\n\nSource title:\n${$node[\"Latest Article\"].json.title || \"Untitled\"}\n\nSource URL:\n${$node[\"Latest Article\"].json.link || \"\"}\n\nPost preview:\n${($node[\"Gemini: Rewrite\"].json.text || \"\").substring(0, 550)}${($node[\"Gemini: Rewrite\"].json.text || \"\").length > 550 ? \"...\" : \"\"}\n\nImage prompt preview:\n${($json.text || \"\").substring(0, 350)}${($json.text || \"\").length > 350 ? \"...\" : \"\"}\n\nApprove:\n<${$execution.resumeUrl}&approved=true>\n\nReject:\n<${$execution.resumeUrl}&approved=false&feedback=Needs+revision>\n\nCustom reject feedback:\nCopy this URL, replace YOUR_FEEDBACK, then open it:\n<${$execution.resumeUrl}&approved=false&feedback=YOUR_FEEDBACK>` }}",
+              "value": "={{ `Sarah Nutri approval request\n\nSource title:\n${$node[\"Latest Article\"].json.title || \"Untitled\"}\n\nSource link for preview:\n${$node[\"Latest Article\"].json.link || \"\"}\n\nDraft post:\n${($node[\"Gemini: Rewrite\"].json.text || \"\").substring(0, 650)}${($node[\"Gemini: Rewrite\"].json.text || \"\").length > 650 ? \"...\" : \"\"}\n\nImage prompt:\n${($json.text || \"\").substring(0, 400)}${($json.text || \"\").length > 400 ? \"...\" : \"\"}\n\nApprove:\n<${$execution.resumeUrl}&approved=true>\n\nReject:\n<${$execution.resumeUrl}&approved=false&feedback=Needs+revision>\n\nCustom reject feedback:\nReplace FEEDBACK_HERE in this URL, then open it:\n<${$execution.resumeUrl}&approved=false&feedback=FEEDBACK_HERE>` }}",
               "type": "string"
             }
           ]
@@ -196,7 +191,7 @@
             {
               "id": "a2",
               "name": "instruction",
-              "value": "={{ `The user rejected the previous draft with this feedback: \"${$json.query.feedback || 'Needs revision'}\". Rewrite the social post so it addresses that feedback while keeping the Sarah Nutri tone for seniors. Previous draft: ${($node[\"Gemini: Rewrite\"].json.text || '').substring(0, 700)}` }}",
+              "value": "={{ `The user rejected the previous Sarah Nutri draft with this feedback: \"${$json.query.feedback || 'Needs revision'}\". Rewrite the post so it addresses that feedback while staying concise, practical, warm, and senior-friendly. Previous draft: ${($node[\"Gemini: Rewrite\"].json.text || '').substring(0, 700)}` }}",
               "type": "string"
             }
           ]
@@ -211,11 +206,17 @@
     },
     {
       "parameters": {
-        "url": "http://postiz:5000/api/posts",
+        "url": "http://host.docker.internal:4007/api/public/v1/posts",
         "method": "POST",
+        "authentication": "none",
         "sendHeaders": true,
+        "specifyHeaders": "keypair",
         "headerParameters": {
           "parameters": [
+            {
+              "name": "Authorization",
+              "value": "66809b7288bee402dcf00e1eb8d33b26567844a576f3684a5b1f72aa3d0e97b5"
+            },
             {
               "name": "Content-Type",
               "value": "application/json"
@@ -223,29 +224,19 @@
           ]
         },
         "sendBody": true,
-        "bodyParameters": {
-          "parameters": [
-            {
-              "name": "content",
-              "value": "={{ $node['Gemini: Rewrite'].json.text }}"
-            }
-          ]
-        }
+        "contentType": "json",
+        "specifyBody": "json",
+        "jsonBody": "={{ JSON.stringify({ type: 'draft', shortLink: false, date: $now.toISOString(), tags: [], posts: [{ integration: { id: 'cmnp9dbkr0003lm7pipaj2hwb' }, value: [{ content: $node['Gemini: Rewrite'].json.text, image: [] }], settings: { __type: 'youtube', title: ($node['Latest Article'].json.title || 'Sarah Nutri Draft').substring(0, 95), type: 'private', tags: [] } }] }) }}"
       },
       "id": "postiz-id",
-      "name": "Post to Postiz",
+      "name": "Create Postiz Draft",
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 4.1,
-      "position": [1300, 0],
-      "credentials": {
-        "httpBearerAuth": {
-          "id": "PQBPODFShCWLqouN"
-        }
-      }
+      "position": [1300, 0]
     }
   ],
   "connections": {
-    "Webhook Trigger": {
+    "Manual Trigger": {
       "main": [
         [
           {
@@ -370,7 +361,7 @@
       "main": [
         [
           {
-            "node": "Post to Postiz",
+            "node": "Create Postiz Draft",
             "type": "main",
             "index": 0
           }
