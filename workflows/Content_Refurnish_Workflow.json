@@ -1,0 +1,128 @@
+{
+  "name": "Content Refurnish (Scrape, Rewrite, Approve)",
+  "nodes": [
+    {
+      "parameters": {},
+      "id": "trigger-node-2",
+      "name": "Manual Trigger",
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [0, 0]
+    },
+    {
+      "parameters": {
+        "url": "https://example-reference-blog.com/post-to-copy",
+        "method": "GET"
+      },
+      "id": "http-scrape",
+      "name": "Scrape Reference Page",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.1,
+      "position": [200, 0]
+    },
+    {
+      "parameters": {
+        "extractionValues": {
+          "values": [
+            { "key": "content", "cssSelector": "article, .content, main, body", "returnValue": "text" }
+          ]
+        }
+      },
+      "id": "html-extract",
+      "name": "Extract Text",
+      "type": "n8n-nodes-base.htmlExtract",
+      "typeVersion": 1,
+      "position": [400, 0]
+    },
+    {
+      "parameters": {
+        "model": "gemini-1.5-flash",
+        "prompt": "={{ 'You are an expert social media manager for the Sarah Nutri brand. Rewrite the following scraped content to fit our niche and brand voice. Make it engaging, actionable, and add 3 relevant hashtags. Original Content: ' + $json.content }}"
+      },
+      "id": "ai-rewrite-gen",
+      "name": "Gemini: Rewrite Content",
+      "type": "n8n-nodes-base.googleGemini",
+      "typeVersion": 1,
+      "position": [600, 0]
+    },
+    {
+      "parameters": {
+        "model": "gemini-1.5-flash",
+        "prompt": "={{ 'You are Nano Banana 2.0, an expert visual prompt engineer. Based on this rewritten text, write a detailed, visually descriptive prompt for an AI image generator (like Midjourney or DALL-E): ' + $json.text }}"
+      },
+      "id": "nano-banana-prompt-2",
+      "name": "Nano Banana 2.0 (Prompt Gen)",
+      "type": "n8n-nodes-base.googleGemini",
+      "typeVersion": 1,
+      "position": [800, 0]
+    },
+    {
+      "parameters": {
+        "url": "https://api.openai.com/v1/images/generations",
+        "method": "POST",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "sendBody": true,
+        "bodyParameters": {
+          "parameters": [
+            { "name": "prompt", "value": "={{ $json.text }}" },
+            { "name": "n", "value": "1" },
+            { "name": "size", "value": "1024x1024" }
+          ]
+        }
+      },
+      "id": "image-gen-2",
+      "name": "Generate Image (DALL-E fallback)",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.1,
+      "position": [1000, 0]
+    },
+    {
+      "parameters": {
+        "webhookId": "approval-webhook-2",
+        "respondWith": "text",
+        "responseBody": "Content Approved! Sending to Postiz."
+      },
+      "id": "wait-approval-2",
+      "name": "Wait for Discord Approval",
+      "type": "n8n-nodes-base.wait",
+      "typeVersion": 1.1,
+      "position": [1200, 0]
+    },
+    {
+      "parameters": {
+        "url": "http://postiz:5000/api/posts",
+        "method": "POST",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            { "name": "Authorization", "value": "Bearer 66809b7288bee402dcf00e1eb8d33b26567844a576f3684a5b1f72aa3d0e97b5" },
+            { "name": "Content-Type", "value": "application/json" }
+          ]
+        },
+        "sendBody": true,
+        "bodyParameters": {
+          "parameters": [
+            { "name": "content", "value": "={{ $('Gemini: Rewrite Content').item.json.text }}" }
+          ]
+        }
+      },
+      "id": "postiz-publish-2",
+      "name": "Publish to Postiz",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.1,
+      "position": [1400, 0]
+    }
+  ],
+  "connections": {
+    "Manual Trigger": { "main": [ [ { "node": "Scrape Reference Page", "type": "main", "index": 0 } ] ] },
+    "Scrape Reference Page": { "main": [ [ { "node": "Extract Text", "type": "main", "index": 0 } ] ] },
+    "Extract Text": { "main": [ [ { "node": "Gemini: Rewrite Content", "type": "main", "index": 0 } ] ] },
+    "Gemini: Rewrite Content": { "main": [ [ { "node": "Nano Banana 2.0 (Prompt Gen)", "type": "main", "index": 0 } ] ] },
+    "Nano Banana 2.0 (Prompt Gen)": { "main": [ [ { "node": "Generate Image (DALL-E fallback)", "type": "main", "index": 0 } ] ] },
+    "Generate Image (DALL-E fallback)": { "main": [ [ { "node": "Wait for Discord Approval", "type": "main", "index": 0 } ] ] },
+    "Wait for Discord Approval": { "main": [ [ { "node": "Publish to Postiz", "type": "main", "index": 0 } ] ] }
+  },
+  "active": false,
+  "settings": {}
+}

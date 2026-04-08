@@ -1,0 +1,159 @@
+{
+  "name": "Sarah Nutri - PRODUCTION FLOW",
+  "nodes": [
+    {
+      "parameters": {
+        "httpMethod": "GET",
+        "path": "trigger",
+        "options": {}
+      },
+      "id": "trigger-webhook",
+      "name": "Trigger Webhook",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 1,
+      "position": [-500, 0],
+      "webhookId": "sarah-trigger"
+    },
+    {
+      "parameters": {
+        "url": "https://www.healthline.com/nutrition/balanced-diet-for-seniors",
+        "method": "GET"
+      },
+      "id": "scrape-node",
+      "name": "Scrape Site",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.1,
+      "position": [-300, 0]
+    },
+    {
+      "parameters": {
+        "extractionValues": {
+          "values": [
+            {
+              "key": "content",
+              "cssSelector": "body",
+              "returnValue": "text"
+            }
+          ]
+        }
+      },
+      "id": "extract-node",
+      "name": "Extract Content",
+      "type": "n8n-nodes-base.htmlExtract",
+      "typeVersion": 1,
+      "position": [-100, 0]
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "={{ 'Rewrite for Sarah Nutri brand (elderly health). Punchy Pinterest post with 5 hashtags. Context: ' + $json.content.substring(0, 2000) }}"
+      },
+      "id": "rewrite-chain",
+      "name": "Rewrite AI",
+      "type": "@n8n/n8n-nodes-langchain.chainLlm",
+      "typeVersion": 1.4,
+      "position": [100, 0]
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "id": "gemini-model-id",
+      "name": "Gemini Model",
+      "type": "@n8n/n8n-nodes-langchain.lmChatGoogleGemini",
+      "typeVersion": 1,
+      "position": [0, 200],
+      "credentials": {
+        "googlePalmApi": { "id": "ZYtHRqXd2R1ruL4K" }
+      }
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "={{ 'Nano Banana 2.0: Create an AI image prompt for this content: ' + $json.text }}"
+      },
+      "id": "nano-chain",
+      "name": "Nano Banana AI",
+      "type": "@n8n/n8n-nodes-langchain.chainLlm",
+      "typeVersion": 1.4,
+      "position": [300, 0]
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "id": "gemini-model-id-2",
+      "name": "Gemini Model 2",
+      "type": "@n8n/n8n-nodes-langchain.lmChatGoogleGemini",
+      "typeVersion": 1,
+      "position": [200, 200],
+      "credentials": {
+        "googlePalmApi": { "id": "ZYtHRqXd2R1ruL4K" }
+      }
+    },
+    {
+      "parameters": {
+        "authentication": "webhook",
+        "content": "={{ 'PROPOSAL:\n' + $('Rewrite AI').item.json.text + '\n\nIMG PROMPT:\n' + $json.text + '\n\nAPPROVE: http://localhost:8080/rest/webhooks/approve' }}",
+        "options": {}
+      },
+      "id": "discord-node",
+      "name": "Discord Notify",
+      "type": "n8n-nodes-base.discord",
+      "typeVersion": 2,
+      "position": [500, 0],
+      "credentials": {
+        "discordWebhookApi": { "id": "7i15uQZ2xyb2Y3zH" }
+      }
+    },
+    {
+      "parameters": {
+        "resumeId": "resume-post"
+      },
+      "id": "wait-node",
+      "name": "Wait Approval",
+      "type": "n8n-nodes-base.wait",
+      "typeVersion": 1.1,
+      "position": [700, 0],
+      "webhookId": "resume-webhook-id"
+    },
+    {
+      "parameters": {
+        "url": "http://postiz:5000/api/posts",
+        "method": "POST",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            { "name": "Content-Type", "value": "application/json" }
+          ]
+        },
+        "sendBody": true,
+        "bodyParameters": {
+          "parameters": [
+            { "name": "content", "value": "={{ $('Rewrite AI').item.json.text }}" }
+          ]
+        }
+      },
+      "id": "postiz-node",
+      "name": "Post to Postiz",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.1,
+      "position": [900, 0],
+      "credentials": {
+        "httpBearerAuth": { "id": "PQBPODFShCWLqouN" }
+      }
+    }
+  ],
+  "connections": {
+    "Trigger Webhook": { "main": [ [ { "node": "Scrape Site", "type": "main", "index": 0 } ] ] },
+    "Scrape Site": { "main": [ [ { "node": "Extract Content", "type": "main", "index": 0 } ] ] },
+    "Extract Content": { "main": [ [ { "node": "Rewrite AI", "type": "main", "index": 0 } ] ] },
+    "Gemini Model": { "ai_languageModel": [ [ { "node": "Rewrite AI", "type": "ai_languageModel", "index": 0 } ] ] },
+    "Rewrite AI": { "main": [ [ { "node": "Nano Banana AI", "type": "main", "index": 0 } ] ] },
+    "Gemini Model 2": { "ai_languageModel": [ [ { "node": "Nano Banana AI", "type": "ai_languageModel", "index": 0 } ] ] },
+    "Nano Banana AI": { "main": [ [ { "node": "Discord Notify", "type": "main", "index": 0 } ] ] },
+    "Discord Notify": { "main": [ [ { "node": "Wait Approval", "type": "main", "index": 0 } ] ] },
+    "Wait Approval": { "main": [ [ { "node": "Post to Postiz", "type": "main", "index": 0 } ] ] }
+  },
+  "settings": {}
+}

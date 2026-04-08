@@ -1,0 +1,153 @@
+{
+  "name": "Sarah Nutri - Content Refurnish (FIXED 2.0)",
+  "nodes": [
+    {
+      "parameters": {},
+      "id": "node-trigger",
+      "name": "Manual Trigger",
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [-700, 0]
+    },
+    {
+      "parameters": {
+        "url": "https://www.healthline.com/nutrition/balanced-diet-for-seniors",
+        "method": "GET"
+      },
+      "id": "node-scrape",
+      "name": "Scrape Healthline",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.1,
+      "position": [-500, 0]
+    },
+    {
+      "parameters": {
+        "extractionValues": {
+          "values": [
+            {
+              "key": "content",
+              "cssSelector": "body",
+              "returnValue": "text"
+            }
+          ]
+        }
+      },
+      "id": "node-extract",
+      "name": "Extract Text",
+      "type": "n8n-nodes-base.htmlExtract",
+      "typeVersion": 1,
+      "position": [-300, 0]
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "={{ 'You are an expert social media manager for Sarah Nutri. Rewrite this article into a punchy, viral Pinterest post for elderly health. Use 5 hashtags. Source: ' + $json.content.substring(0, 3000) }}"
+      },
+      "id": "node-chain-rewrite",
+      "name": "Gemini Chain: Rewrite",
+      "type": "@n8n/n8n-nodes-langchain.chainLlm",
+      "typeVersion": 1.4,
+      "position": [-100, 0]
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "id": "node-gemini-1",
+      "name": "Google Gemini Chat Model",
+      "type": "@n8n/n8n-nodes-langchain.lmChatGoogleGemini",
+      "typeVersion": 1,
+      "position": [-200, 200],
+      "credentials": {
+        "googlePalmApi": { "id": "ZYtHRqXd2R1ruL4K" }
+      }
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "={{ 'You are Nano Banana 2.0. Create a photorealistic AI image prompt of a happy senior couple eating healthy. Focus on lighting and vibrancy. Content: ' + $json.text }}"
+      },
+      "id": "node-chain-nano",
+      "name": "Gemini Chain: Nano Banana",
+      "type": "@n8n/n8n-nodes-langchain.chainLlm",
+      "typeVersion": 1.4,
+      "position": [200, 0]
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "id": "node-gemini-2",
+      "name": "Google Gemini Chat Model 2",
+      "type": "@n8n/n8n-nodes-langchain.lmChatGoogleGemini",
+      "typeVersion": 1,
+      "position": [100, 200],
+      "credentials": {
+        "googlePalmApi": { "id": "ZYtHRqXd2R1ruL4K" }
+      }
+    },
+    {
+      "parameters": {
+        "authentication": "webhook",
+        "content": "={{ 'NEW CONTENT PROPOSAL:\n\n' + $('Gemini Chain: Rewrite').item.json.text + '\n\nIMAGE PROMPT:\n' + $json.text + '\n\nAPPROVE: http://localhost:8080/rest/webhooks/approve' }}",
+        "options": {}
+      },
+      "id": "node-discord",
+      "name": "Send to Discord",
+      "type": "n8n-nodes-base.discord",
+      "typeVersion": 2,
+      "position": [400, 0],
+      "credentials": {
+        "discordWebhookApi": { "id": "7i15uQZ2xyb2Y3zH" }
+      }
+    },
+    {
+      "parameters": {
+        "resumeId": "approval-resume"
+      },
+      "id": "node-wait",
+      "name": "Wait for Approval",
+      "type": "n8n-nodes-base.wait",
+      "typeVersion": 1.1,
+      "position": [600, 0]
+    },
+    {
+      "parameters": {
+        "url": "http://postiz:5000/api/posts",
+        "method": "POST",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            { "name": "Content-Type", "value": "application/json" }
+          ]
+        },
+        "sendBody": true,
+        "bodyParameters": {
+          "parameters": [
+            { "name": "content", "value": "={{ $('Gemini Chain: Rewrite').item.json.text }}" }
+          ]
+        }
+      },
+      "id": "node-postiz",
+      "name": "Post to Postiz",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.1,
+      "position": [800, 0],
+      "credentials": {
+        "httpBearerAuth": { "id": "PQBPODFShCWLqouN" }
+      }
+    }
+  ],
+  "connections": {
+    "Manual Trigger": { "main": [ [ { "node": "Scrape Healthline", "type": "main", "index": 0 } ] ] },
+    "Scrape Healthline": { "main": [ [ { "node": "Extract Text", "type": "main", "index": 0 } ] ] },
+    "Extract Text": { "main": [ [ { "node": "Gemini Chain: Rewrite", "type": "main", "index": 0 } ] ] },
+    "Google Gemini Chat Model": { "ai_languageModel": [ [ { "node": "Gemini Chain: Rewrite", "type": "ai_languageModel", "index": 0 } ] ] },
+    "Gemini Chain: Rewrite": { "main": [ [ { "node": "Gemini Chain: Nano Banana", "type": "main", "index": 0 } ] ] },
+    "Google Gemini Chat Model 2": { "ai_languageModel": [ [ { "node": "Gemini Chain: Nano Banana", "type": "ai_languageModel", "index": 0 } ] ] },
+    "Gemini Chain: Nano Banana": { "main": [ [ { "node": "Send to Discord", "type": "main", "index": 0 } ] ] },
+    "Send to Discord": { "main": [ [ { "node": "Wait for Approval", "type": "main", "index": 0 } ] ] },
+    "Wait for Approval": { "main": [ [ { "node": "Post to Postiz", "type": "main", "index": 0 } ] ] }
+  },
+  "settings": {}
+}

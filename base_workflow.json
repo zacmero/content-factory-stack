@@ -1,0 +1,103 @@
+{
+  "name": "Base Creation & Nano Banana 2.0 (With Approval)",
+  "nodes": [
+    {
+      "parameters": {},
+      "id": "trigger-node",
+      "name": "Manual Trigger",
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [0, 0]
+    },
+    {
+      "parameters": {
+        "model": "gemini-1.5-flash",
+        "prompt": "Write a highly engaging social media post about healthy eating. Include 3 relevant hashtags."
+      },
+      "id": "ai-text-gen",
+      "name": "Gemini: Write Content",
+      "type": "n8n-nodes-base.googleGemini",
+      "typeVersion": 1,
+      "position": [200, 0]
+    },
+    {
+      "parameters": {
+        "model": "gemini-1.5-flash",
+        "prompt": "={{ 'You are Nano Banana 2.0, an expert visual prompt engineer. Based on this text, write a detailed, visually descriptive prompt for an AI image generator (like Midjourney or DALL-E): ' + $json.text }}"
+      },
+      "id": "nano-banana-prompt",
+      "name": "Nano Banana 2.0 (Prompt Gen)",
+      "type": "n8n-nodes-base.googleGemini",
+      "typeVersion": 1,
+      "position": [400, 0]
+    },
+    {
+      "parameters": {
+        "url": "https://api.openai.com/v1/images/generations",
+        "method": "POST",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "sendBody": true,
+        "bodyParameters": {
+          "parameters": [
+            { "name": "prompt", "value": "={{ $json.text }}" },
+            { "name": "n", "value": "1" },
+            { "name": "size", "value": "1024x1024" }
+          ]
+        }
+      },
+      "id": "image-gen",
+      "name": "Generate Image (DALL-E fallback)",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.1,
+      "position": [600, 0],
+      "notesInFlow": true,
+      "notes": "Replace this node with the specific Image Generator you prefer (DALL-E, Stability, etc.)"
+    },
+    {
+      "parameters": {
+        "webhookId": "approval-webhook",
+        "respondWith": "text",
+        "responseBody": "Content Approved! Sending to Postiz."
+      },
+      "id": "wait-approval",
+      "name": "Wait for Discord Approval",
+      "type": "n8n-nodes-base.wait",
+      "typeVersion": 1.1,
+      "position": [800, 0]
+    },
+    {
+      "parameters": {
+        "url": "http://postiz:5000/api/posts",
+        "method": "POST",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            { "name": "Authorization", "value": "Bearer 66809b7288bee402dcf00e1eb8d33b26567844a576f3684a5b1f72aa3d0e97b5" },
+            { "name": "Content-Type", "value": "application/json" }
+          ]
+        },
+        "sendBody": true,
+        "bodyParameters": {
+          "parameters": [
+            { "name": "content", "value": "={{ $('Gemini: Write Content').item.json.text }}" }
+          ]
+        }
+      },
+      "id": "postiz-publish",
+      "name": "Publish to Postiz",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.1,
+      "position": [1000, 0]
+    }
+  ],
+  "connections": {
+    "Manual Trigger": { "main": [ [ { "node": "Gemini: Write Content", "type": "main", "index": 0 } ] ] },
+    "Gemini: Write Content": { "main": [ [ { "node": "Nano Banana 2.0 (Prompt Gen)", "type": "main", "index": 0 } ] ] },
+    "Nano Banana 2.0 (Prompt Gen)": { "main": [ [ { "node": "Generate Image (DALL-E fallback)", "type": "main", "index": 0 } ] ] },
+    "Generate Image (DALL-E fallback)": { "main": [ [ { "node": "Wait for Discord Approval", "type": "main", "index": 0 } ] ] },
+    "Wait for Discord Approval": { "main": [ [ { "node": "Publish to Postiz", "type": "main", "index": 0 } ] ] }
+  },
+  "active": false,
+  "settings": {}
+}

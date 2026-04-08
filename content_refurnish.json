@@ -1,0 +1,129 @@
+{
+  "name": "Sarah Nutri - Content Refurnish (FIXED)",
+  "nodes": [
+    {
+      "parameters": {},
+      "id": "node-trigger",
+      "name": "Manual Trigger",
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [-500, 0]
+    },
+    {
+      "parameters": {
+        "url": "https://www.who.int/news-room/fact-sheets/detail/ageing-and-health",
+        "method": "GET"
+      },
+      "id": "node-scrape",
+      "name": "Scrape WHO",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.1,
+      "position": [-300, 0]
+    },
+    {
+      "parameters": {
+        "extractionValues": {
+          "values": [
+            {
+              "key": "content",
+              "cssSelector": "body",
+              "returnValue": "text"
+            }
+          ]
+        }
+      },
+      "id": "node-extract",
+      "name": "Extract Text",
+      "type": "n8n-nodes-base.htmlExtract",
+      "typeVersion": 1,
+      "position": [-100, 0]
+    },
+    {
+      "parameters": {
+        "model": "gemini-1.5-flash",
+        "prompt": "={{ 'You are an expert nutritionist for the Sarah Nutri brand. Rewrite the following content to be a viral Pinterest post for the elderly health niche. Be encouraging and use 5 hashtags. Original: ' + $json.content.substring(0, 2000) }}"
+      },
+      "id": "node-rewrite",
+      "name": "Gemini: Rewrite",
+      "type": "n8n-nodes-base.googleGemini",
+      "typeVersion": 1,
+      "position": [100, 0],
+      "credentials": {
+        "googlePalmApi": { "id": "ZYtHRqXd2R1ruL4K" }
+      }
+    },
+    {
+      "parameters": {
+        "model": "gemini-1.5-flash",
+        "prompt": "={{ 'You are Nano Banana 2.0, an expert visual prompt engineer. Create a detailed prompt for an AI image generator depicting a healthy elderly person enjoying life. Text: ' + $json.text }}"
+      },
+      "id": "node-nano",
+      "name": "Nano Banana 2.0",
+      "type": "n8n-nodes-base.googleGemini",
+      "typeVersion": 1,
+      "position": [300, 0],
+      "credentials": {
+        "googlePalmApi": { "id": "ZYtHRqXd2R1ruL4K" }
+      }
+    },
+    {
+      "parameters": {
+        "content": "={{ 'NEW CONTENT PROPOSAL:\n\n' + $('Gemini: Rewrite').item.json.text + '\n\nIMAGE PROMPT:\n' + $json.text + '\n\nAPPROVE: http://localhost:8080/rest/webhooks/approve' }}"
+      },
+      "id": "node-discord",
+      "name": "Send to Discord",
+      "type": "n8n-nodes-base.discord",
+      "typeVersion": 2,
+      "position": [500, 0],
+      "credentials": {
+        "discordBotApi": { "id": "I80j6uTrSeQoL1d4" }
+      }
+    },
+    {
+      "parameters": {
+        "resumeId": "approval-resume"
+      },
+      "id": "node-wait",
+      "name": "Wait for Approval",
+      "type": "n8n-nodes-base.wait",
+      "typeVersion": 1.1,
+      "position": [700, 0]
+    },
+    {
+      "parameters": {
+        "url": "http://postiz:5000/api/posts",
+        "method": "POST",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            { "name": "Content-Type", "value": "application/json" }
+          ]
+        },
+        "sendBody": true,
+        "bodyParameters": {
+          "parameters": [
+            { "name": "content", "value": "={{ $('Gemini: Rewrite').item.json.text }}" }
+          ]
+        }
+      },
+      "id": "node-postiz",
+      "name": "Post to Postiz",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.1,
+      "position": [900, 0],
+      "credentials": {
+        "httpBearerAuth": { "id": "PQBPODFShCWLqouN" }
+      }
+    }
+  ],
+  "connections": {
+    "Manual Trigger": { "main": [ [ { "node": "Scrape WHO", "type": "main", "index": 0 } ] ] },
+    "Scrape WHO": { "main": [ [ { "node": "Extract Text", "type": "main", "index": 0 } ] ] },
+    "Extract Text": { "main": [ [ { "node": "Gemini: Rewrite", "type": "main", "index": 0 } ] ] },
+    "Gemini: Rewrite": { "main": [ [ { "node": "Nano Banana 2.0", "type": "main", "index": 0 } ] ] },
+    "Nano Banana 2.0": { "main": [ [ { "node": "Send to Discord", "type": "main", "index": 0 } ] ] },
+    "Send to Discord": { "main": [ [ { "node": "Wait for Approval", "type": "main", "index": 0 } ] ] },
+    "Wait for Approval": { "main": [ [ { "node": "Post to Postiz", "type": "main", "index": 0 } ] ] }
+  },
+  "settings": {}
+}

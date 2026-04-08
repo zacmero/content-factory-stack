@@ -1,0 +1,84 @@
+{
+  "name": "Sarah Nutri - MINIMAL TEST",
+  "nodes": [
+    {
+      "parameters": {
+        "httpMethod": "GET",
+        "path": "test",
+        "options": {}
+      },
+      "id": "trigger-id",
+      "name": "Trigger",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 1,
+      "position": [0, 0],
+      "webhookId": "test-webhook"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "1",
+              "name": "content",
+              "value": "Dummy content about elderly health and nutrition.",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "set-id",
+      "name": "Set Content",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [200, 0]
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "Rewrite: {{ $json.content }}"
+      },
+      "id": "rewrite-id",
+      "name": "Rewrite",
+      "type": "@n8n/n8n-nodes-langchain.chainLlm",
+      "typeVersion": 1.4,
+      "position": [400, 0]
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "id": "model-id",
+      "name": "Gemini Model",
+      "type": "@n8n/n8n-nodes-langchain.lmChatGoogleGemini",
+      "typeVersion": 1,
+      "position": [300, 200],
+      "credentials": {
+        "googlePalmApi": { "id": "ZYtHRqXd2R1ruL4K" }
+      }
+    },
+    {
+      "parameters": {
+        "authentication": "webhook",
+        "content": "TEST PROPOSAL: {{ $json.text }}\n\nAPPROVE: http://localhost:8080/webhook/approve",
+        "options": {}
+      },
+      "id": "discord-id",
+      "name": "Discord",
+      "type": "n8n-nodes-base.discord",
+      "typeVersion": 2,
+      "position": [600, 0],
+      "credentials": {
+        "discordWebhookApi": { "id": "7i15uQZ2xyb2Y3zH" }
+      }
+    }
+  ],
+  "connections": {
+    "Trigger": { "main": [ [ { "node": "Set Content", "type": "main", "index": 0 } ] ] },
+    "Set Content": { "main": [ [ { "node": "Rewrite", "type": "main", "index": 0 } ] ] },
+    "Gemini Model": { "ai_languageModel": [ [ { "node": "Rewrite", "type": "ai_languageModel", "index": 0 } ] ] },
+    "Rewrite": { "main": [ [ { "node": "Discord", "type": "main", "index": 0 } ] ] }
+  },
+  "settings": {}
+}
