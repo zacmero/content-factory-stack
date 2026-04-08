@@ -288,30 +288,6 @@
               "name": "imagePrompt",
               "value": "={{ $node[\"Nano Banana AI\"].json.text || \"\" }}",
               "type": "string"
-            },
-            {
-              "id": "generated-media-id",
-              "name": "generatedMediaId",
-              "value": "={{ $node[\"Upload Generated Image\"].json.id || \"\" }}",
-              "type": "string"
-            },
-            {
-              "id": "generated-media-path",
-              "name": "generatedMediaPath",
-              "value": "={{ $node[\"Upload Generated Image\"].json.path || \"\" }}",
-              "type": "string"
-            },
-            {
-              "id": "generated-media-url",
-              "name": "generatedMediaUrl",
-              "value": "={{ $node[\"Upload Generated Image\"].json.path || \"\" }}",
-              "type": "string"
-            },
-            {
-              "id": "generated-media-name",
-              "name": "generatedMediaName",
-              "value": "={{ $node[\"Upload Generated Image\"].json.name || \"\" }}",
-              "type": "string"
             }
           ]
         },
@@ -336,7 +312,7 @@
             {
               "id": "approval-message",
               "name": "discordMessage",
-              "value": "={{ `Sarah Nutri approval request\\n\\nSource title:\\n${$json.sourceTitle || \"Untitled\"}\\n\\nSource link:\\n${$json.sourceLink || \"\"}\\n\\nSource media preview:\\n${$json.sourceVideoUrl || $json.sourceImageUrl || \"No source media preview available\"}\\n\\nAI image fallback:\\n${$json.generatedMediaPath || \"AI image generation unavailable\"}\\n\\nDraft post:\\n${($json.postText || \"\").substring(0, 900)}${($json.postText || \"\").length > 900 ? \"...\" : \"\"}\\n\\nImage prompt:\\n${($json.imagePrompt || \"\").substring(0, 350)}${($json.imagePrompt || \"\").length > 350 ? \"...\" : \"\"}\\n\\nReview page:\\n<http://192.168.1.59:8080/webhook/sarah-nutri-review?executionId=${$execution.id}>` }}",
+              "value": "={{ `Sarah Nutri approval request\\n\\nSource title:\\n${$json.sourceTitle || \"Untitled\"}\\n\\nSource link:\\n${$json.sourceLink || \"\"}\\n\\nSource media preview:\\n${$json.sourceVideoUrl || $json.sourceImageUrl || \"No source media preview available\"}\\n\\nDraft post:\\n${($json.postText || \"\").substring(0, 900)}${($json.postText || \"\").length > 900 ? \"...\" : \"\"}\\n\\nImage prompt:\\n${($json.imagePrompt || \"\").substring(0, 350)}${($json.imagePrompt || \"\").length > 350 ? \"...\" : \"\"}\\n\\nReview page:\\n<http://192.168.1.59:8080/webhook/sarah-nutri-review?executionId=${$execution.id}>` }}",
               "type": "string"
             }
           ]
@@ -377,93 +353,6 @@
         }
       },
       "webhookId": "sarah-discord-main"
-    },
-    {
-      "parameters": {
-        "method": "POST",
-        "url": "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-image:generateContent",
-        "authentication": "predefinedCredentialType",
-        "nodeCredentialType": "googlePalmApi",
-        "sendHeaders": true,
-        "specifyHeaders": "keypair",
-        "headerParameters": {
-          "parameters": [
-            {
-              "name": "Content-Type",
-              "value": "application/json"
-            }
-          ]
-        },
-        "sendBody": true,
-        "contentType": "json",
-        "specifyBody": "json",
-        "jsonBody": "={{ JSON.stringify({ contents: [{ parts: [{ text: `Create a photorealistic vertical 4:5 social media image. No text overlay. Follow this prompt closely: ${$json.text}` }] }] }) }}",
-        "options": {}
-      },
-      "id": "nano-image-http-id",
-      "name": "Generate Nano Banana Image",
-      "type": "n8n-nodes-base.httpRequest",
-      "typeVersion": 4.1,
-      "position": [
-        320,
-        0
-      ],
-      "credentials": {
-        "googlePalmApi": {
-          "id": "ZYtHRqXd2R1ruL4K",
-          "name": "Google Gemini(PaLM) Api account"
-        }
-      }
-    },
-    {
-      "parameters": {
-        "jsCode": "const candidate = $json.candidates?.[0];\nconst imagePart = candidate?.content?.parts?.find((part) => part.inlineData?.data);\nif (!imagePart) {\n  throw new Error('No inline image data returned by Gemini');\n}\nconst mimeType = imagePart.inlineData.mimeType || 'image/png';\nconst extension = (mimeType.split('/')[1] || 'png').split(';')[0];\nreturn [{\n  json: { mimeType, extension },\n  binary: {\n    image: {\n      data: imagePart.inlineData.data,\n      mimeType,\n      fileName: `generated.${extension}`\n    }\n  }\n}];"
-      },
-      "id": "nano-image-binary-id",
-      "name": "Build Generated Image Binary",
-      "type": "n8n-nodes-base.code",
-      "typeVersion": 2,
-      "position": [
-        540,
-        0
-      ]
-    },
-    {
-      "parameters": {
-        "method": "POST",
-        "url": "http://192.168.1.59:4007/api/public/v1/upload",
-        "authentication": "none",
-        "sendHeaders": true,
-        "specifyHeaders": "keypair",
-        "headerParameters": {
-          "parameters": [
-            {
-              "name": "Authorization",
-              "value": "66809b7288bee402dcf00e1eb8d33b26567844a576f3684a5b1f72aa3d0e97b5"
-            }
-          ]
-        },
-        "sendBody": true,
-        "contentType": "multipart-form-data",
-        "bodyParameters": {
-          "parameters": [
-            {
-              "parameterType": "formBinaryData",
-              "name": "file",
-              "inputDataFieldName": "image"
-            }
-          ]
-        },
-        "options": {}
-      },
-      "id": "nano-image-upload-id",
-      "name": "Upload Generated Image",
-      "type": "n8n-nodes-base.httpRequest",
-      "typeVersion": 4.1,
-      "position": [
-        760,
-        0
-      ]
     }
   ],
   "connections": {
@@ -566,17 +455,6 @@
         ]
       ]
     },
-    "Nano Banana AI": {
-      "main": [
-        [
-          {
-            "node": "Generate Nano Banana Image",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
     "Assemble Draft": {
       "main": [
         [
@@ -599,44 +477,22 @@
         ]
       ]
     },
-    "Generate Nano Banana Image": {
-      "main": [
-        [
-          {
-            "node": "Build Generated Image Binary",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "Build Generated Image Binary": {
-      "main": [
-        [
-          {
-            "node": "Upload Generated Image",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "Upload Generated Image": {
-      "main": [
-        [
-          {
-            "node": "Assemble Draft",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
     "API Trigger": {
       "main": [
         [
           {
             "node": "RSS Health News",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Nano Banana AI": {
+      "main": [
+        [
+          {
+            "node": "Assemble Draft",
             "type": "main",
             "index": 0
           }

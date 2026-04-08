@@ -1,6 +1,8 @@
 .env
 .codex/
-n8n_dataa/
+n8n_data/database.sqlite*
+n8n_data/crash.journal
+n8n_data/n8nEventLog*.log
 n8n_data_backup/
 node_modules/
 n8n-mcp-server/node_modules/
