@@ -2,7 +2,7 @@ services:
   postiz:
     image: ghcr.io/gitroomhq/postiz-app:latest
     container_name: postiz
-    restart: always
+    restart: unless-stopped
     environment:
       # === Required Settings
       MAIN_URL: 'http://localhost:4007'
@@ -126,7 +126,7 @@ services:
   postiz-postgres:
     image: postgres:17-alpine
     container_name: postiz-postgres
-    restart: always
+    restart: unless-stopped
     environment:
       POSTGRES_PASSWORD: postiz-password
       POSTGRES_USER: postiz-user
@@ -143,7 +143,7 @@ services:
   postiz-redis:
     image: redis:7.2
     container_name: postiz-redis
-    restart: always
+    restart: unless-stopped
     healthcheck:
       test: redis-cli ping
       interval: 10s
