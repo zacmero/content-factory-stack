@@ -1,0 +1,840 @@
+{
+  "name": "Sarah Nutri - Video Approval Callback",
+  "nodes": [
+    {
+      "parameters": {
+        "httpMethod": "GET",
+        "path": "sarah-nutri-video-approval",
+        "responseMode": "lastNode",
+        "responseData": "firstEntryJson",
+        "options": {}
+      },
+      "id": "approval-webhook",
+      "name": "Approval Webhook",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 1,
+      "position": [
+        -1100,
+        0
+      ],
+      "webhookId": "sarah-nutri-video-approval"
+    },
+    {
+      "parameters": {
+        "curlImport": "",
+        "method": "GET",
+        "url": "={{ `http://localhost:5678/api/v1/executions/${$node[\"Approval Webhook\"].json.query.executionId}?includeData=true` }}",
+        "authentication": "none",
+        "provideSslCertificates": false,
+        "sendQuery": false,
+        "sendHeaders": true,
+        "specifyHeaders": "keypair",
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "X-N8N-API-KEY",
+              "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2OTg0YTliYi1mMmM5LTRjMTUtYmY3NC1jZDVmZDVjYmQ1YWQiLCJpc3MiOiJuOG4iLCJhdWQiOiJwdWJsaWMtYXBpIiwiaWF0IjoxNzU5Nzk1MTg2fQ.7ui0fuFgZ0zm5xew5COKoLVbYDNl49G6Iy2M2IUtj-g"
+            }
+          ]
+        },
+        "sendBody": false,
+        "options": {},
+        "infoMessage": ""
+      },
+      "id": "get-source-execution",
+      "name": "Get Source Execution",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.1,
+      "position": [
+        -900,
+        0
+      ]
+    },
+    {
+      "parameters": {
+        "mode": "manual",
+        "duplicateItem": false,
+        "assignments": {
+          "assignments": [
+            {
+              "id": "action",
+              "name": "action",
+              "value": "={{ ($node[\"Approval Webhook\"].json.query.action || \"\").toString().toLowerCase() }}",
+              "type": "string"
+            },
+            {
+              "id": "feedback",
+              "name": "feedback",
+              "value": "={{ $node[\"Approval Webhook\"].json.query.feedback || \"Needs revision\" }}",
+              "type": "string"
+            },
+            {
+              "id": "media-choice",
+              "name": "mediaChoice",
+              "value": "={{ ($node[\"Approval Webhook\"].json.query.mediaChoice || \"source\").toString().toLowerCase() }}",
+              "type": "string"
+            },
+            {
+              "id": "source-title",
+              "name": "sourceTitle",
+              "value": "={{ $json.data.resultData.runData[\"Assemble Draft\"][0].data.main[0][0].json.sourceTitle }}",
+              "type": "string"
+            },
+            {
+              "id": "source-link",
+              "name": "sourceLink",
+              "value": "={{ $json.data.resultData.runData[\"Assemble Draft\"][0].data.main[0][0].json.sourceLink }}",
+              "type": "string"
+            },
+            {
+              "id": "source-snippet",
+              "name": "sourceSnippet",
+              "value": "={{ $json.data.resultData.runData[\"Assemble Draft\"][0].data.main[0][0].json.sourceSnippet }}",
+              "type": "string"
+            },
+            {
+              "id": "post-text",
+              "name": "postText",
+              "value": "={{ $json.data.resultData.runData[\"Assemble Draft\"][0].data.main[0][0].json.postText }}",
+              "type": "string"
+            },
+            {
+              "id": "source-image",
+              "name": "sourceImageUrl",
+              "value": "={{ $json.data.resultData.runData[\"Assemble Draft\"][0].data.main[0][0].json.sourceImageUrl || '' }}",
+              "type": "string"
+            },
+            {
+              "id": "source-video",
+              "name": "sourceVideoUrl",
+              "value": "={{ $json.data.resultData.runData[\"Assemble Draft\"][0].data.main[0][0].json.sourceVideoUrl || '' }}",
+              "type": "string"
+            },
+            {
+              "id": "video-prompt",
+              "name": "videoPrompt",
+              "value": "={{ $json.data.resultData.runData[\"Assemble Draft\"][0].data.main[0][0].json.videoPrompt || \"\" }}",
+              "type": "string"
+            },
+            {
+              "id": "generated-media-id",
+              "name": "generatedMediaId",
+              "value": "={{ $json.data.resultData.runData[\"Assemble Draft\"][0].data.main[0][0].json.generatedMediaId || \"\" }}",
+              "type": "string"
+            },
+            {
+              "id": "generated-media-path",
+              "name": "generatedMediaPath",
+              "value": "={{ $json.data.resultData.runData[\"Assemble Draft\"][0].data.main[0][0].json.generatedMediaPath || \"\" }}",
+              "type": "string"
+            },
+            {
+              "id": "generated-media-url",
+              "name": "generatedMediaUrl",
+              "value": "={{ $json.data.resultData.runData[\"Assemble Draft\"][0].data.main[0][0].json.generatedMediaUrl || \"\" }}",
+              "type": "string"
+            },
+            {
+              "id": "generated-media-name",
+              "name": "generatedMediaName",
+              "value": "={{ $json.data.resultData.runData[\"Assemble Draft\"][0].data.main[0][0].json.generatedMediaName || \"\" }}",
+              "type": "string"
+            }
+          ]
+        },
+        "includeOtherFields": false,
+        "options": {}
+      },
+      "id": "extract-draft",
+      "name": "Extract Draft",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        -700,
+        0
+      ]
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict"
+          },
+          "conditions": [
+            {
+              "id": "approved-check",
+              "leftValue": "={{ $json.action }}",
+              "rightValue": "approve",
+              "operator": {
+                "type": "string",
+                "operation": "equals"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "id": "if-approved",
+      "name": "If Approved?",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        -500,
+        0
+      ]
+    },
+    {
+      "parameters": {
+        "mode": "manual",
+        "duplicateItem": false,
+        "assignments": {
+          "assignments": [
+            {
+              "id": "rev-title",
+              "name": "sourceTitle",
+              "value": "={{ $json.sourceTitle }}",
+              "type": "string"
+            },
+            {
+              "id": "rev-link",
+              "name": "sourceLink",
+              "value": "={{ $json.sourceLink }}",
+              "type": "string"
+            },
+            {
+              "id": "rev-snippet",
+              "name": "sourceSnippet",
+              "value": "={{ $json.sourceSnippet }}",
+              "type": "string"
+            },
+            {
+              "id": "rev-image",
+              "name": "sourceImageUrl",
+              "value": "={{ $json.sourceImageUrl || '' }}",
+              "type": "string"
+            },
+            {
+              "id": "rev-video",
+              "name": "sourceVideoUrl",
+              "value": "={{ $json.sourceVideoUrl || '' }}",
+              "type": "string"
+            },
+            {
+              "id": "rev-instruction",
+              "name": "instruction",
+              "value": "={{ `The user rejected the previous Sarah Nutri video draft with this feedback: \"${$json.feedback}\". Rewrite the post so it addresses that feedback while staying concise, practical, warm, senior-friendly, and aligned with a video-first workflow. Return only the final post copy, with no labels, no commentary, and no media prompt. Previous draft: ${($json.postText || \"\").substring(0, 700)}. Source video page: ${$json.sourceTitle} - ${$json.sourceSnippet}` }}",
+              "type": "string"
+            }
+          ]
+        },
+        "includeOtherFields": true,
+        "options": {}
+      },
+      "id": "build-revision-context",
+      "name": "Build Revision Context",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        -300,
+        -180
+      ]
+    },
+    {
+      "parameters": {
+        "notice": "",
+        "promptType": "define",
+        "text": "={{ `You are an expert social media manager for Sarah Nutri. ${$json.instruction} Return only the final post copy, with no labels, no commentary, no markdown headings, and no media prompt.` }}",
+        "hasOutputParser": false,
+        "needsFallback": false,
+        "messages": {}
+      },
+      "id": "rewrite-id",
+      "name": "Gemini: Rewrite",
+      "type": "@n8n/n8n-nodes-langchain.chainLlm",
+      "typeVersion": 1.4,
+      "position": [
+        -100,
+        -180
+      ]
+    },
+    {
+      "parameters": {
+        "jsCode": "const raw = String($json.text || '').replace(/\\r\\n/g, '\\n').trim();\n\nfunction stripPostArtifacts(input) {\n  let text = String(input || '').replace(/\\r\\n/g, '\\n').trim();\n  const markers = [\n    'Image Generation Prompt:',\n    'Image Prompt:',\n    'Video Prompt:',\n    'Prompt:',\n    '🖼️ **IMG PROMPT:**',\n    '🖼️ **Image Prompt:**',\n    '🎬 **VIDEO PROMPT:**',\n  ];\n  for (const marker of markers) {\n    const idx = text.toLowerCase().indexOf(marker.toLowerCase());\n    if (idx >= 0) {\n      text = text.slice(0, idx).trim();\n    }\n  }\n  const socialMatch = text.match(/(?:^|\\n)\\s*(?:\\*\\*)?Social Media Post(?:\\*\\*)?:\\s*([\\s\\S]*?)(?:\\n\\s*(?:\\*\\*)?(?:Image Generation Prompt|Video Prompt)(?:\\*\\*)?:|$)/i);\n  if (socialMatch) {\n    text = socialMatch[1].trim();\n  }\n  text = text.replace(/^---+\\s*$/gm, '').replace(/^\\s*(?:\\*\\*)?Social Media Post(?:\\*\\*)?:\\s*/i, '').replace(/\\n{3,}/g, '\\n\\n').trim();\n  return text;\n}\n\nconst text = stripPostArtifacts(raw);\nreturn [{ json: { ...$json, text } }];"
+      },
+      "id": "normalize-post-copy-callback",
+      "name": "Normalize Post Copy",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        0,
+        -180
+      ]
+    },
+    {
+      "parameters": {
+        "notice": "",
+        "modelName": "models/gemini-2.5-flash",
+        "options": {}
+      },
+      "id": "model-id",
+      "name": "Gemini Model",
+      "type": "@n8n/n8n-nodes-langchain.lmChatGoogleGemini",
+      "typeVersion": 1,
+      "position": [
+        -200,
+        20
+      ],
+      "credentials": {
+        "googlePalmApi": {
+          "id": "ZYtHRqXd2R1ruL4K",
+          "name": "Google Gemini(PaLM) Api account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "notice": "",
+        "promptType": "define",
+        "text": "={{ `Create a detailed photorealistic social video prompt for adults and seniors based on this post. Describe the subject, scene, pacing, camera motion, lighting, mood, framing, and realism. Keep the result ready for a Veo-style video generator. Post text: ${$json.text}` }}",
+        "hasOutputParser": false,
+        "needsFallback": false,
+        "messages": {}
+      },
+      "id": "nano-id",
+      "name": "Veo Video Generation",
+      "type": "@n8n/n8n-nodes-langchain.chainLlm",
+      "typeVersion": 1.4,
+      "position": [
+        100,
+        -180
+      ],
+      "disabled": true
+    },
+    {
+      "parameters": {
+        "notice": "",
+        "modelName": "models/gemini-2.5-flash",
+        "options": {}
+      },
+      "id": "model-id-2",
+      "name": "Gemini Model 2",
+      "type": "@n8n/n8n-nodes-langchain.lmChatGoogleGemini",
+      "typeVersion": 1,
+      "position": [
+        0,
+        20
+      ],
+      "credentials": {
+        "googlePalmApi": {
+          "id": "ZYtHRqXd2R1ruL4K",
+          "name": "Google Gemini(PaLM) Api account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "mode": "manual",
+        "duplicateItem": false,
+        "assignments": {
+          "assignments": [
+            {
+              "id": "draft-title",
+              "name": "sourceTitle",
+              "value": "={{ $node[\"Build Revision Context\"].json.sourceTitle }}",
+              "type": "string"
+            },
+            {
+              "id": "draft-link",
+              "name": "sourceLink",
+              "value": "={{ $node[\"Build Revision Context\"].json.sourceLink }}",
+              "type": "string"
+            },
+            {
+              "id": "draft-snippet",
+              "name": "sourceSnippet",
+              "value": "={{ $node[\"Build Revision Context\"].json.sourceSnippet }}",
+              "type": "string"
+            },
+            {
+              "id": "draft-image",
+              "name": "sourceImageUrl",
+              "value": "={{ $node[\"Build Revision Context\"].json.sourceImageUrl || '' }}",
+              "type": "string"
+            },
+            {
+              "id": "draft-video",
+              "name": "sourceVideoUrl",
+              "value": "={{ $node[\"Build Revision Context\"].json.sourceVideoUrl || '' }}",
+              "type": "string"
+            },
+            {
+              "id": "post-text",
+              "name": "postText",
+              "value": "={{ $node[\"Normalize Post Copy\"].json.text || $node[\"Gemini: Rewrite\"].json.text || \"\" }}",
+              "type": "string"
+            },
+            {
+              "id": "video-prompt",
+              "name": "videoPrompt",
+              "value": "={{ \"Veo prompt generation is inactive for now\" }}",
+              "type": "string"
+            },
+            {
+              "id": "generated-media-id",
+              "name": "generatedMediaId",
+              "value": "={{ \"\" }}",
+              "type": "string"
+            },
+            {
+              "id": "generated-media-path",
+              "name": "generatedMediaPath",
+              "value": "={{ \"\" }}",
+              "type": "string"
+            },
+            {
+              "id": "generated-media-url",
+              "name": "generatedMediaUrl",
+              "value": "={{ \"\" }}",
+              "type": "string"
+            },
+            {
+              "id": "generated-media-name",
+              "name": "generatedMediaName",
+              "value": "={{ \"\" }}",
+              "type": "string"
+            }
+          ]
+        },
+        "includeOtherFields": false,
+        "options": {}
+      },
+      "id": "assemble-draft",
+      "name": "Assemble Draft",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        980,
+        -180
+      ]
+    },
+    {
+      "parameters": {
+        "mode": "manual",
+        "duplicateItem": false,
+        "assignments": {
+          "assignments": [
+            {
+              "id": "approval-message",
+              "name": "discordMessage",
+              "value": "={{ `Sarah Nutri video approval request\n\nSource title:\n${$json.sourceTitle || \"Untitled\"}\n\nSource link:\n${$json.sourceLink || \"\"}\n\nSource media preview:\n${$json.sourceVideoUrl || $json.sourceImageUrl || \"No source media preview available\"}\n\nAI fallback preview:\n${$json.generatedMediaPath || \"Veo is inactive for now\"}\n\nDraft post:\n${($json.postText || \"\").substring(0, 900)}${($json.postText || \"\").length > 900 ? \"...\" : \"\"}\n\nVideo prompt:\n${($json.videoPrompt || \"\").substring(0, 350)}${($json.videoPrompt || \"\").length > 350 ? \"...\" : \"\"}\n\nReview page:\n<http://192.168.1.59:8080/webhook/sarah-nutri-video-review?executionId=${$execution.id}>` }}",
+              "type": "string"
+            }
+          ]
+        },
+        "includeOtherFields": true,
+        "options": {}
+      },
+      "id": "prepare-approval",
+      "name": "Prepare Approval Message",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        1180,
+        -180
+      ]
+    },
+    {
+      "parameters": {
+        "authentication": "webhook",
+        "operation": "sendLegacy",
+        "content": "={{ $json.discordMessage }}",
+        "options": {},
+        "embeds": {},
+        "files": {}
+      },
+      "id": "discord-id",
+      "name": "Discord Notify",
+      "type": "n8n-nodes-base.discord",
+      "typeVersion": 2,
+      "position": [
+        1380,
+        -180
+      ],
+      "credentials": {
+        "discordWebhookApi": {
+          "id": "7i15uQZ2xyb2Y3zH",
+          "name": "Discord Webhook account"
+        }
+      },
+      "webhookId": "sarah-discord-callback"
+    },
+    {
+      "parameters": {
+        "curlImport": "",
+        "method": "POST",
+        "url": "http://192.168.1.59:4007/api/public/v1/upload-from-url",
+        "authentication": "none",
+        "provideSslCertificates": false,
+        "sendQuery": false,
+        "sendHeaders": true,
+        "specifyHeaders": "keypair",
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Authorization",
+              "value": "66809b7288bee402dcf00e1eb8d33b26567844a576f3684a5b1f72aa3d0e97b5"
+            },
+            {
+              "name": "Content-Type",
+              "value": "application/json"
+            }
+          ]
+        },
+        "sendBody": true,
+        "contentType": "json",
+        "specifyBody": "json",
+        "jsonBody": "={{ JSON.stringify({ url: ($json.sourceVideoUrl || $json.sourceImageUrl || '') }) }}",
+        "options": {
+          "response": {
+            "response": {
+              "neverError": true
+            }
+          }
+        },
+        "infoMessage": ""
+      },
+      "id": "postiz-upload-id",
+      "name": "Upload Source Media",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.1,
+      "position": [
+        -300,
+        180
+      ]
+    },
+    {
+      "parameters": {
+        "curlImport": "",
+        "method": "GET",
+        "url": "http://192.168.1.59:4007/api/public/v1/integrations",
+        "authentication": "none",
+        "provideSslCertificates": false,
+        "sendQuery": false,
+        "sendHeaders": true,
+        "specifyHeaders": "keypair",
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Authorization",
+              "value": "66809b7288bee402dcf00e1eb8d33b26567844a576f3684a5b1f72aa3d0e97b5"
+            }
+          ]
+        },
+        "options": {},
+        "infoMessage": ""
+      },
+      "id": "postiz-integrations-id",
+      "name": "List Postiz Integrations",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.1,
+      "position": [
+        -180,
+        180
+      ]
+    },
+    {
+      "parameters": {
+        "jsCode": "const integrations = $input.all().map((item) => item.json).filter((item) => !item.disabled);\nconst sourceUpload = $node['Upload Source Media'].json || {};\nconst draft = $node['Extract Draft'].json;\nconst publicUploadBase = 'http://192.168.1.59:4007';\n\nfunction toPublicUploadUrl(input) {\n  const value = String(input || '').trim();\n  if (!value) return value;\n  return value\n    .replace(/^https?:\\/\\/localhost:4007/i, publicUploadBase)\n    .replace(/^https?:\\/\\/127\\.0\\.0\\.1:4007/i, publicUploadBase);\n}\n\nconst uploadedSourcePath = sourceUpload.path || draft.sourceVideoUrl || draft.sourceImageUrl || '';\nconst sourceMedia = [];\nif (uploadedSourcePath) {\n  sourceMedia.push({\n    id: sourceUpload.id || (draft.sourceVideoUrl ? 'source-video' : 'source-image'),\n    path: uploadedSourcePath,\n  });\n}\nconst generatedMedia = draft.generatedMediaId && draft.generatedMediaPath ? [{ id: draft.generatedMediaId, path: toPublicUploadUrl(draft.generatedMediaPath) }] : [];\nconst mediaChoice = (draft.mediaChoice || 'source').toLowerCase();\nconst useGenerated = mediaChoice === 'generated' && generatedMedia.length > 0;\nconst media = useGenerated ? generatedMedia : sourceMedia.length ? sourceMedia : generatedMedia;\nconst mediaSource = useGenerated ? 'generated' : sourceMedia.length ? 'source' : generatedMedia.length ? 'generated' : 'none';\nconst postText = cleanPostText(draft.postText || '');\nconst posts = [];\nconst postedTo = [];\nconst skipped = [];\n\nfunction stripPostArtifacts(input) {\n  let text = String(input || '').split('\\r\\n').join('\\n').trim();\n  const markers = [\n    'Image Generation Prompt:',\n    'Image Prompt:',\n    'Prompt:',\n    '🖼️ **IMG PROMPT:**',\n    '🖼️ **Image Prompt:**',\n  ];\n  for (const marker of markers) {\n    const idx = text.toLowerCase().indexOf(marker.toLowerCase());\n    if (idx >= 0) {\n      text = text.slice(0, idx).trim();\n    }\n  }\n\n  const lines = text.split('\\n').map((line) => line.trimRight());\n  const filtered = [];\n  let sawSocialLabel = false;\n  for (const line of lines) {\n    const normalized = line.trim().toLowerCase();\n    if (normalized === '---') continue;\n    if (normalized === 'social media post:' || normalized === '**social media post:**' || normalized === 'social media post' || normalized === '**social media post**:') {\n      sawSocialLabel = true;\n      continue;\n    }\n    if (normalized === 'image generation prompt:' || normalized === '**image generation prompt:**' || normalized === 'image prompt:' || normalized === '**image prompt:**' || normalized === 'prompt:' || normalized === '**img prompt:**') {\n      break;\n    }\n    filtered.push(line);\n  }\n\n  text = filtered.join('\\n').trim();\n  if (!text && sawSocialLabel) {\n    text = String(input || '').split('\\r\\n').join('\\n').trim();\n  }\n  while (text.includes('\\n\\n\\n')) text = text.split('\\n\\n\\n').join('\\n\\n');\n  return text.trim();\n}\n\nfunction cleanPostText(input) {\n  return stripPostArtifacts(input);\n}\n\nfor (const integration of integrations) {\n  const identifier = integration.identifier;\n\n  if (identifier === 'facebook') {\n    if (!media.length) {\n      skipped.push({ integration: identifier, reason: 'No image or video media available' });\n      continue;\n    }\n    posts.push({\n      integration: { id: integration.id },\n      value: [{ content: postText, image: media }],\n      settings: {\n        __type: 'facebook',\n        url: draft.sourceLink || '',\n      },\n    });\n    postedTo.push(identifier);\n    continue;\n  }\n\n  if (identifier === 'instagram' || identifier === 'instagram-standalone') {\n    if (!media.length) {\n      skipped.push({ integration: identifier, reason: 'No image or video media available' });\n      continue;\n    }\n    posts.push({\n      integration: { id: integration.id },\n      value: [{ content: postText, image: media }],\n      settings: {\n        __type: identifier,\n        post_type: 'post',\n        collaborators: [],\n      },\n    });\n    postedTo.push(identifier);\n    continue;\n  }\n\n\n  if (identifier === 'youtube') {\n    if (!draft.sourceVideoUrl) {\n      skipped.push({ integration: identifier, reason: 'No video source available yet' });\n      continue;\n    }\n    posts.push({\n      integration: { id: integration.id },\n      value: [{ content: postText, image: media }],\n      settings: {\n        __type: 'youtube',\n        title: (draft.sourceTitle || 'Sarah Nutri Draft').substring(0, 95),\n        type: 'private',\n        tags: [],\n      },\n    });\n    postedTo.push(identifier);\n    continue;\n  }\n\n  if (identifier === 'pinterest') {\n    skipped.push({ integration: identifier, reason: 'Pinterest production publishing is blocked by Trial app access' });\n    continue;\n  }\n\n  skipped.push({ integration: identifier, reason: 'No workflow posting template configured yet' });\n}\n\nif (!posts.length) {\n  throw new Error('No eligible Postiz integrations are configured for automatic posting');\n}\n\nconst body = {\n  type: 'draft',\n  shortLink: false,\n  date: new Date().toISOString(),\n  tags: [],\n  posts,\n};\n\nreturn [{ json: { postizBody: JSON.stringify(body), postedTo, skipped, mediaSource, mediaChoice } }];"
+      },
+      "id": "build-postiz-body",
+      "name": "Build Postiz Body",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        -20,
+        180
+      ]
+    },
+    {
+      "parameters": {
+        "curlImport": "",
+        "method": "POST",
+        "url": "http://192.168.1.59:4007/api/public/v1/posts",
+        "authentication": "none",
+        "provideSslCertificates": false,
+        "sendQuery": false,
+        "sendHeaders": true,
+        "specifyHeaders": "keypair",
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Authorization",
+              "value": "66809b7288bee402dcf00e1eb8d33b26567844a576f3684a5b1f72aa3d0e97b5"
+            },
+            {
+              "name": "Content-Type",
+              "value": "application/json"
+            }
+          ]
+        },
+        "sendBody": true,
+        "contentType": "raw",
+        "rawContentType": "application/json",
+        "body": "={{ $json.postizBody }}",
+        "options": {},
+        "infoMessage": ""
+      },
+      "id": "postiz-id",
+      "name": "Create Postiz Draft",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.1,
+      "position": [
+        180,
+        180
+      ]
+    },
+    {
+      "parameters": {
+        "jsCode": "const routing = $node['Build Postiz Body'].json;\nconst response = $input.first().json;\nconst postedTo = routing.postedTo || [];\nconst skipped = routing.skipped || [];\nconst mediaSource = routing.mediaSource || 'none';\nconst mediaChoice = routing.mediaChoice || 'source';\nconst postedLine = postedTo.length ? 'Sent to Postiz draft queue for: ' + postedTo.join(', ') + '.' : 'No eligible integrations were posted.';\nconst skippedLine = skipped.length ? ' Skipped: ' + skipped.map((item) => item.integration + ' (' + item.reason + ')').join(', ') + '.' : '';\nconst choiceLine = ' Selection: ' + mediaChoice + '.';\nconst mediaLine = mediaSource === 'generated' ? ' Used generated media.' : mediaSource === 'source' ? ' Used source media.' : ' No media asset was attached.';\nreturn [{ json: { ok: true, action: 'approve', message: postedLine + skippedLine + choiceLine + mediaLine, postedTo, skipped, mediaSource, mediaChoice, postizResponse: response } }];"
+      },
+      "id": "approve-response-id",
+      "name": "Build Approve Response",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        380,
+        180
+      ]
+    },
+    {
+      "parameters": {
+        "mode": "manual",
+        "duplicateItem": false,
+        "assignments": {
+          "assignments": [
+            {
+              "id": "reject-ok",
+              "name": "ok",
+              "value": "={{ true }}",
+              "type": "boolean"
+            },
+            {
+              "id": "reject-action",
+              "name": "action",
+              "value": "reject",
+              "type": "string"
+            },
+            {
+              "id": "reject-message",
+              "name": "message",
+              "value": "Rejected. A rewritten draft should arrive in Discord soon.",
+              "type": "string"
+            }
+          ]
+        },
+        "includeOtherFields": false,
+        "options": {}
+      },
+      "id": "reject-response-id",
+      "name": "Build Reject Response",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        900,
+        -180
+      ]
+    }
+  ],
+  "connections": {
+    "Approval Webhook": {
+      "main": [
+        [
+          {
+            "node": "Get Source Execution",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get Source Execution": {
+      "main": [
+        [
+          {
+            "node": "Extract Draft",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Extract Draft": {
+      "main": [
+        [
+          {
+            "node": "If Approved?",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If Approved?": {
+      "main": [
+        [
+          {
+            "node": "Upload Source Media",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Build Revision Context",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Upload Source Media": {
+      "main": [
+        [
+          {
+            "node": "List Postiz Integrations",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "List Postiz Integrations": {
+      "main": [
+        [
+          {
+            "node": "Build Postiz Body",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Build Postiz Body": {
+      "main": [
+        [
+          {
+            "node": "Create Postiz Draft",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Create Postiz Draft": {
+      "main": [
+        [
+          {
+            "node": "Build Approve Response",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Build Revision Context": {
+      "main": [
+        [
+          {
+            "node": "Gemini: Rewrite",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Gemini Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "Gemini: Rewrite",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Gemini: Rewrite": {
+      "main": [
+        [
+          {
+            "node": "Normalize Post Copy",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Gemini Model 2": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "Veo Video Generation",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Assemble Draft": {
+      "main": [
+        [
+          {
+            "node": "Prepare Approval Message",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Prepare Approval Message": {
+      "main": [
+        [
+          {
+            "node": "Discord Notify",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Discord Notify": {
+      "main": [
+        [
+          {
+            "node": "Build Reject Response",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Normalize Post Copy": {
+      "main": [
+        [
+          {
+            "node": "Assemble Draft",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "settings": {
+    "callerPolicy": "workflowsFromSameOwner",
+    "availableInMCP": false
+  }
+}
