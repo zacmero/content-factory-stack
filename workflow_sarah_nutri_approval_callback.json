@@ -225,7 +225,7 @@
             {
               "id": "rev-instruction",
               "name": "instruction",
-              "value": "={{ `The user rejected the previous Sarah Nutri draft with this feedback: \"${$json.feedback}\". Rewrite the post so it addresses that feedback while staying concise, practical, warm, and senior-friendly. Previous draft: ${($json.postText || \"\").substring(0, 700)}. Source article: ${$json.sourceTitle} - ${$json.sourceSnippet}` }}",
+              "value": "={{ `The user rejected the previous Sarah Nutri draft with this feedback: \"${$json.feedback}\". Rewrite the post so it addresses that feedback while staying concise, practical, warm, and senior-friendly. Return only the final post copy, with no labels, no commentary, and no image prompt. Previous draft: ${($json.postText || \"\").substring(0, 700)}. Source article: ${$json.sourceTitle} - ${$json.sourceSnippet}` }}",
               "type": "string"
             }
           ]
@@ -246,7 +246,7 @@
       "parameters": {
         "notice": "",
         "promptType": "define",
-        "text": "={{ `You are an expert social media manager for Sarah Nutri. ${$json.instruction}` }}",
+        "text": "={{ `You are an expert social media manager for Sarah Nutri. ${$json.instruction} Return only the final post copy, with no labels, no commentary, no markdown headings, and no image prompt.` }}",
         "hasOutputParser": false,
         "needsFallback": false,
         "messages": {}
@@ -257,6 +257,19 @@
       "typeVersion": 1.4,
       "position": [
         -100,
+        -180
+      ]
+    },
+    {
+      "parameters": {
+        "jsCode": "const raw = String($json.text || '').replace(/\\r\\n/g, '\\n').trim();\n\nfunction stripPostArtifacts(input) {\n  let text = String(input || '').replace(/\\r\\n/g, '\\n').trim();\n  const markers = [\n    'Image Generation Prompt:',\n    'Image Prompt:',\n    'Prompt:',\n    '🖼️ **IMG PROMPT:**',\n    '🖼️ **Image Prompt:**',\n  ];\n  for (const marker of markers) {\n    const idx = text.toLowerCase().indexOf(marker.toLowerCase());\n    if (idx >= 0) {\n      text = text.slice(0, idx).trim();\n    }\n  }\n  const socialMatch = text.match(/(?:^|\\n)\\s*(?:\\*\\*)?Social Media Post(?:\\*\\*)?:\\s*([\\s\\S]*?)(?:\\n\\s*(?:\\*\\*)?Image Generation Prompt(?:\\*\\*)?:|$)/i);\n  if (socialMatch) {\n    text = socialMatch[1].trim();\n  }\n  text = text.replace(/^---+\\s*$/gm, '').replace(/^\\s*(?:\\*\\*)?Social Media Post(?:\\*\\*)?:\\s*/i, '').replace(/\\n{3,}/g, '\\n\\n').trim();\n  return text;\n}\n\nconst text = stripPostArtifacts(raw);\nreturn [{ json: { ...$json, text } }];"
+      },
+      "id": "normalize-post-copy-callback",
+      "name": "Normalize Post Copy",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        0,
         -180
       ]
     },
@@ -359,7 +372,7 @@
             {
               "id": "post-text",
               "name": "postText",
-              "value": "={{ $node[\"Gemini: Rewrite\"].json.text }}",
+              "value": "={{ $node[\"Normalize Post Copy\"].json.text || $node[\"Gemini: Rewrite\"].json.text || \"\" }}",
               "type": "string"
             },
             {
@@ -533,7 +546,7 @@
     },
     {
       "parameters": {
-        "jsCode": "const integrations = $input.all().map((item) => item.json).filter((item) => !item.disabled);\nconst sourceUpload = $node['Upload Source Media'].json || {};\nconst draft = $node['Extract Draft'].json;\nconst pinterestBoardId = '1017461809504351582';\nconst sourceMedia = sourceUpload.id && sourceUpload.path ? [{ id: sourceUpload.id, path: sourceUpload.path }] : [];\nconst generatedMedia = draft.generatedMediaId && draft.generatedMediaPath ? [{ id: draft.generatedMediaId, path: draft.generatedMediaPath }] : [];\nconst mediaChoice = (draft.mediaChoice || 'source').toLowerCase();\nconst useGenerated = mediaChoice === 'generated' && generatedMedia.length > 0;\nconst media = useGenerated ? generatedMedia : sourceMedia.length ? sourceMedia : generatedMedia;\nconst mediaSource = useGenerated ? 'generated' : sourceMedia.length ? 'source' : generatedMedia.length ? 'generated' : 'none';\nconst posts = [];\nconst postedTo = [];\nconst skipped = [];\n\nfor (const integration of integrations) {\n  const identifier = integration.identifier;\n\n  if (identifier === 'youtube') {\n    posts.push({\n      integration: { id: integration.id },\n      value: [{ content: draft.postText || '', image: media }],\n      settings: {\n        __type: 'youtube',\n        title: (draft.sourceTitle || 'Sarah Nutri Draft').substring(0, 95),\n        type: 'private',\n        tags: [],\n      },\n    });\n    postedTo.push(identifier);\n    continue;\n  }\n\n  if (identifier === 'pinterest') {\n    posts.push({\n      integration: { id: integration.id },\n      value: [{ content: draft.postText || '', image: media }],\n      settings: {\n        __type: 'pinterest',\n        board: pinterestBoardId,\n        title: (draft.sourceTitle || 'Sarah Nutri Draft').substring(0, 95),\n        link: draft.sourceLink || '',\n        dominant_color: '#22c55e',\n      },\n    });\n    postedTo.push(identifier);\n    continue;\n  }\n\n  skipped.push({ integration: identifier, reason: 'No workflow posting template configured yet' });\n}\n\nif (!posts.length) {\n  throw new Error('No eligible Postiz integrations are configured for automatic posting');\n}\n\nconst body = {\n  type: 'draft',\n  shortLink: false,\n  date: new Date().toISOString(),\n  tags: [],\n  posts,\n};\n\nreturn [{ json: { postizBody: JSON.stringify(body), postedTo, skipped, mediaSource, mediaChoice } }];"
+        "jsCode": "const integrations = $input.all().map((item) => item.json).filter((item) => !item.disabled);\nconst sourceUpload = $node['Upload Source Media'].json || {};\nconst draft = $node['Extract Draft'].json;\nconst publicUploadBase = 'http://192.168.1.59:4007';\n\nfunction toPublicUploadUrl(input) {\n  const value = String(input || '').trim();\n  if (!value) return value;\n  return value\n    .replace(/^https?:\\/\\/localhost:4007/i, publicUploadBase)\n    .replace(/^https?:\\/\\/127\\.0\\.0\\.1:4007/i, publicUploadBase);\n}\n\nconst sourceMedia = [];\nif (draft.sourceImageUrl) {\n  sourceMedia.push({ id: sourceUpload.id || 'source-image', path: draft.sourceImageUrl });\n}\nif (!sourceMedia.length && draft.sourceVideoUrl) {\n  sourceMedia.push({ id: 'source-video', path: draft.sourceVideoUrl });\n}\nconst generatedMedia = draft.generatedMediaId && draft.generatedMediaPath ? [{ id: draft.generatedMediaId, path: toPublicUploadUrl(draft.generatedMediaPath) }] : [];\nconst mediaChoice = (draft.mediaChoice || 'source').toLowerCase();\nconst useGenerated = mediaChoice === 'generated' && generatedMedia.length > 0;\nconst media = useGenerated ? generatedMedia : sourceMedia.length ? sourceMedia : generatedMedia;\nconst mediaSource = useGenerated ? 'generated' : sourceMedia.length ? 'source' : generatedMedia.length ? 'generated' : 'none';\nconst postText = cleanPostText(draft.postText || '');\nconst posts = [];\nconst postedTo = [];\nconst skipped = [];\n\nfunction stripPostArtifacts(input) {\n  let text = String(input || '').split('\\r\\n').join('\\n').trim();\n  const markers = [\n    'Image Generation Prompt:',\n    'Image Prompt:',\n    'Prompt:',\n    '🖼️ **IMG PROMPT:**',\n    '🖼️ **Image Prompt:**',\n  ];\n  for (const marker of markers) {\n    const idx = text.toLowerCase().indexOf(marker.toLowerCase());\n    if (idx >= 0) {\n      text = text.slice(0, idx).trim();\n    }\n  }\n\n  const lines = text.split('\\n').map((line) => line.trimRight());\n  const filtered = [];\n  let sawSocialLabel = false;\n  for (const line of lines) {\n    const normalized = line.trim().toLowerCase();\n    if (normalized === '---') continue;\n    if (normalized === 'social media post:' || normalized === '**social media post:**' || normalized === 'social media post' || normalized === '**social media post**:') {\n      sawSocialLabel = true;\n      continue;\n    }\n    if (normalized === 'image generation prompt:' || normalized === '**image generation prompt:**' || normalized === 'image prompt:' || normalized === '**image prompt:**' || normalized === 'prompt:' || normalized === '**img prompt:**') {\n      break;\n    }\n    filtered.push(line);\n  }\n\n  text = filtered.join('\\n').trim();\n  if (!text && sawSocialLabel) {\n    text = String(input || '').split('\\r\\n').join('\\n').trim();\n  }\n  while (text.includes('\\n\\n\\n')) text = text.split('\\n\\n\\n').join('\\n\\n');\n  return text.trim();\n}\n\nfunction cleanPostText(input) {\n  return stripPostArtifacts(input);\n}\n\nfor (const integration of integrations) {\n  const identifier = integration.identifier;\n\n  if (identifier === 'facebook') {\n    if (!media.length) {\n      skipped.push({ integration: identifier, reason: 'No image or video media available' });\n      continue;\n    }\n    posts.push({\n      integration: { id: integration.id },\n      value: [{ content: postText, image: media }],\n      settings: {\n        __type: 'facebook',\n        url: draft.sourceLink || '',\n      },\n    });\n    postedTo.push(identifier);\n    continue;\n  }\n\n  if (identifier === 'instagram' || identifier === 'instagram-standalone') {\n    if (!media.length) {\n      skipped.push({ integration: identifier, reason: 'No image or video media available' });\n      continue;\n    }\n    posts.push({\n      integration: { id: integration.id },\n      value: [{ content: postText, image: media }],\n      settings: {\n        __type: identifier,\n        post_type: 'post',\n        collaborators: [],\n      },\n    });\n    postedTo.push(identifier);\n    continue;\n  }\n\n\n  if (identifier === 'youtube') {\n    if (!draft.sourceVideoUrl) {\n      skipped.push({ integration: identifier, reason: 'No video source available yet' });\n      continue;\n    }\n    posts.push({\n      integration: { id: integration.id },\n      value: [{ content: postText, image: media }],\n      settings: {\n        __type: 'youtube',\n        title: (draft.sourceTitle || 'Sarah Nutri Draft').substring(0, 95),\n        type: 'private',\n        tags: [],\n      },\n    });\n    postedTo.push(identifier);\n    continue;\n  }\n\n  if (identifier === 'pinterest') {\n    skipped.push({ integration: identifier, reason: 'Pinterest production publishing is blocked by Trial app access' });\n    continue;\n  }\n\n  skipped.push({ integration: identifier, reason: 'No workflow posting template configured yet' });\n}\n\nif (!posts.length) {\n  throw new Error('No eligible Postiz integrations are configured for automatic posting');\n}\n\nconst body = {\n  type: 'draft',\n  shortLink: false,\n  date: new Date().toISOString(),\n  tags: [],\n  posts,\n};\n\nreturn [{ json: { postizBody: JSON.stringify(body), postedTo, skipped, mediaSource, mediaChoice } }];"
       },
       "id": "build-postiz-body",
       "name": "Build Postiz Body",
@@ -843,7 +856,7 @@
       "main": [
         [
           {
-            "node": "Nano Banana AI",
+            "node": "Normalize Post Copy",
             "type": "main",
             "index": 0
           }
@@ -932,6 +945,17 @@
         [
           {
             "node": "Assemble Draft",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Normalize Post Copy": {
+      "main": [
+        [
+          {
+            "node": "Nano Banana AI",
             "type": "main",
             "index": 0
           }

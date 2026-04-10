@@ -1,4 +1,5 @@
 .env
+postiz-stable/.env
 .codex/
 n8n_data/database.sqlite*
 n8n_data/crash.journal

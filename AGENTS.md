@@ -46,13 +46,13 @@ We have deployed the official, multi-container `postiz-docker-compose` stack. Th
 
 - **To Start Postiz:**
   ```bash
-  cd ~/content-factory-stack/postiz-stable
+  cd /home/zacmero/projects/content-factory-stack/postiz-stable
   docker-compose up -d
   ```
 
 - **To Stop Postiz:**
   ```bash
-  cd ~/content-factory-stack/postiz-stable
+  cd /home/zacmero/projects/content-factory-stack/postiz-stable
   docker-compose down
   ```
 **IMPORTANT:** Do NOT attempt to simplify this stack or use the single-container image. The current setup is the result of extensive troubleshooting and is the only reliable path.
@@ -70,16 +70,19 @@ n8n is running in a separate, simplified Docker container managed by the `docker
 **Management Commands (run from the project root):**
 - **To Start n8n:**
   ```bash
+  cd /home/zacmero/projects/content-factory-stack
   docker-compose up -d
   ```
 
 - **To Stop n8n:**
   ```bash
+  cd /home/zacmero/projects/content-factory-stack
   docker-compose stop
   ```
 
 - **To Update n8n:**
   ```bash
+  cd /home/zacmero/projects/content-factory-stack
   docker-compose pull
   docker-compose up -d --force-recreate
   ```
@@ -90,6 +93,26 @@ n8n is running in a separate, simplified Docker container managed by the `docker
 For both **n8n** and **Postiz**, the centralized master credentials are:
 - **Email / Username:** `z4cmero@gmail.com`
 - **Password:** `Nuk@2202`
+
+### Meta / Instagram Credentials
+These credentials were used during the Meta page and Instagram connection flow:
+- **Facebook login:** `manuel_melo81@hotmail.com`
+- **Facebook password:** `2202@2202@nuk`
+- **Instagram login:** `sarahsmithnutri@gmail.com`
+- **Instagram password:** `2202@2202@nuk`
+
+### Meta / Postiz Connection Steps Used In This Project
+When future agents need to recreate or debug the social account setup, use this sequence:
+1. Open Meta Business Suite while logged into the Facebook account that owns the Page.
+2. From the Page home, click `Editar Página do Facebook | Conectar o Instagram`.
+3. Accept the Instagram inbox / messaging permission prompt.
+4. Complete any Meta verification or checkpoint prompt before continuing.
+5. Create or connect the Instagram business account for Sarah Nutri.
+6. Link that Instagram business account to the existing Facebook Page.
+7. Open Postiz and add the Instagram integration again if it does not appear automatically.
+8. Verify the integration in Postiz by publishing a real test post.
+9. Confirm the new Instagram integration appears in `http://localhost:4007/api/public/v1/integrations`.
+10. Re-run the n8n approval webhook and confirm it routes to both `facebook` and `instagram`.
 
 
 
@@ -237,4 +260,3 @@ For both **n8n** and **Postiz**, the centralized master credentials are:
 
 
 ----> Official n8n documentation, where you can chat with an assistant there to get your answers: <BS>https://docs.n8n.io/integrations/builtin/cluster-nodes/sub-nodes/n8n-nodes-langchain.toolmcp/?utm_source=n8n_app&utm_medium=node_settings_modal-credential_link&utm_campaign=%40n8n%2Fn8n-nodes-langchain.mcpClientTool#related-resources
-

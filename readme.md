@@ -10,7 +10,7 @@ This project uses a multi-container architecture to ensure stability and separat
 Postiz runs as a microservices stack (PostgreSQL, Redis, Temporal, ElasticSearch). 
 To start it, open a terminal and run:
 ```bash
-cd /home/zacmero/content-factory-stack/postiz-stable
+cd /home/zacmero/projects/content-factory-stack/postiz-stable
 docker-compose up -d
 ```
 - **Access Postiz:** `http://localhost:4007`
@@ -20,7 +20,7 @@ docker-compose up -d
 n8n runs as its own service with a dedicated data volume.
 To start it, open a terminal and run:
 ```bash
-cd /home/zacmero/content-factory-stack
+cd /home/zacmero/projects/content-factory-stack
 docker-compose up -d
 ```
 - **Access n8n:** `http://localhost:8080`
@@ -32,6 +32,29 @@ docker-compose up -d
 For both **n8n** and **Postiz**, the centralized master credentials are:
 - **Email / Username:** `z4cmero@gmail.com`
 - **Password:** `Nuk@2202`
+
+### Meta / Instagram Setup Record
+These are the account credentials used to connect the social accounts during the Sarah Nutri setup:
+- **Facebook login:** `manuel_melo81@hotmail.com`
+- **Facebook password:** `2202@2202@nuk`
+- **Instagram login:** `sarahsmithnutri@gmail.com`
+- **Instagram password:** `2202@2202@nuk`
+
+What was actually done to connect the pages:
+1. Opened Meta Business Suite for the `Soluções Naturais` Facebook Page.
+2. Used the `Editar Página do Facebook | Conectar o Instagram` control in Business Suite.
+3. Accepted the Instagram inbox permission prompt.
+4. Completed the business/identity verification step when Meta requested it.
+5. Created a new Instagram business account for Sarah Nutri.
+6. Linked that Instagram business account to the existing Facebook business account/Page.
+7. Opened Postiz and added the new Instagram integration.
+8. Verified the integration in Postiz by publishing a real image post successfully.
+
+Current result:
+- Facebook integration is active in Postiz.
+- Instagram integration is active in Postiz.
+- The Sarah Nutri approval workflow now sends approved drafts to both Facebook and Instagram.
+- Direct Instagram publishing through Postiz was verified successfully.
 
 ---
 

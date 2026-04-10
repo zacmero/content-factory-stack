@@ -146,7 +146,7 @@
             {
               "id": "instruction",
               "name": "instruction",
-              "value": "={{ `Write a concise Sarah Nutri social media post for adults and seniors based on this article. Keep it practical, warm, clear, and ready to approve. Include 3 to 5 relevant hashtags. Article: ${$node[\"Latest Article\"].json.title || ''} - ${$node[\"Latest Article\"].json.contentSnippet || ''}` }}",
+              "value": "={{ `Write a concise Sarah Nutri social media post for adults and seniors based on this article. Keep it practical, warm, clear, and ready to approve. Return only the final post copy, with no labels, no commentary, and no image prompt. Include 3 to 5 relevant hashtags. Article: ${$node[\"Latest Article\"].json.title || \"\"} - ${$node[\"Latest Article\"].json.contentSnippet || \"\"}` }}",
               "type": "string"
             }
           ]
@@ -167,7 +167,7 @@
       "parameters": {
         "notice": "",
         "promptType": "define",
-        "text": "={{ `You are an expert social media manager for Sarah Nutri. ${$json.instruction}` }}",
+        "text": "={{ `You are an expert social media manager for Sarah Nutri. ${$json.instruction} Return only the final post copy, with no labels, no commentary, no markdown headings, and no image prompt.` }}",
         "hasOutputParser": false,
         "needsFallback": false,
         "messages": {}
@@ -178,6 +178,19 @@
       "typeVersion": 1.4,
       "position": [
         -100,
+        0
+      ]
+    },
+    {
+      "parameters": {
+        "jsCode": "const raw = String($json.text || '').replace(/\\r\\n/g, '\\n').trim();\n\nfunction stripPostArtifacts(input) {\n  let text = String(input || '').replace(/\\r\\n/g, '\\n').trim();\n  const markers = [\n    'Image Generation Prompt:',\n    'Image Prompt:',\n    'Prompt:',\n    '🖼️ **IMG PROMPT:**',\n    '🖼️ **Image Prompt:**',\n  ];\n  for (const marker of markers) {\n    const idx = text.toLowerCase().indexOf(marker.toLowerCase());\n    if (idx >= 0) {\n      text = text.slice(0, idx).trim();\n    }\n  }\n  const socialMatch = text.match(/(?:^|\\n)\\s*(?:\\*\\*)?Social Media Post(?:\\*\\*)?:\\s*([\\s\\S]*?)(?:\\n\\s*(?:\\*\\*)?Image Generation Prompt(?:\\*\\*)?:|$)/i);\n  if (socialMatch) {\n    text = socialMatch[1].trim();\n  }\n  text = text.replace(/^---+\\s*$/gm, '').replace(/^\\s*(?:\\*\\*)?Social Media Post(?:\\*\\*)?:\\s*/i, '').replace(/\\n{3,}/g, '\\n\\n').trim();\n  return text;\n}\n\nconst text = stripPostArtifacts(raw);\nreturn [{ json: { ...$json, text } }];"
+      },
+      "id": "normalize-post-copy-main",
+      "name": "Normalize Post Copy",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        0,
         0
       ]
     },
@@ -280,7 +293,7 @@
             {
               "id": "post-text",
               "name": "postText",
-              "value": "={{ $node[\"Gemini: Rewrite\"].json.text }}",
+              "value": "={{ $node[\"Normalize Post Copy\"].json.text || $node[\"Gemini: Rewrite\"].json.text || \"\" }}",
               "type": "string"
             },
             {
@@ -437,7 +450,7 @@
       "main": [
         [
           {
-            "node": "Nano Banana AI",
+            "node": "Normalize Post Copy",
             "type": "main",
             "index": 0
           }
@@ -493,6 +506,17 @@
         [
           {
             "node": "Assemble Draft",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Normalize Post Copy": {
+      "main": [
+        [
+          {
+            "node": "Nano Banana AI",
             "type": "main",
             "index": 0
           }
