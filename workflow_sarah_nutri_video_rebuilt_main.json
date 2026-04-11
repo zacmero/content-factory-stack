@@ -1,10 +1,10 @@
 {
-  "name": "Sarah Nutri - Video -> Discord -> Postiz (LOOP)",
+  "name": "Sarah Nutri - Video -> Discord -> Postiz (LOOP v3)",
   "nodes": [
     {
       "parameters": {
         "httpMethod": "GET",
-        "path": "sarah-nutri-run",
+        "path": "sarah-nutri-video-run-v3",
         "responseMode": "lastNode",
         "responseData": "firstEntryJson",
         "options": {}
@@ -14,10 +14,10 @@
       "type": "n8n-nodes-base.webhook",
       "typeVersion": 1,
       "position": [
-        -900,
+        -980,
         -180
       ],
-      "webhookId": "sarah-nutri-run"
+      "webhookId": "sarah-nutri-video-run-v3"
     },
     {
       "parameters": {},
@@ -26,7 +26,7 @@
       "type": "n8n-nodes-base.manualTrigger",
       "typeVersion": 1,
       "position": [
-        -900,
+        -980,
         0
       ]
     },
@@ -39,19 +39,31 @@
             {
               "id": "source-title",
               "name": "title",
-              "value": "Elderly Health video refurnisher",
-              "type": "string"
-            },
-            {
-              "id": "source-link",
-              "name": "link",
-              "value": "https://www.instagram.com/popular/elderly-health/",
+              "value": "Sarah Nutri rolling video refurnisher",
               "type": "string"
             },
             {
               "id": "source-snippet",
               "name": "contentSnippet",
-              "value": "Refurnish the latest public elderly health video into a warm, practical Sarah Nutri post for seniors.",
+              "value": "Pull one random real Instagram post from source pool, rewrite it for Sarah Nutri, pass through human approval, then ship to Postiz.",
+              "type": "string"
+            },
+            {
+              "id": "source-pool",
+              "name": "sourcePool",
+              "value": "[{\"title\":\"healthh.hacksss\",\"link\":\"https://www.instagram.com/healthh.hacksss/?g=5\",\"contentSnippet\":\"Pull one random post from this Instagram source and rewrite it for Sarah Nutri with warm, practical elderly-health framing.\"},{\"title\":\"grandma.healer\",\"link\":\"https://www.instagram.com/grandma.healer/\",\"contentSnippet\":\"Pull one random post from this Instagram source and rewrite it for Sarah Nutri with warm, practical elderly-health framing.\"},{\"title\":\"elderly-health-popular\",\"link\":\"https://www.instagram.com/popular/elderly-health/\",\"contentSnippet\":\"Pull one random post from this Instagram source pool and rewrite it for Sarah Nutri with warm, practical elderly-health framing.\"}]",
+              "type": "string"
+            },
+            {
+              "id": "reject-feedback",
+              "name": "feedback",
+              "value": "={{ ($json.query && $json.query.feedback) || '' }}",
+              "type": "string"
+            },
+            {
+              "id": "exclude-post-links",
+              "name": "excludePostLinks",
+              "value": "={{ ($json.query && $json.query.excludePostLinks) || '[]' }}",
               "type": "string"
             }
           ]
@@ -59,75 +71,42 @@
         "includeOtherFields": true,
         "options": {}
       },
-      "id": "rss-id",
+      "id": "target-config",
       "name": "Target Page Config",
       "type": "n8n-nodes-base.set",
       "typeVersion": 3.4,
       "position": [
-        -700,
+        -760,
         0
       ]
     },
     {
       "parameters": {
-        "maxItems": 1,
-        "keep": "firstItems"
-      },
-      "id": "limit-id",
-      "name": "Latest Article",
-      "type": "n8n-nodes-base.limit",
-      "typeVersion": 1,
-      "position": [
-        -500,
-        0
-      ]
-    },
-    {
-      "parameters": {
-        "url": "={{ $json.link }}",
-        "options": {
-          "response": {
-            "response": {
-              "responseFormat": "text"
-            }
-          }
-        }
-      },
-      "id": "fetch-source-page",
-      "name": "Fetch Source Page",
-      "type": "n8n-nodes-base.httpRequest",
-      "typeVersion": 4.1,
-      "position": [
-        -400,
-        0
-      ]
-    },
-    {
-      "parameters": {
-        "extractionValues": {
-          "values": [
+        "method": "POST",
+        "url": "http://192.168.1.59:8788/pull-source",
+        "authentication": "none",
+        "sendHeaders": true,
+        "specifyHeaders": "keypair",
+        "headerParameters": {
+          "parameters": [
             {
-              "key": "sourceImageUrl",
-              "cssSelector": "meta[property=\"og:image\"]",
-              "returnValue": "attribute",
-              "attribute": "content"
-            },
-            {
-              "key": "sourceVideoUrl",
-              "cssSelector": "meta[property=\"og:video\"]",
-              "returnValue": "attribute",
-              "attribute": "content"
+              "name": "Content-Type",
+              "value": "application/json"
             }
           ]
         },
+        "sendBody": true,
+        "contentType": "json",
+        "specifyBody": "json",
+        "jsonBody": "={{ JSON.stringify({ sources: JSON.parse($json.sourcePool || '[]'), excludePostLinks: JSON.parse($node['Target Page Config'].json.excludePostLinks || '[]') }) }}",
         "options": {}
       },
-      "id": "extract-source-media",
-      "name": "Extract Source Media",
-      "type": "n8n-nodes-base.htmlExtract",
-      "typeVersion": 1,
+      "id": "pull-source-post",
+      "name": "Pull Source Post",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.1,
       "position": [
-        -300,
+        -520,
         0
       ]
     },
@@ -138,39 +117,63 @@
         "assignments": {
           "assignments": [
             {
-              "id": "source-title",
+              "id": "draft-title",
               "name": "sourceTitle",
-              "value": "={{ $node[\"Latest Article\"].json.title || '' }}",
+              "value": "={{ $json.sourceTitle || 'Instagram source' }}",
               "type": "string"
             },
             {
-              "id": "source-link",
+              "id": "draft-link",
               "name": "sourceLink",
-              "value": "={{ $node[\"Latest Article\"].json.link || '' }}",
+              "value": "={{ $json.sourceLink || '' }}",
               "type": "string"
             },
             {
-              "id": "source-snippet",
+              "id": "draft-page-link",
+              "name": "sourcePageLink",
+              "value": "={{ $json.sourcePageLink || '' }}",
+              "type": "string"
+            },
+            {
+              "id": "draft-post-link",
+              "name": "sourcePostLink",
+              "value": "={{ $json.sourcePostLink || $json.sourceLink || '' }}",
+              "type": "string"
+            },
+            {
+              "id": "draft-snippet",
               "name": "sourceSnippet",
-              "value": "={{ $node[\"Latest Article\"].json.contentSnippet || '' }}",
+              "value": "={{ $json.sourceSnippet || '' }}",
               "type": "string"
             },
             {
-              "id": "source-image",
+              "id": "draft-image",
               "name": "sourceImageUrl",
-              "value": "={{ $node[\"Extract Source Media\"].json.sourceImageUrl || '' }}",
+              "value": "={{ $json.sourceImageUrl || '' }}",
               "type": "string"
             },
             {
-              "id": "source-video",
+              "id": "draft-video",
               "name": "sourceVideoUrl",
-              "value": "={{ $node[\"Extract Source Media\"].json.sourceVideoUrl || '' }}",
+              "value": "={{ $json.sourceVideoUrl || '' }}",
               "type": "string"
             },
             {
-              "id": "instruction",
+              "id": "draft-handle",
+              "name": "sourceHandle",
+              "value": "={{ $json.sourceHandle || '' }}",
+              "type": "string"
+            },
+            {
+              "id": "draft-resolution",
+              "name": "sourceResolution",
+              "value": "={{ $json.sourceResolution || '' }}",
+              "type": "string"
+            },
+            {
+              "id": "draft-instruction",
               "name": "instruction",
-              "value": "={{ `Write a concise Sarah Nutri social media post for adults and seniors based on this video page. Keep it practical, warm, clear, and ready to approve. Return only the final post copy, with no labels, no commentary, and no media prompt. Include 3 to 5 relevant hashtags. Source page: ${$node[\"Latest Article\"].json.title || \"\"} - ${$node[\"Latest Article\"].json.contentSnippet || \"\"}` }}",
+              "value": "={{ `You are Sarah Nutri's senior social media writer. Rewrite this Instagram source into one concise post for adults and seniors. Keep tone warm, practical, science-aware, and easy to understand. Return only final post copy. No labels. No commentary. No media prompt. Keep 3 to 5 relevant hashtags. End post with original source reference ${$json.sourceHandle || ''}. Source title: ${$json.sourceTitle || ''}. Source snippet: ${$json.sourceSnippet || ''}.${$node['Target Page Config'].json.feedback ? ` User requested this change for the next attempt: ${$node['Target Page Config'].json.feedback}. Prefer a genuinely different angle and different media feel from the rejected draft.` : ''}` }}",
               "type": "string"
             }
           ]
@@ -183,7 +186,7 @@
       "type": "n8n-nodes-base.set",
       "typeVersion": 3.4,
       "position": [
-        -300,
+        -280,
         0
       ]
     },
@@ -191,7 +194,7 @@
       "parameters": {
         "notice": "",
         "promptType": "define",
-        "text": "={{ `You are an expert social media manager for Sarah Nutri. ${$json.instruction} Return only the final post copy, with no labels, no commentary, no markdown headings, and no media prompt.` }}",
+        "text": "={{ $json.instruction }}",
         "hasOutputParser": false,
         "needsFallback": false,
         "messages": {}
@@ -201,20 +204,7 @@
       "type": "@n8n/n8n-nodes-langchain.chainLlm",
       "typeVersion": 1.4,
       "position": [
-        -100,
-        0
-      ]
-    },
-    {
-      "parameters": {
-        "jsCode": "const raw = String($json.text || '').replace(/\\r\\n/g, '\\n').trim();\n\nfunction stripPostArtifacts(input) {\n  let text = String(input || '').replace(/\\r\\n/g, '\\n').trim();\n  const markers = [\n    'Image Generation Prompt:',\n    'Image Prompt:',\n    'Video Prompt:',\n    'Prompt:',\n    '🖼️ **IMG PROMPT:**',\n    '🖼️ **Image Prompt:**',\n    '🎬 **VIDEO PROMPT:**',\n  ];\n  for (const marker of markers) {\n    const idx = text.toLowerCase().indexOf(marker.toLowerCase());\n    if (idx >= 0) {\n      text = text.slice(0, idx).trim();\n    }\n  }\n  const socialMatch = text.match(/(?:^|\\n)\\s*(?:\\*\\*)?Social Media Post(?:\\*\\*)?:\\s*([\\s\\S]*?)(?:\\n\\s*(?:\\*\\*)?(?:Image Generation Prompt|Video Prompt)(?:\\*\\*)?:|$)/i);\n  if (socialMatch) {\n    text = socialMatch[1].trim();\n  }\n  text = text.replace(/^---+\\s*$/gm, '').replace(/^\\s*(?:\\*\\*)?Social Media Post(?:\\*\\*)?:\\s*/i, '').replace(/\\n{3,}/g, '\\n\\n').trim();\n  return text;\n}\n\nconst text = stripPostArtifacts(raw);\nreturn [{ json: { ...$json, text } }];"
-      },
-      "id": "normalize-post-copy-main",
-      "name": "Normalize Post Copy",
-      "type": "n8n-nodes-base.code",
-      "typeVersion": 2,
-      "position": [
-        0,
+        -40,
         0
       ]
     },
@@ -229,7 +219,7 @@
       "type": "@n8n/n8n-nodes-langchain.lmChatGoogleGemini",
       "typeVersion": 1,
       "position": [
-        -200,
+        -120,
         200
       ],
       "credentials": {
@@ -241,22 +231,65 @@
     },
     {
       "parameters": {
+        "jsCode": "const raw = String($json.text || '').replace(/\\r\\n/g, '\\n').trim();\n\nfunction stripPostArtifacts(input) {\n  let text = String(input || '').replace(/\\r\\n/g, '\\n').trim();\n  const markers = [\n    'Image Generation Prompt:',\n    'Image Prompt:',\n    'Video Prompt:',\n    'Prompt:',\n    '🖼️ **IMG PROMPT:**',\n    '🎬 **VIDEO PROMPT:**'\n  ];\n  for (const marker of markers) {\n    const idx = text.toLowerCase().indexOf(marker.toLowerCase());\n    if (idx >= 0) text = text.slice(0, idx).trim();\n  }\n  const socialMatch = text.match(/(?:^|\\n)\\s*(?:\\*\\*)?Social Media Post(?:\\*\\*)?:\\s*([\\s\\S]*?)(?:\\n\\s*(?:\\*\\*)?(?:Image Generation Prompt|Video Prompt)(?:\\*\\*)?:|$)/i);\n  if (socialMatch) text = socialMatch[1].trim();\n  text = text.replace(/^---+\\s*$/gm, '').replace(/^\\s*(?:\\*\\*)?Social Media Post(?:\\*\\*)?:\\s*/i, '').replace(/\\n{3,}/g, '\\n\\n').trim();\n  return text;\n}\n\nreturn [{ json: { ...$json, text: stripPostArtifacts(raw) } }];"
+      },
+      "id": "normalize-post-copy",
+      "name": "Normalize Post Copy",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        180,
+        0
+      ]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "http://192.168.1.59:8787/generate-video",
+        "authentication": "none",
+        "sendHeaders": true,
+        "specifyHeaders": "keypair",
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Content-Type",
+              "value": "application/json"
+            }
+          ]
+        },
+        "sendBody": true,
+        "contentType": "json",
+        "specifyBody": "json",
+        "jsonBody": "={{ JSON.stringify({ sourceImageUrl: $node['Build Draft Context'].json.sourceImageUrl || '', sourceVideoUrl: $node['Build Draft Context'].json.sourceVideoUrl || '', sourceTitle: $node['Build Draft Context'].json.sourceTitle || '', sourceLink: $node['Build Draft Context'].json.sourceLink || '' }) }}",
+        "options": {}
+      },
+      "id": "generate-video-fallback",
+      "name": "Generate Video Fallback",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.1,
+      "position": [
+        420,
+        0
+      ]
+    },
+    {
+      "parameters": {
         "notice": "",
         "promptType": "define",
-        "text": "={{ `Create a detailed photorealistic social video prompt for adults and seniors based on this post. Describe the subject, scene, pacing, camera motion, lighting, mood, framing, and realism. Keep the result ready for a Veo-style video generator. Post text: ${$json.text}` }}",
+        "text": "={{ `Create detailed Veo-ready fallback video prompt for Sarah Nutri using this rewritten post: ${$node['Normalize Post Copy'].json.text || ''}` }}",
         "hasOutputParser": false,
         "needsFallback": false,
         "messages": {}
       },
-      "id": "nano-id",
+      "id": "veo-id",
       "name": "Veo Video Generation",
-      "disabled": true,
       "type": "@n8n/n8n-nodes-langchain.chainLlm",
       "typeVersion": 1.4,
       "position": [
-        100,
-        0
-      ]
+        420,
+        180
+      ],
+      "disabled": true
     },
     {
       "parameters": {
@@ -269,8 +302,8 @@
       "type": "@n8n/n8n-nodes-langchain.lmChatGoogleGemini",
       "typeVersion": 1,
       "position": [
-        0,
-        200
+        340,
+        360
       ],
       "credentials": {
         "googlePalmApi": {
@@ -286,45 +319,93 @@
         "assignments": {
           "assignments": [
             {
-              "id": "draft-title",
+              "id": "source-title-final",
               "name": "sourceTitle",
-              "value": "={{ $node[\"Build Draft Context\"].json.sourceTitle }}",
+              "value": "={{ $node['Build Draft Context'].json.sourceTitle || '' }}",
               "type": "string"
             },
             {
-              "id": "draft-link",
+              "id": "source-link-final",
               "name": "sourceLink",
-              "value": "={{ $node[\"Build Draft Context\"].json.sourceLink }}",
+              "value": "={{ $node['Build Draft Context'].json.sourceLink || '' }}",
               "type": "string"
             },
             {
-              "id": "draft-snippet",
+              "id": "source-page-final",
+              "name": "sourcePageLink",
+              "value": "={{ $node['Build Draft Context'].json.sourcePageLink || '' }}",
+              "type": "string"
+            },
+            {
+              "id": "source-post-final",
+              "name": "sourcePostLink",
+              "value": "={{ $node['Build Draft Context'].json.sourcePostLink || '' }}",
+              "type": "string"
+            },
+            {
+              "id": "source-snippet-final",
               "name": "sourceSnippet",
-              "value": "={{ $node[\"Build Draft Context\"].json.sourceSnippet }}",
+              "value": "={{ $node['Build Draft Context'].json.sourceSnippet || '' }}",
               "type": "string"
             },
             {
-              "id": "draft-image",
+              "id": "source-image-final",
               "name": "sourceImageUrl",
-              "value": "={{ $node[\"Build Draft Context\"].json.sourceImageUrl || '' }}",
+              "value": "={{ $node['Build Draft Context'].json.sourceImageUrl || '' }}",
               "type": "string"
             },
             {
-              "id": "draft-video",
+              "id": "source-video-final",
               "name": "sourceVideoUrl",
-              "value": "={{ $node[\"Build Draft Context\"].json.sourceVideoUrl || '' }}",
+              "value": "={{ $node['Build Draft Context'].json.sourceVideoUrl || '' }}",
               "type": "string"
             },
             {
-              "id": "post-text",
+              "id": "source-handle-final",
+              "name": "sourceHandle",
+              "value": "={{ $node['Build Draft Context'].json.sourceHandle || '' }}",
+              "type": "string"
+            },
+            {
+              "id": "post-text-final",
               "name": "postText",
-              "value": "={{ $node[\"Normalize Post Copy\"].json.text || $node[\"Gemini: Rewrite\"].json.text || \"\" }}",
+              "value": "={{ $node['Normalize Post Copy'].json.text || '' }}",
               "type": "string"
             },
             {
-              "id": "image-prompt",
+              "id": "video-prompt-final",
               "name": "videoPrompt",
-              "value": "={{ \"Veo prompt generation is inactive for now\" }}",
+              "value": "={{ $node['Generate Video Fallback'].json.generatedMediaMode === 'generated-mp4-from-image' ? 'Generated MP4 fallback from source image. Veo node remains disabled.' : 'Using original source video. Veo node remains disabled.' }}",
+              "type": "string"
+            },
+            {
+              "id": "generated-id-final",
+              "name": "generatedMediaId",
+              "value": "={{ $node['Generate Video Fallback'].json.generatedMediaId || '' }}",
+              "type": "string"
+            },
+            {
+              "id": "generated-path-final",
+              "name": "generatedMediaPath",
+              "value": "={{ $node['Generate Video Fallback'].json.generatedMediaPath || '' }}",
+              "type": "string"
+            },
+            {
+              "id": "generated-url-final",
+              "name": "generatedMediaUrl",
+              "value": "={{ $node['Generate Video Fallback'].json.generatedMediaUrl || '' }}",
+              "type": "string"
+            },
+            {
+              "id": "generated-name-final",
+              "name": "generatedMediaName",
+              "value": "={{ $node['Generate Video Fallback'].json.generatedMediaName || '' }}",
+              "type": "string"
+            },
+            {
+              "id": "generated-mode-final",
+              "name": "generatedMediaMode",
+              "value": "={{ $node['Generate Video Fallback'].json.generatedMediaMode || '' }}",
               "type": "string"
             }
           ]
@@ -337,7 +418,7 @@
       "type": "n8n-nodes-base.set",
       "typeVersion": 3.4,
       "position": [
-        980,
+        680,
         0
       ]
     },
@@ -350,7 +431,7 @@
             {
               "id": "approval-message",
               "name": "discordMessage",
-              "value": "={{ `Sarah Nutri video approval request\\n\\nSource title:\\n${$json.sourceTitle || \"Untitled\"}\\n\\nSource link:\\n${$json.sourceLink || \"\"}\\n\\nSource media preview:\\n${$json.sourceVideoUrl || $json.sourceImageUrl || \"No source media preview available\"}\\n\\nDraft post:\\n${($json.postText || \"\").substring(0, 900)}${($json.postText || \"\").length > 900 ? \"...\" : \"\"}\\n\\nVideo prompt:\\n${($json.videoPrompt || \"\").substring(0, 350)}${($json.videoPrompt || \"\").length > 350 ? \"...\" : \"\"}\\n\\nReview page:\\n<http://192.168.1.59:8080/webhook/sarah-nutri-video-review?executionId=${$execution.id}>` }}",
+              "value": "={{ `Sarah Nutri video approval request\\n\\nSource: ${$json.sourceTitle || 'Untitled'} ${$json.sourceHandle || ''}\\nPost: <${$json.sourcePostLink || $json.sourceLink || ''}>\\nPreview: <${$json.sourceVideoUrl || $json.sourceImageUrl || ''}>\\n\\nDraft post:\\n${($json.postText || '').substring(0, 520)}${($json.postText || '').length > 520 ? '...' : ''}\\n\\nReview page:\\n<http://192.168.1.59:8080/webhook/sarah-nutri-video-review?executionId=${$execution.id}>` }}",
               "type": "string"
             }
           ]
@@ -363,7 +444,7 @@
       "type": "n8n-nodes-base.set",
       "typeVersion": 3.4,
       "position": [
-        1180,
+        920,
         0
       ]
     },
@@ -381,7 +462,7 @@
       "type": "n8n-nodes-base.discord",
       "typeVersion": 2,
       "position": [
-        1380,
+        1160,
         0
       ],
       "credentials": {
@@ -390,10 +471,21 @@
           "name": "Discord Webhook account"
         }
       },
-      "webhookId": "sarah-discord-main"
+      "webhookId": "sarah-discord-main-video-v3"
     }
   ],
   "connections": {
+    "API Trigger": {
+      "main": [
+        [
+          {
+            "node": "Target Page Config",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
     "Manual Trigger": {
       "main": [
         [
@@ -409,36 +501,14 @@
       "main": [
         [
           {
-            "node": "Latest Article",
+            "node": "Pull Source Post",
             "type": "main",
             "index": 0
           }
         ]
       ]
     },
-    "Latest Article": {
-      "main": [
-        [
-          {
-            "node": "Fetch Source Page",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "Fetch Source Page": {
-      "main": [
-        [
-          {
-            "node": "Extract Source Media",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "Extract Source Media": {
+    "Pull Source Post": {
       "main": [
         [
           {
@@ -482,6 +552,28 @@
         ]
       ]
     },
+    "Normalize Post Copy": {
+      "main": [
+        [
+          {
+            "node": "Generate Video Fallback",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Generate Video Fallback": {
+      "main": [
+        [
+          {
+            "node": "Assemble Draft",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
     "Gemini Model 2": {
       "ai_languageModel": [
         [
@@ -514,32 +606,11 @@
           }
         ]
       ]
-    },
-    "API Trigger": {
-      "main": [
-        [
-          {
-            "node": "Target Page Config",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "Normalize Post Copy": {
-      "main": [
-        [
-          {
-            "node": "Assemble Draft",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
     }
   },
   "settings": {
     "callerPolicy": "workflowsFromSameOwner",
     "availableInMCP": false
-  }
+  },
+  "staticData": {}
 }

@@ -87,6 +87,18 @@
               "type": "string"
             },
             {
+              "id": "source-page-link",
+              "name": "sourcePageLink",
+              "value": "={{ $json.data.resultData.runData[\"Assemble Draft\"][0].data.main[0][0].json.sourcePageLink || '' }}",
+              "type": "string"
+            },
+            {
+              "id": "source-post-link",
+              "name": "sourcePostLink",
+              "value": "={{ $json.data.resultData.runData[\"Assemble Draft\"][0].data.main[0][0].json.sourcePostLink || '' }}",
+              "type": "string"
+            },
+            {
               "id": "source-snippet",
               "name": "sourceSnippet",
               "value": "={{ $json.data.resultData.runData[\"Assemble Draft\"][0].data.main[0][0].json.sourceSnippet }}",
@@ -108,6 +120,12 @@
               "id": "source-video",
               "name": "sourceVideoUrl",
               "value": "={{ $json.data.resultData.runData[\"Assemble Draft\"][0].data.main[0][0].json.sourceVideoUrl || '' }}",
+              "type": "string"
+            },
+            {
+              "id": "source-handle",
+              "name": "sourceHandle",
+              "value": "={{ $json.data.resultData.runData[\"Assemble Draft\"][0].data.main[0][0].json.sourceHandle || '' }}",
               "type": "string"
             },
             {
@@ -205,6 +223,18 @@
               "type": "string"
             },
             {
+              "id": "rev-page-link",
+              "name": "sourcePageLink",
+              "value": "={{ $json.sourcePageLink || '' }}",
+              "type": "string"
+            },
+            {
+              "id": "rev-post-link",
+              "name": "sourcePostLink",
+              "value": "={{ $json.sourcePostLink || '' }}",
+              "type": "string"
+            },
+            {
               "id": "rev-snippet",
               "name": "sourceSnippet",
               "value": "={{ $json.sourceSnippet }}",
@@ -223,9 +253,15 @@
               "type": "string"
             },
             {
+              "id": "rev-handle",
+              "name": "sourceHandle",
+              "value": "={{ $json.sourceHandle || '' }}",
+              "type": "string"
+            },
+            {
               "id": "rev-instruction",
               "name": "instruction",
-              "value": "={{ `The user rejected the previous Sarah Nutri video draft with this feedback: \"${$json.feedback}\". Rewrite the post so it addresses that feedback while staying concise, practical, warm, senior-friendly, and aligned with a video-first workflow. Return only the final post copy, with no labels, no commentary, and no media prompt. Previous draft: ${($json.postText || \"\").substring(0, 700)}. Source video page: ${$json.sourceTitle} - ${$json.sourceSnippet}` }}",
+              "value": "={{ `The user rejected the previous Sarah Nutri video draft with this feedback: \"${$json.feedback}\". Rewrite the post so it addresses that feedback while staying concise, practical, warm, senior-friendly, and aligned with a video-first workflow. Return only the final post copy, with no labels, no commentary, and no media prompt. End the post with the original profile reference ${$json.sourceHandle || \"\"}. Previous draft: ${($json.postText || \"\").substring(0, 700)}. Source video page: ${$json.sourceTitle} - ${$json.sourceSnippet}` }}",
               "type": "string"
             }
           ]
@@ -353,6 +389,18 @@
               "type": "string"
             },
             {
+              "id": "draft-page-link",
+              "name": "sourcePageLink",
+              "value": "={{ $node[\"Build Revision Context\"].json.sourcePageLink || '' }}",
+              "type": "string"
+            },
+            {
+              "id": "draft-post-link",
+              "name": "sourcePostLink",
+              "value": "={{ $node[\"Build Revision Context\"].json.sourcePostLink || '' }}",
+              "type": "string"
+            },
+            {
               "id": "draft-snippet",
               "name": "sourceSnippet",
               "value": "={{ $node[\"Build Revision Context\"].json.sourceSnippet }}",
@@ -368,6 +416,12 @@
               "id": "draft-video",
               "name": "sourceVideoUrl",
               "value": "={{ $node[\"Build Revision Context\"].json.sourceVideoUrl || '' }}",
+              "type": "string"
+            },
+            {
+              "id": "draft-handle",
+              "name": "sourceHandle",
+              "value": "={{ $node[\"Build Revision Context\"].json.sourceHandle || '' }}",
               "type": "string"
             },
             {
@@ -429,7 +483,7 @@
             {
               "id": "approval-message",
               "name": "discordMessage",
-              "value": "={{ `Sarah Nutri video approval request\n\nSource title:\n${$json.sourceTitle || \"Untitled\"}\n\nSource link:\n${$json.sourceLink || \"\"}\n\nSource media preview:\n${$json.sourceVideoUrl || $json.sourceImageUrl || \"No source media preview available\"}\n\nAI fallback preview:\n${$json.generatedMediaPath || \"Veo is inactive for now\"}\n\nDraft post:\n${($json.postText || \"\").substring(0, 900)}${($json.postText || \"\").length > 900 ? \"...\" : \"\"}\n\nVideo prompt:\n${($json.videoPrompt || \"\").substring(0, 350)}${($json.videoPrompt || \"\").length > 350 ? \"...\" : \"\"}\n\nReview page:\n<http://192.168.1.59:8080/webhook/sarah-nutri-video-review?executionId=${$execution.id}>` }}",
+              "value": "={{ `Sarah Nutri video approval request\n\nSource page:\n${$json.sourcePageLink || \"\"}\n\nSource post:\n${$json.sourcePostLink || $json.sourceLink || \"\"}\n\nSource title:\n${$json.sourceTitle || \"Untitled\"}\n\nSource handle:\n${$json.sourceHandle || \"\"}\n\nSource media preview:\n${$json.sourceVideoUrl || $json.sourceImageUrl || \"No source media preview available\"}\n\nAI fallback preview:\n${$json.generatedMediaPath || \"Veo is inactive for now\"}\n\nDraft post:\n${($json.postText || \"\").substring(0, 900)}${($json.postText || \"\").length > 900 ? \"...\" : \"\"}\n\nVideo prompt:\n${($json.videoPrompt || \"\").substring(0, 350)}${($json.videoPrompt || \"\").length > 350 ? \"...\" : \"\"}\n\nReview page:\n<http://192.168.1.59:8080/webhook/sarah-nutri-video-review?executionId=${$execution.id}>` }}",
               "type": "string"
             }
           ]
@@ -547,7 +601,7 @@
     },
     {
       "parameters": {
-        "jsCode": "const integrations = $input.all().map((item) => item.json).filter((item) => !item.disabled);\nconst sourceUpload = $node['Upload Source Media'].json || {};\nconst draft = $node['Extract Draft'].json;\nconst publicUploadBase = 'http://192.168.1.59:4007';\n\nfunction toPublicUploadUrl(input) {\n  const value = String(input || '').trim();\n  if (!value) return value;\n  return value\n    .replace(/^https?:\\/\\/localhost:4007/i, publicUploadBase)\n    .replace(/^https?:\\/\\/127\\.0\\.0\\.1:4007/i, publicUploadBase);\n}\n\nconst uploadedSourcePath = sourceUpload.path || draft.sourceVideoUrl || draft.sourceImageUrl || '';\nconst sourceMedia = [];\nif (uploadedSourcePath) {\n  sourceMedia.push({\n    id: sourceUpload.id || (draft.sourceVideoUrl ? 'source-video' : 'source-image'),\n    path: uploadedSourcePath,\n  });\n}\nconst generatedMedia = draft.generatedMediaId && draft.generatedMediaPath ? [{ id: draft.generatedMediaId, path: toPublicUploadUrl(draft.generatedMediaPath) }] : [];\nconst mediaChoice = (draft.mediaChoice || 'source').toLowerCase();\nconst useGenerated = mediaChoice === 'generated' && generatedMedia.length > 0;\nconst media = useGenerated ? generatedMedia : sourceMedia.length ? sourceMedia : generatedMedia;\nconst mediaSource = useGenerated ? 'generated' : sourceMedia.length ? 'source' : generatedMedia.length ? 'generated' : 'none';\nconst postText = cleanPostText(draft.postText || '');\nconst posts = [];\nconst postedTo = [];\nconst skipped = [];\n\nfunction stripPostArtifacts(input) {\n  let text = String(input || '').split('\\r\\n').join('\\n').trim();\n  const markers = [\n    'Image Generation Prompt:',\n    'Image Prompt:',\n    'Prompt:',\n    '🖼️ **IMG PROMPT:**',\n    '🖼️ **Image Prompt:**',\n  ];\n  for (const marker of markers) {\n    const idx = text.toLowerCase().indexOf(marker.toLowerCase());\n    if (idx >= 0) {\n      text = text.slice(0, idx).trim();\n    }\n  }\n\n  const lines = text.split('\\n').map((line) => line.trimRight());\n  const filtered = [];\n  let sawSocialLabel = false;\n  for (const line of lines) {\n    const normalized = line.trim().toLowerCase();\n    if (normalized === '---') continue;\n    if (normalized === 'social media post:' || normalized === '**social media post:**' || normalized === 'social media post' || normalized === '**social media post**:') {\n      sawSocialLabel = true;\n      continue;\n    }\n    if (normalized === 'image generation prompt:' || normalized === '**image generation prompt:**' || normalized === 'image prompt:' || normalized === '**image prompt:**' || normalized === 'prompt:' || normalized === '**img prompt:**') {\n      break;\n    }\n    filtered.push(line);\n  }\n\n  text = filtered.join('\\n').trim();\n  if (!text && sawSocialLabel) {\n    text = String(input || '').split('\\r\\n').join('\\n').trim();\n  }\n  while (text.includes('\\n\\n\\n')) text = text.split('\\n\\n\\n').join('\\n\\n');\n  return text.trim();\n}\n\nfunction cleanPostText(input) {\n  return stripPostArtifacts(input);\n}\n\nfor (const integration of integrations) {\n  const identifier = integration.identifier;\n\n  if (identifier === 'facebook') {\n    if (!media.length) {\n      skipped.push({ integration: identifier, reason: 'No image or video media available' });\n      continue;\n    }\n    posts.push({\n      integration: { id: integration.id },\n      value: [{ content: postText, image: media }],\n      settings: {\n        __type: 'facebook',\n        url: draft.sourceLink || '',\n      },\n    });\n    postedTo.push(identifier);\n    continue;\n  }\n\n  if (identifier === 'instagram' || identifier === 'instagram-standalone') {\n    if (!media.length) {\n      skipped.push({ integration: identifier, reason: 'No image or video media available' });\n      continue;\n    }\n    posts.push({\n      integration: { id: integration.id },\n      value: [{ content: postText, image: media }],\n      settings: {\n        __type: identifier,\n        post_type: 'post',\n        collaborators: [],\n      },\n    });\n    postedTo.push(identifier);\n    continue;\n  }\n\n\n  if (identifier === 'youtube') {\n    if (!draft.sourceVideoUrl) {\n      skipped.push({ integration: identifier, reason: 'No video source available yet' });\n      continue;\n    }\n    posts.push({\n      integration: { id: integration.id },\n      value: [{ content: postText, image: media }],\n      settings: {\n        __type: 'youtube',\n        title: (draft.sourceTitle || 'Sarah Nutri Draft').substring(0, 95),\n        type: 'private',\n        tags: [],\n      },\n    });\n    postedTo.push(identifier);\n    continue;\n  }\n\n  if (identifier === 'pinterest') {\n    skipped.push({ integration: identifier, reason: 'Pinterest production publishing is blocked by Trial app access' });\n    continue;\n  }\n\n  skipped.push({ integration: identifier, reason: 'No workflow posting template configured yet' });\n}\n\nif (!posts.length) {\n  throw new Error('No eligible Postiz integrations are configured for automatic posting');\n}\n\nconst body = {\n  type: 'draft',\n  shortLink: false,\n  date: new Date().toISOString(),\n  tags: [],\n  posts,\n};\n\nreturn [{ json: { postizBody: JSON.stringify(body), postedTo, skipped, mediaSource, mediaChoice } }];"
+        "jsCode": "const integrations = $input.all().map((item) => item.json).filter((item) => !item.disabled);\nconst sourceUpload = $node['Upload Source Media'].json || {};\nconst draft = $node['Extract Draft'].json;\nconst publicUploadBase = 'http://192.168.1.59:4007';\n\nfunction toPublicUploadUrl(input) {\n  const value = String(input || '').trim();\n  if (!value) return value;\n  return value\n    .replace(/^https?:\\/\\/localhost:4007/i, publicUploadBase)\n    .replace(/^https?:\\/\\/127\\.0\\.0\\.1:4007/i, publicUploadBase);\n}\n\nfunction stripPostArtifacts(input) {\n  let text = String(input || '').split('\\r\\n').join('\\n').trim();\n  const markers = [\n    'Image Generation Prompt:',\n    'Image Prompt:',\n    'Prompt:',\n    '🖼️ **IMG PROMPT:**',\n    '🖼️ **Image Prompt:**',\n  ];\n  for (const marker of markers) {\n    const idx = text.toLowerCase().indexOf(marker.toLowerCase());\n    if (idx >= 0) {\n      text = text.slice(0, idx).trim();\n    }\n  }\n\n  const lines = text.split('\\n').map((line) => line.trimRight());\n  const filtered = [];\n  let sawSocialLabel = false;\n  for (const line of lines) {\n    const normalized = line.trim().toLowerCase();\n    if (normalized === '---') continue;\n    if (normalized === 'social media post:' || normalized === '**social media post:**' || normalized === 'social media post' || normalized === '**social media post**:') {\n      sawSocialLabel = true;\n      continue;\n    }\n    if (normalized === 'image generation prompt:' || normalized === '**image generation prompt:**' || normalized === 'image prompt:' || normalized === '**image prompt:**' || normalized === 'prompt:' || normalized === '**img prompt:**') {\n      break;\n    }\n    filtered.push(line);\n  }\n\n  text = filtered.join('\\n').trim();\n  if (!text && sawSocialLabel) {\n    text = String(input || '').split('\\r\\n').join('\\n').trim();\n  }\n  while (text.includes('\\n\\n\\n')) text = text.split('\\n\\n\\n').join('\\n\\n');\n  return text.trim();\n}\n\nfunction cleanPostText(input) {\n  return stripPostArtifacts(input);\n}\n\nfunction isVideoPath(input) {\n  const value = String(input || '').toLowerCase();\n  if (!value) return false;\n  return value.includes('.mp4') || value.includes('.mov') || value.includes('.webm') || value.includes('.mkv');\n}\n\nconst generatedMediaPath = toPublicUploadUrl(draft.generatedMediaPath || draft.generatedMediaUrl || '');\nconst uploadedSourcePath = toPublicUploadUrl(sourceUpload.path || '');\nconst directSourcePath = toPublicUploadUrl(draft.sourceVideoUrl || draft.sourceImageUrl || '');\nconst sourceMediaPath = directSourcePath || uploadedSourcePath;\nconst sourceMedia = [];\nif (sourceMediaPath) {\n  sourceMedia.push({\n    id: sourceUpload.id || (draft.sourceVideoUrl ? 'source-video' : 'source-image'),\n    path: sourceMediaPath,\n  });\n}\nconst generatedMedia = generatedMediaPath ? [{ id: draft.generatedMediaId || 'generated-video', path: generatedMediaPath }] : [];\nconst mediaChoice = (draft.mediaChoice || 'source').toLowerCase();\nconst preferGenerated = !draft.sourceVideoUrl && generatedMedia.length > 0;\nconst useGenerated = (mediaChoice === 'generated' && generatedMedia.length > 0) || preferGenerated;\nconst media = useGenerated ? generatedMedia : sourceMedia.length ? sourceMedia : generatedMedia;\nconst mediaSource = useGenerated ? 'generated' : sourceMedia.length ? 'source' : generatedMedia.length ? 'generated' : 'none';\nconst hasVideoMedia = media.some((item) => isVideoPath(item.path)) || isVideoPath(draft.sourceVideoUrl) || isVideoPath(draft.generatedMediaUrl) || isVideoPath(draft.generatedMediaPath);\nconst sourceHandle = String(draft.sourceHandle || '').trim();\nconst sourceCredit = sourceHandle ? (sourceHandle.startsWith('@') ? sourceHandle : '@' + sourceHandle) : '';\nlet postText = cleanPostText(draft.postText || '');\nif (sourceCredit && !postText.toLowerCase().includes(sourceCredit.toLowerCase())) {\n  postText = postText ? postText + '\\n\\nSource: ' + sourceCredit : 'Source: ' + sourceCredit;\n}\nconst posts = [];\nconst postedTo = [];\nconst skipped = [];\n\nfor (const integration of integrations) {\n  const identifier = integration.identifier;\n\n  if (identifier === 'facebook') {\n    if (!media.length) {\n      skipped.push({ integration: identifier, reason: 'No image or video media available' });\n      continue;\n    }\n    posts.push({\n      integration: { id: integration.id },\n      value: [{ content: postText, image: media }],\n      settings: {\n        __type: 'facebook',\n        url: draft.sourceLink || '',\n      },\n    });\n    postedTo.push(identifier);\n    continue;\n  }\n\n  if (identifier === 'instagram' || identifier === 'instagram-standalone') {\n    if (!media.length) {\n      skipped.push({ integration: identifier, reason: 'No image or video media available' });\n      continue;\n    }\n    posts.push({\n      integration: { id: integration.id },\n      value: [{ content: postText, image: media }],\n      settings: {\n        __type: identifier,\n        post_type: 'post',\n        collaborators: [],\n      },\n    });\n    postedTo.push(identifier);\n    continue;\n  }\n\n  if (identifier === 'youtube') {\n    skipped.push({ integration: identifier, reason: 'YouTube auto-post is disabled until account token is reconnected' });\n    continue;\n  }\n\n  if (identifier === 'pinterest') {\n    skipped.push({ integration: identifier, reason: 'Pinterest production publishing is blocked by Trial app access' });\n    continue;\n  }\n\n  skipped.push({ integration: identifier, reason: 'No workflow posting template configured yet' });\n}\n\nif (!posts.length) {\n  throw new Error('No eligible Postiz integrations are configured for automatic posting');\n}\n\nconst body = {\n  type: 'now',\n  shortLink: false,\n  date: new Date().toISOString(),\n  tags: [],\n  posts,\n};\n\nreturn [{ json: { postizBody: JSON.stringify(body), postedTo, skipped, mediaSource, mediaChoice, sourceHandle: sourceCredit, hasVideoMedia } }];"
       },
       "id": "build-postiz-body",
       "name": "Build Postiz Body",
@@ -630,7 +684,7 @@
             {
               "id": "reject-message",
               "name": "message",
-              "value": "Rejected. A rewritten draft should arrive in Discord soon.",
+              "value": "Rejected. Fresh source draft requested. Check Discord for the next review.",
               "type": "string"
             }
           ]
@@ -644,6 +698,34 @@
       "typeVersion": 3.4,
       "position": [
         900,
+        -180
+      ]
+    },
+    {
+      "parameters": {
+        "curlImport": "",
+        "method": "GET",
+        "url": "={{ `http://localhost:5678/webhook/sarah-nutri-video-run-v3?feedback=${encodeURIComponent($node['Extract Draft'].json.feedback || '')}&excludePostLinks=${encodeURIComponent(JSON.stringify([$node['Extract Draft'].json.sourcePostLink || ''].filter(Boolean)))}` }}",
+        "authentication": "none",
+        "provideSslCertificates": false,
+        "sendQuery": false,
+        "sendHeaders": false,
+        "sendBody": false,
+        "options": {
+          "response": {
+            "response": {
+              "neverError": true
+            }
+          }
+        },
+        "infoMessage": ""
+      },
+      "id": "trigger-fresh-draft-id",
+      "name": "Trigger Fresh Draft",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.1,
+      "position": [
+        -40,
         -180
       ]
     }
@@ -693,7 +775,7 @@
         ],
         [
           {
-            "node": "Build Revision Context",
+            "node": "Trigger Fresh Draft",
             "type": "main",
             "index": 0
           }
@@ -826,6 +908,17 @@
         [
           {
             "node": "Assemble Draft",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Trigger Fresh Draft": {
+      "main": [
+        [
+          {
+            "node": "Build Reject Response",
             "type": "main",
             "index": 0
           }
