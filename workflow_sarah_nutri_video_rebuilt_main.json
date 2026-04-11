@@ -51,7 +51,7 @@
             {
               "id": "source-pool",
               "name": "sourcePool",
-              "value": "[{\"title\":\"healthh.hacksss\",\"link\":\"https://www.instagram.com/healthh.hacksss/?g=5\",\"contentSnippet\":\"Pull one random post from this Instagram source and rewrite it for Sarah Nutri with warm, practical elderly-health framing.\"},{\"title\":\"grandma.healer\",\"link\":\"https://www.instagram.com/grandma.healer/\",\"contentSnippet\":\"Pull one random post from this Instagram source and rewrite it for Sarah Nutri with warm, practical elderly-health framing.\"},{\"title\":\"elderly-health-popular\",\"link\":\"https://www.instagram.com/popular/elderly-health/\",\"contentSnippet\":\"Pull one random post from this Instagram source pool and rewrite it for Sarah Nutri with warm, practical elderly-health framing.\"}]",
+              "value": "[{\"title\":\"healthh.hacksss\",\"link\":\"https://www.instagram.com/healthh.hacksss/?g=5\",\"contentSnippet\":\"Pull one random post from this Instagram source and rewrite it for Sarah Nutri with warm, practical elderly-health framing.\"},{\"title\":\"grandma.healer\",\"link\":\"https://www.instagram.com/grandma.healer/\",\"contentSnippet\":\"Pull one random post from this Instagram source and rewrite it for Sarah Nutri with warm, practical elderly-health framing.\"},{\"title\":\"elderly-health\",\"link\":\"https://www.instagram.com/popular/elderly-health/\",\"contentSnippet\":\"Pull one random post from this Instagram source pool and rewrite it for Sarah Nutri with warm, practical elderly-health framing.\"}]",
               "type": "string"
             },
             {
