@@ -114,6 +114,47 @@ When future agents need to recreate or debug the social account setup, use this 
 9. Confirm the new Instagram integration appears in `http://localhost:4007/api/public/v1/integrations`.
 10. Re-run the n8n approval webhook and confirm it routes to both `facebook` and `instagram`.
 
+### Current Live State: Sarah Nutri Video Pipeline
+The video pipeline is the current high-value workflow. Treat it as the production path.
+
+- Main workflow: `Sarah Nutri - Video -> Discord -> Postiz (LOOP v3)`
+- Main workflow id: `gYJCczNloTbqWo1q`
+- Approval callback: `Sarah Nutri - Video Approval Callback`
+- Callback workflow id: `TEtc2C3vW5mEDQYD`
+- Review page: `Sarah Nutri - Video Review Page`
+- Review workflow id: `M7WmkDgaD3zSCeTe`
+
+Current behavior:
+1. Main workflow picks one source page from the rolling Instagram pool.
+2. It pulls one real post from that page, not the profile landing page.
+3. Media is rehosted to a public URL before Postiz gets it.
+4. Discord receives a human approval message with source preview and draft copy.
+5. Approve sends draft to Postiz.
+6. Reject sends feedback back into the main workflow and excludes the rejected source post from the next run.
+7. Facebook and Instagram are verified working.
+
+Source pool currently used:
+- `https://www.instagram.com/healthh.hacksss/?g=5`
+- `https://www.instagram.com/grandma.healer/`
+- `https://www.instagram.com/popular/elderly-health/`
+
+Helper services:
+- Source puller: `http://192.168.1.59:8788`
+- Video fallback helper: `http://localhost:8787`
+
+YouTube status:
+- Do not assume YouTube is healthy.
+- Current callback routes YouTube again, but token must be healthy.
+- Last known Postiz error was token expiry / reconnect required.
+- If YouTube is needed, reconnect the account in Postiz first, then re-enable routing.
+- Do not let YouTube block Facebook or Instagram publishing.
+
+Obsolete video workflows removed from n8n:
+- `iqkU7v87aeO4u4ma`
+- `CsBkSY4dizxdR0Ay`
+
+If n8n startup logs show `Cannot read properties of undefined (reading 'endsWith')`, check for stale workflow refs tied to those deleted ids. The fix was to remove leftover `shared_workflow`, `webhook_entity`, `workflow_history`, `workflow_publish_history`, `workflow_published_version`, and `workflow_statistics` rows for the dead video workflows.
+
 
 
 ### Connecting an AI Assistant to a Local n8n Instance: The Direct API Method
