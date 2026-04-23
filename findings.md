@@ -17,6 +17,8 @@
 - n8n's `openAiApi` credential accepts `apiKey`, `organizationId`, `url`, and optional custom headers.
 - Temporal failure was a stop/shutdown event, not a broken schema. Logs show `received fast shutdown request`, then the stack was simply restarted.
 - n8n now has a Bonsai OpenAI credential in SQLite using `http://host.docker.internal:8081/v1`, and the live workflows were rewired to use `bonsai-8b` for text tasks.
+- Postiz backend startup was flaky because PM2 expects `ps` inside the container and the upstream image did not provide it.
+- The durable stack fix is a local Postiz wrapper image that installs `procps`, plus a Temporal health gate so the backend starts only after Temporal is ready.
 
 ## Technical Decisions
 | Decision | Rationale |
@@ -25,6 +27,8 @@
 | Route normal text tasks to Bonsai | Matches user preference and local OpenAI-style serving |
 | Investigate Temporal from compose/logs before changing DB data | Safer than blind resets |
 | Use `host.docker.internal` for Bonsai base URL in containers | Docker container must reach host service, not its own loopback |
+| Build a local Postiz wrapper image with `procps` | PM2 needs `ps` inside the container to supervise backend restarts |
+| Gate Postiz on Temporal health | Prevents the backend from starting before Temporal is ready |
 
 ## Issues Encountered
 | Issue | Resolution |

@@ -81,8 +81,8 @@
 ## 5-Question Reboot Check
 | Question | Answer |
 |----------|--------|
-| Where am I? | Phase 3 |
-| Where am I going? | Model routing patch + Temporal fix + verification |
+| Where am I? | Phase 5 |
+| Where am I going? | Delivery wrap-up + stack hardening notes |
 | What's the goal? | Bonsai for text, Gemini for media, Temporal healthy |
 | What have I learned? | See findings.md |
 | What have I done? | See above |

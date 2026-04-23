@@ -229,3 +229,39 @@ The workflow source files live in the repo root and are the authoritative record
 - `workflow_sarah_nutri_live_fix.json`
 - `workflow_sarah_nutri_approval_callback.json`
 - `workflow_sarah_nutri_review_page.json`
+
+
+## Useful Start/Stop Container Commands:
+
+  Note:
+
+  The `postiz-stable/` stack now builds a small local wrapper image so PM2 keeps the backend stable.
+  Use `docker-compose up -d --build` for Postiz after pulling changes.
+
+  Stop all project containers:
+
+  cd /home/zacmero/projects/content-factory-stack
+  docker-compose down
+
+  cd /home/zacmero/projects/content-factory-stack/postiz-stable
+  docker-compose down
+
+  Start all project containers:
+
+  cd /home/zacmero/projects/content-factory-stack
+  docker-compose up -d
+
+  cd /home/zacmero/projects/content-factory-stack/postiz-stable
+  docker-compose up -d --build
+
+  Full restart all project containers:
+
+  cd /home/zacmero/projects/content-factory-stack
+  docker-compose down && docker-compose up -d
+
+  cd /home/zacmero/projects/content-factory-stack/postiz-stable
+  docker-compose down && docker-compose up -d --build
+
+  Verify:
+
+  docker ps
