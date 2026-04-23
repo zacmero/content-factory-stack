@@ -141,14 +141,26 @@
   - Added `scripts/build_forum_manual_queue.mjs`.
   - Generated `workflow_sarah_nutri_forum_manual_queue.json`.
   - Changed import helper to import the manual queue by default and leave blocked Reddit API workflows opt-in.
+  - Added the provided Digistore24 and n8n API credentials to local `.env`.
+  - Tested Digistore24 API access and corrected the sync strategy for an affiliate-only account.
+  - Confirmed `listProducts` and `listMarketplaceEntries` are vendor-oriented and return zero for this account.
+  - Mined affiliate product IDs from `listPurchases` and `listTransactions`.
+  - Validated products with `validateAffiliate` and generated `sarah_nutri` Promolinks.
+  - Synced 12 approved active affiliate products into the active product catalog.
+  - Imported and activated `Sarah Nutri - Forum Manual Queue -> Discord Review`.
+  - Removed the need for the Bonsai host proxy by restarting Bonsai on `0.0.0.0:8081`.
+  - Smoke-tested the forum webhook successfully with product-relevant and unrelated posts.
 - Files created/modified:
   - `content_factory/reddit_quora/digistore24.md`
   - `scripts/digistore24_sync_catalog.mjs`
   - `scripts/build_forum_manual_queue.mjs`
   - `workflow_sarah_nutri_forum_manual_queue.json`
   - `scripts/import_social_response_workflows.mjs`
+  - `scripts/bonsai_host_proxy.mjs`
   - `.env.template`
+  - `.env` (gitignored, local secrets)
   - `docker-compose.yml`
+  - `.dockerignore`
   - `content_factory/reddit_quora/README.md`
 
 ## Phase 7 Test Results
@@ -159,8 +171,20 @@
 | Manual queue generation | `node scripts/build_forum_manual_queue.mjs` | Workflow export written | Export written | pass |
 | Manual queue JSON validation | `JSON.parse` export | Valid JSON | Passed | pass |
 | Compose config | `docker-compose config` | Digistore env vars render | Rendered cleanly | pass |
+| Digistore API sync | `node scripts/digistore24_sync_catalog.mjs --write-catalog` | Catalog sync succeeds | 12 approved affiliate products written | pass |
+| n8n import | `node scripts/import_social_response_workflows.mjs` | Workflows imported | Manual queue and Quora intake imported | pass |
+| n8n activation | API activate call | Manual queue active | Active workflow id `Rz60m7Gr2YYSoDS1` | pass |
+| Bonsai container reachability | `docker exec n8n node fetch(...)` | HTTP 200 from `/v1/models` | Passed directly via `0.0.0.0:8081` | pass |
+| Forum webhook smoke test | POST candidate pair | HTTP 200 | Execution `178` success | pass |
+| Product-link smoke test | Hearing-related Reddit/Quora candidate | Relevant approved Digistore link when safe | Reddit included `checkout-ds24.com/redir/.../sarah_nutri/...`; Quora withheld link due safety | pass |
+| Irrelevant-link guard | Protein/low-appetite candidate | No hearing-product link | No Digistore links included | pass |
 
 ## Phase 7 Error Log
 | Timestamp | Error | Attempt | Resolution |
 |-----------|-------|---------|------------|
 | 2026-04-23 | Discord packet node accidentally interpolated runtime variables during workflow generation | 1 | Rewrote packet composition with string joins and regenerated export |
+| 2026-04-23 | `.env` keyword value with spaces broke shell sourcing | 1 | Converted multi-word Digistore keywords to underscores and normalized them in the sync script |
+| 2026-04-23 | n8n import API rejected `active` as read-only | 1 | Removed `active` from workflow create payloads |
+| 2026-04-23 | Bonsai connection failed from n8n container | 1 | Confirmed Bonsai was bound only to `127.0.0.1:8081`; restarted Bonsai directly on `0.0.0.0:8081` |
+| 2026-04-23 | Digistore `listProducts` and `listMarketplaceEntries` returned no products | 1 | Identified those endpoints as vendor-oriented; switched catalog sync to affiliate sales history plus `validateAffiliate` |
+| 2026-04-23 | Bonsai generated a product mention without setting affiliate JSON fields | 1 | Hardened parser to attach a catalog product link when a safe draft mentions an approved product |

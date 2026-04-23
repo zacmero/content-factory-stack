@@ -56,9 +56,13 @@ Phase 7
 - [x] Add Digistore24 credential docs
 - [x] Add Digistore24 catalog sync helper
 - [x] Wire Digistore24 env vars into n8n compose
-- [ ] Wait for Digistore24 read-only API key
-- [ ] Import and activate manual queue in n8n
-- [ ] Test one real Reddit candidate and one real Quora candidate
+- [x] Add Digistore24 read-only API key
+- [x] Import and activate manual queue in n8n
+- [x] Smoke-test Reddit + Quora candidate pair
+- [x] Sync approved active Digistore products from affiliate sales history
+- [x] Validate products through Digistore `validateAffiliate`
+- [x] Confirm relevant product links include `sarah_nutri`
+- [ ] Investigate whether MCP exposes public marketplace search beyond the HTTP API docs
 - **Status:** in_progress
 
 ## Key Questions

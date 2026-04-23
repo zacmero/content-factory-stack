@@ -31,7 +31,7 @@ services:
       - REDDIT_USER_AGENT=${REDDIT_USER_AGENT:-linux:content-factory-sarah-nutri:0.1.0 by /u/sarah_nutri}
       - DIGISTORE24_API_KEY=${DIGISTORE24_API_KEY:-}
       - DIGISTORE24_AFFILIATE_ID=${DIGISTORE24_AFFILIATE_ID:-}
-      - DIGISTORE24_MARKETPLACE_KEYWORDS=${DIGISTORE24_MARKETPLACE_KEYWORDS:-senior,elderly,caregiver,nutrition,mobility,sleep,joint,arthritis,memory,digestion}
+      - DIGISTORE24_MARKETPLACE_KEYWORDS=${DIGISTORE24_MARKETPLACE_KEYWORDS:-senior,elderly,caregiver,nutrition,mobility,sleep,joint,arthritis,memory,digestion,blood_pressure,back_pain,bone_health,weight_loss,appetite,protein,brain_health,hearing,vision,falls,balance,walking,home_care}
       - DIGISTORE24_MAX_PRODUCTS=${DIGISTORE24_MAX_PRODUCTS:-40}
     volumes:
       - ./n8n_data:/home/node/.n8n

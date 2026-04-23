@@ -24,7 +24,7 @@ if (!apiKey) {
 for (const file of workflowFiles) {
   const workflow = JSON.parse(fs.readFileSync(file, 'utf8'));
   delete workflow.id;
-  workflow.active = false;
+  delete workflow.active;
 
   const response = await fetch(`${n8nBaseUrl}/api/v1/workflows`, {
     method: 'POST',

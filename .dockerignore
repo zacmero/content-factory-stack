@@ -8,6 +8,9 @@ n8n_data/
 n8n_data_backup/
 postgres_data/
 content_factory/
+postiz-source/
+postiz-stable/
+postiz_deploy/
 
 # Node modules and temporary files
 node_modules/

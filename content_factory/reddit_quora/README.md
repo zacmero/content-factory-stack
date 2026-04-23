@@ -61,6 +61,29 @@ The workflow sends two Discord messages in one run:
 
 No Reddit or Quora posting API is used.
 
+## Bonsai Container Access
+
+Docker containers cannot reach a host service that is bound only to `127.0.0.1`. LLMero's `serve.sh` supports host binding through the underlying `llama-server --host` option, but the current Bonsai profile hardcodes `127.0.0.1`.
+
+Current working service command:
+
+```bash
+systemctl --user stop llmero-bonsai
+systemd-run --user --unit=llmero-bonsai \
+  --working-directory=/home/zacmero/projects/LLMero \
+  --setenv=LD_LIBRARY_PATH=/home/zacmero/projects/LLMero/.llmero/build/llmero-bonsai/cuda/bin:/opt/cuda-12.9/targets/x86_64-linux/lib \
+  /home/zacmero/projects/LLMero/.llmero/build/llmero-bonsai/cuda/bin/llama-server \
+  --host 0.0.0.0 --port 8081 --alias bonsai-8b -c 4096 -ngl 99 \
+  -m /home/zacmero/projects/LLMero/models/llmero-bonsai/Bonsai-8B.gguf \
+  --temp 0.5 --top-p 0.85 --top-k 20
+```
+
+Verify from n8n:
+
+```bash
+docker exec n8n node -e "fetch('http://host.docker.internal:8081/v1/models',{headers:{Authorization:'Bearer local'}}).then(async r=>{console.log(r.status); console.log(await r.text())})"
+```
+
 ## Digistore24
 
 Use Digistore24 API first, MCP second.
@@ -86,6 +109,30 @@ Sync possible products into the local catalog:
 cd /home/zacmero/projects/content-factory-stack
 export DIGISTORE24_API_KEY=your_key_here
 node scripts/digistore24_sync_catalog.mjs --write-catalog
+node scripts/build_forum_manual_queue.mjs
+```
+
+Affiliate links in Discord are only suggested if `product_catalog.json` contains a real `affiliate_url`. For Digistore24 products with a product ID and no URL, the sync helper generates a Promolink in this format:
+
+```text
+https://www.checkout-ds24.com/redir/PRODUCT-ID/sarah_nutri/sarahnutri_forum
+```
+
+Digistore API behavior observed for this affiliate account:
+
+- `listProducts` returns vendor-owned products; this affiliate-only account has `0`.
+- `listMarketplaceEntries` returns vendor marketplace entries, not the public affiliate marketplace browser; this account has `0`.
+- `statsMarketplace` confirms marketplace data exists globally, but does not return product details.
+- `listPurchases` and `listTransactions` expose historic affiliate sales with product IDs/names.
+- `validateAffiliate` confirms whether `sarah_nutri` is approved for each product ID.
+
+The sync helper now builds the active catalog from affiliate sales history, filters inactive/deleted products, validates approved affiliation, and generates `sarah_nutri` Promolinks.
+
+To add a Digistore24 product manually when you know the product ID:
+
+```bash
+cd /home/zacmero/projects/content-factory-stack
+node scripts/add_digistore24_product.mjs id=PRODUCT_ID name="Product name" keywords="senior,nutrition,mobility"
 node scripts/build_forum_manual_queue.mjs
 ```
 

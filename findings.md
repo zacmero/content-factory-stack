@@ -27,6 +27,14 @@
 - Digistore24 API keys are created in vendor view under `Settings > Account access > API keys`; read access is enough for product/catalog lookup.
 - Digistore24 API calls use `https://www.digistore24.com/api/call/FUNCTION` with `X-DS-API-KEY` and `Accept: application/json` headers.
 - Digistore24 MCP is available at `https://mcp.digistore24.com/` with `Authorization: Bearer YOUR_DIGISTORE24_API_KEY`, but the direct HTTP API is better for n8n scheduled workflows.
+- The configured Digistore24 key works. `listProducts` returns `0` because it lists vendor-owned products, and this account is affiliate-only.
+- `listMarketplaceEntries` returns `0` because it exposes vendor marketplace entries, not the public affiliate marketplace browser. Valid `sort_by` values are `name`, `stars`, `created`, `rank`, `profit`, `cancel`, `conversion`, and `revenue`.
+- `statsMarketplace` returns global marketplace stats including count `13830`, but not product details.
+- Affiliate product discovery works through sales history: `listPurchases` returned 121 purchases, `listTransactions` returned 132 transactions, and `listCommissions` returned 264 commission rows.
+- `validateAffiliate` works for historic product IDs and reports `have_affiliation: Y` plus `affiliation_status: approved` when `sarah_nutri` is approved.
+- The active Digistore catalog now contains 12 approved, active affiliate products generated from historic sales and validated affiliations.
+- Digistore24 Promolink format is `https://www.checkout-ds24.com/redir/PRODUCT-ID/AFFILIATE/CAMPAIGNKEY`.
+- n8n could not reach Bonsai because `llama-server` was bound only to `127.0.0.1:8081`. The current working service now runs Bonsai directly on `0.0.0.0:8081`, so the proxy is no longer required.
 
 ## Technical Decisions
 | Decision | Rationale |
@@ -43,6 +51,12 @@
 | Pivot to manual posting queue | Delivers immediate validation without Playwright auto-posting or Reddit API approval wait |
 | Use Digistore24 read-only key first | Least-privilege product discovery and catalog sync |
 | Keep Digistore24 products cached locally for drafting | Prevents live API instability from blocking forum draft generation |
+| Do not use placeholder product links | Prevents Discord drafts from suggesting fake `example.com` affiliate links |
+| Generate Digistore24 Promolinks only from real product IDs | Ensures suggested links include `sarah_nutri` and valid tracking shape |
+| Discover affiliate products through purchase/transaction history | Correct API path for an affiliate-only Digistore24 account |
+| Validate every product with `validateAffiliate` before catalog inclusion | Ignores restricted/unapproved products |
+| Exclude inactive/deleted products by default | Avoids recommending products that may no longer sell |
+| Start Bonsai on `0.0.0.0:8081` | Lets n8n reach the local OpenAI-compatible endpoint through `host.docker.internal` without a proxy |
 
 ## Issues Encountered
 | Issue | Resolution |
