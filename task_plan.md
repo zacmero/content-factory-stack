@@ -65,10 +65,20 @@ Phase 7
 - [ ] Investigate whether MCP exposes public marketplace search beyond the HTTP API docs
 - **Status:** in_progress
 
+### Phase 8: Postiz Startup Hardening
+- [x] Reproduce the Postiz blank-screen failure after restart
+- [x] Isolate whether Temporal, Postiz, or the backend port was the actual blocker
+- [x] Patch the Temporal healthcheck in `postiz-stable/docker-compose.yaml`
+- [x] Verify Postiz returns HTTP auth responses instead of `502`
+- [x] Add unified start/stop helper scripts for both compose projects
+- [x] Document the root cause and the corrected operational path
+- **Status:** complete
+
 ## Key Questions
 1. Which files currently control text interpretation vs image/video generation?
 2. Is Bonsai already reachable from containers, or do we need to add env/proxy plumbing?
 3. What specifically caused Temporal to fail, and what reset is safe?
+4. Does Digistore24 MCP expose public marketplace search beyond affiliate history?
 
 ## Decisions Made
 | Decision | Rationale |
@@ -82,6 +92,7 @@ Phase 7
 | Use manual posting queue while Reddit API is blocked | Validates answer format without waiting for Reddit approval or bypassing platform controls |
 | Use Digistore24 HTTP API for n8n | Simpler and more deterministic than MCP for scheduled workflows |
 | Use Digistore24 MCP for interactive exploration only | Good for agent-assisted browsing, less suitable as the workflow runtime path |
+| Start/stop the full stack with root helper scripts | Avoids leaving Postiz running without its Temporal services |
 
 ## Errors Encountered
 | Error | Attempt | Resolution |

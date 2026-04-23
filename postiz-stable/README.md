@@ -315,3 +315,28 @@ networks:
     driver: bridge
     name: temporal-network
 ```
+
+## Local Operational Notes
+
+- This repo runs `n8n` and `Postiz` in two different compose projects.
+- Restarting only the repo-root compose project does not restart the Temporal services used by Postiz.
+- Use the root helper scripts when you want the whole content-factory stack up or down together:
+
+```bash
+cd /home/zacmero/projects/content-factory-stack
+./scripts/start_content_factory_stack.sh
+./scripts/stop_content_factory_stack.sh
+```
+
+- If you want to operate Postiz only:
+
+```bash
+cd /home/zacmero/projects/content-factory-stack/postiz-stable
+docker compose up -d
+docker compose stop
+```
+
+- Local fix applied on 2026-04-23:
+  Temporal was healthy but its compose healthcheck incorrectly probed `localhost:7233`.
+  In this environment Temporal binds its container IP, not loopback, so the healthcheck stayed red and blocked Postiz startup.
+  The compose file now checks `$(hostname -i):7233`, which lets Postiz start reliably after machine restarts and clean compose restarts.

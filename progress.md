@@ -188,3 +188,39 @@
 | 2026-04-23 | Bonsai connection failed from n8n container | 1 | Confirmed Bonsai was bound only to `127.0.0.1:8081`; restarted Bonsai directly on `0.0.0.0:8081` |
 | 2026-04-23 | Digistore `listProducts` and `listMarketplaceEntries` returned no products | 1 | Identified those endpoints as vendor-oriented; switched catalog sync to affiliate sales history plus `validateAffiliate` |
 | 2026-04-23 | Bonsai generated a product mention without setting affiliate JSON fields | 1 | Hardened parser to attach a catalog product link when a safe draft mentions an approved product |
+
+### Phase 8: Postiz Startup Hardening
+- **Status:** complete
+- Actions taken:
+  - Confirmed the blank Postiz UI was caused by `502` responses from nginx to `/api/user/self`.
+  - Verified `temporal`, `temporal-postgresql`, and `temporal-elasticsearch` were down while `postiz` itself was still running.
+  - Recreated the Postiz compose project from `postiz-stable/`.
+  - Traced the remaining blocker to a false Temporal healthcheck failure.
+  - Confirmed Temporal was listening on the container IP, not `localhost`.
+  - Patched `postiz-stable/docker-compose.yaml` to use `nc -z $(hostname -i) 7233`.
+  - Recreated Temporal and Postiz, then restarted only the Postiz app once Temporal was healthy.
+  - Verified Postiz now responds with HTTP `401 Unauthorized` on `/api/user/self` instead of `502 Bad Gateway`.
+  - Added root helper scripts to start and stop both compose projects together.
+  - Documented the corrected startup path in `postiz-stable/README.md`.
+- Files created/modified:
+  - `postiz-stable/docker-compose.yaml`
+  - `postiz-stable/README.md`
+  - `scripts/start_content_factory_stack.sh`
+  - `scripts/stop_content_factory_stack.sh`
+  - `task_plan.md`
+  - `findings.md`
+  - `progress.md`
+
+## Phase 8 Test Results
+| Test | Input | Expected | Actual | Status |
+|------|-------|----------|--------|--------|
+| Temporal port binding | `/proc/net/tcp` inside `temporal` | Confirm whether `7233` is really open | Port open on container IP, not loopback | pass |
+| Temporal health after patch | `docker ps` | `temporal` healthy | Healthy after compose recreate | pass |
+| Postiz API reachability | `curl http://localhost:4007/api/user/self` | No more `502` | Returned `401 Unauthorized` | pass |
+| Postiz backend port | `/proc/net/tcp` inside `postiz` | Port `3000` open after clean restart | Listening after app-only restart | pass |
+
+## Phase 8 Error Log
+| Timestamp | Error | Attempt | Resolution |
+|-----------|-------|---------|------------|
+| 2026-04-23 | Temporal stayed unhealthy even though the process was running | 1 | Confirmed healthcheck was probing `localhost`; patched it to use the container IP |
+| 2026-04-23 | Postiz still returned `502` immediately after Temporal fix | 1 | Restarted only the `postiz` app container after Temporal was healthy; backend then bound to `3000` |

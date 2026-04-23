@@ -35,6 +35,10 @@
 - The active Digistore catalog now contains 12 approved, active affiliate products generated from historic sales and validated affiliations.
 - Digistore24 Promolink format is `https://www.checkout-ds24.com/redir/PRODUCT-ID/AFFILIATE/CAMPAIGNKEY`.
 - n8n could not reach Bonsai because `llama-server` was bound only to `127.0.0.1:8081`. The current working service now runs Bonsai directly on `0.0.0.0:8081`, so the proxy is no longer required.
+- Postiz and n8n are split across two compose projects. Restarting only the repo-root compose project leaves the Postiz stack untouched.
+- Temporal was not actually dead after the latest restart. It was listening on the container IP at `172.20.x.x:7233`, but the compose healthcheck probed `localhost:7233`, so Docker kept it unhealthy and blocked Postiz startup.
+- Once Temporal healthcheck was corrected and the `postiz` app container was restarted against a healthy Temporal instance, Postiz returned `401 Unauthorized` on `/api/user/self`, confirming the blank-UI `502` state was cleared.
+- The recurring error was operational plus one compose bug, not data corruption from powering off the machine.
 
 ## Technical Decisions
 | Decision | Rationale |
@@ -57,6 +61,8 @@
 | Validate every product with `validateAffiliate` before catalog inclusion | Ignores restricted/unapproved products |
 | Exclude inactive/deleted products by default | Avoids recommending products that may no longer sell |
 | Start Bonsai on `0.0.0.0:8081` | Lets n8n reach the local OpenAI-compatible endpoint through `host.docker.internal` without a proxy |
+| Change Temporal healthcheck from `localhost` to `$(hostname -i)` | Matches how Temporal binds in this container and prevents false unhealthy status |
+| Add unified start/stop helper scripts | Reduces operator error across the split n8n/Postiz compose projects |
 
 ## Issues Encountered
 | Issue | Resolution |

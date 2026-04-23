@@ -229,7 +229,7 @@ services:
     labels:
       kompose.volume.type: configMap
     healthcheck:
-      test: ["CMD", "nc", "-z", "localhost", "7233"]
+      test: ["CMD-SHELL", "nc -z $(hostname -i) 7233"]
       interval: 10s
       timeout: 5s
       retries: 30

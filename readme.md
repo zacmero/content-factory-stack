@@ -233,35 +233,31 @@ The workflow source files live in the repo root and are the authoritative record
 
 ## Useful Start/Stop Container Commands:
 
-  Note:
-
-  The `postiz-stable/` stack now builds a small local wrapper image so PM2 keeps the backend stable.
-  Use `docker-compose up -d --build` for Postiz after pulling changes.
-
-  Stop all project containers:
+Use These Commands
+  Start everything:
 
   cd /home/zacmero/projects/content-factory-stack
-  docker-compose down
+  ./scripts/start_content_factory_stack.sh
 
-  cd /home/zacmero/projects/content-factory-stack/postiz-stable
-  docker-compose down
-
-  Start all project containers:
+  Stop everything:
 
   cd /home/zacmero/projects/content-factory-stack
-  docker-compose up -d
+  ./scripts/stop_content_factory_stack.sh
 
-  cd /home/zacmero/projects/content-factory-stack/postiz-stable
-  docker-compose up -d --build
+  If you want the raw commands:
 
-  Full restart all project containers:
+  Start:
 
   cd /home/zacmero/projects/content-factory-stack
-  docker-compose down && docker-compose up -d
+  docker compose up -d n8n
 
   cd /home/zacmero/projects/content-factory-stack/postiz-stable
-  docker-compose down && docker-compose up -d --build
+  docker compose up -d
 
-  Verify:
+  Stop:
 
-  docker ps
+  cd /home/zacmero/projects/content-factory-stack/postiz-stable
+  docker compose stop
+
+  cd /home/zacmero/projects/content-factory-stack
+  docker compose stop n8n
