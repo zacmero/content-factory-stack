@@ -1,0 +1,58 @@
+{
+  "brand": "Sarah Nutri",
+  "mode": "human_approval_required",
+  "daily_approved_post_limit": 5,
+  "affiliate_link_probability": 0.15,
+  "default_disclosure": "Disclosure: this may be an affiliate link, which means I may earn a small commission at no extra cost to you.",
+  "reddit": {
+    "search_limit": 15,
+    "search_query": "(elderly OR senior OR \"aging parent\" OR caregiver OR arthritis OR mobility OR sleep OR constipation OR appetite OR hydration OR \"blood pressure\")",
+    "target_subreddits": [
+      "AgingParents",
+      "CaregiverSupport",
+      "eldercare",
+      "AskOldPeopleAdvice",
+      "nutrition",
+      "Supplements"
+    ],
+    "blocked_subreddits": [
+      "AskDocs",
+      "medical",
+      "DiagnoseMe"
+    ]
+  },
+  "quora": {
+    "daily_manual_post_limit": 5,
+    "source_mode": "draft_only_until_reviewed",
+    "google_query": "site:quora.com elderly senior health caregiver nutrition sleep mobility question"
+  },
+  "safety": {
+    "block_if_contains": [
+      "chest pain",
+      "stroke",
+      "suicidal",
+      "suicide",
+      "overdose",
+      "can't breathe",
+      "cannot breathe",
+      "severe bleeding",
+      "fainted",
+      "unconscious",
+      "sepsis",
+      "blood in stool",
+      "blood in urine"
+    ],
+    "requires_human_review": [
+      "medication",
+      "dose",
+      "dosage",
+      "diagnosis",
+      "treatment",
+      "cancer",
+      "diabetes",
+      "kidney disease",
+      "heart failure",
+      "dementia"
+    ]
+  }
+}

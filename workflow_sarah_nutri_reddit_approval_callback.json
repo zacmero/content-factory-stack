@@ -1,0 +1,404 @@
+{
+  "name": "Sarah Nutri - Reddit Approval Callback",
+  "nodes": [
+    {
+      "parameters": {
+        "httpMethod": "GET",
+        "path": "sarah-nutri-reddit-approval",
+        "responseMode": "lastNode",
+        "responseData": "firstEntryJson",
+        "options": {}
+      },
+      "id": "approval-webhook",
+      "name": "Approval Webhook",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 1,
+      "position": [
+        -1120,
+        0
+      ],
+      "webhookId": "sarah-nutri-reddit-approval"
+    },
+    {
+      "parameters": {
+        "curlImport": "",
+        "method": "GET",
+        "url": "={{ `http://localhost:5678/api/v1/executions/${$node['Approval Webhook'].json.query.executionId}?includeData=true` }}",
+        "authentication": "none",
+        "provideSslCertificates": false,
+        "sendQuery": false,
+        "sendHeaders": true,
+        "specifyHeaders": "keypair",
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "X-N8N-API-KEY",
+              "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2OTg0YTliYi1mMmM5LTRjMTUtYmY3NC1jZDVmZDVjYmQ1YWQiLCJpc3MiOiJuOG4iLCJhdWQiOiJwdWJsaWMtYXBpIiwiaWF0IjoxNzU5Nzk1MTg2fQ.7ui0fuFgZ0zm5xew5COKoLVbYDNl49G6Iy2M2IUtj-g"
+            }
+          ]
+        },
+        "sendBody": false,
+        "options": {},
+        "infoMessage": ""
+      },
+      "id": "get-source-execution",
+      "name": "Get Source Execution",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.1,
+      "position": [
+        -880,
+        0
+      ]
+    },
+    {
+      "parameters": {
+        "jsCode": "const action = String($node['Approval Webhook'].json.query.action || '').toLowerCase();\nconst execution = $input.first().json;\nconst runData = execution.data?.resultData?.runData || {};\nconst review = runData['Assemble Review']?.[0]?.data?.main?.[0]?.[0]?.json;\nif (!review) throw new Error('Could not find Assemble Review output in source execution');\nreturn [{ json: { action, ...review } }];"
+      },
+      "id": "extract-review",
+      "name": "Extract Review",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        -640,
+        0
+      ]
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict"
+          },
+          "conditions": [
+            {
+              "id": "approved-check",
+              "leftValue": "={{ $json.action }}",
+              "rightValue": "approve",
+              "operator": {
+                "type": "string",
+                "operation": "equals"
+              }
+            },
+            {
+              "id": "safety-check",
+              "leftValue": "={{ $json.safetyDecision }}",
+              "rightValue": "answer",
+              "operator": {
+                "type": "string",
+                "operation": "equals"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "id": "if-approved",
+      "name": "If Approved?",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        -400,
+        0
+      ]
+    },
+    {
+      "parameters": {
+        "jsCode": "const staticData = $getWorkflowStaticData('global');\nconst today = new Date().toISOString().slice(0, 10);\nif (staticData.day !== today) {\n  staticData.day = today;\n  staticData.approvedCount = 0;\n}\nconst limit = Number($json.dailyApprovedPostLimit || 5);\nif ((staticData.approvedCount || 0) >= limit) {\n  return [{ json: { ...$json, blockedByDailyLimit: true, message: 'Daily Reddit approval limit reached: ' + staticData.approvedCount + '/' + limit } }];\n}\nreturn [{ json: { ...$json, blockedByDailyLimit: false, approvedCount: staticData.approvedCount || 0, dailyLimit: limit } }];"
+      },
+      "id": "daily-limit-guard",
+      "name": "Daily Limit Guard",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        -160,
+        -120
+      ]
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict"
+          },
+          "conditions": [
+            {
+              "id": "limit-check",
+              "leftValue": "={{ $json.blockedByDailyLimit }}",
+              "rightValue": false,
+              "operator": {
+                "type": "boolean",
+                "operation": "false",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "id": "if-limit-ok",
+      "name": "If Limit OK?",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        80,
+        -120
+      ]
+    },
+    {
+      "parameters": {
+        "jsCode": "const clientId = $env.REDDIT_CLIENT_ID || '';\nconst clientSecret = $env.REDDIT_CLIENT_SECRET || '';\nconst refreshToken = $env.REDDIT_REFRESH_TOKEN || '';\nconst userAgent = $env.REDDIT_USER_AGENT || 'linux:content-factory-sarah-nutri:0.1.0 by /u/sarah_nutri';\nif (!clientId || !clientSecret || !refreshToken) throw new Error('Missing Reddit OAuth env vars');\nreturn [{ json: { ...$json, redditBasicAuth: 'Basic ' + Buffer.from(clientId + ':' + clientSecret).toString('base64'), redditRefreshToken: refreshToken, userAgent } }];"
+      },
+      "id": "build-reddit-auth",
+      "name": "Build Reddit Auth",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        320,
+        -180
+      ]
+    },
+    {
+      "parameters": {
+        "curlImport": "",
+        "method": "POST",
+        "url": "https://www.reddit.com/api/v1/access_token",
+        "authentication": "none",
+        "provideSslCertificates": false,
+        "sendQuery": false,
+        "sendHeaders": true,
+        "specifyHeaders": "keypair",
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Authorization",
+              "value": "={{ $json.redditBasicAuth }}"
+            },
+            {
+              "name": "User-Agent",
+              "value": "={{ $json.userAgent }}"
+            },
+            {
+              "name": "Content-Type",
+              "value": "application/x-www-form-urlencoded"
+            }
+          ]
+        },
+        "sendBody": true,
+        "contentType": "raw",
+        "rawContentType": "application/x-www-form-urlencoded",
+        "body": "={{ 'grant_type=refresh_token&refresh_token=' + encodeURIComponent($json.redditRefreshToken) }}",
+        "options": {},
+        "infoMessage": ""
+      },
+      "id": "get-reddit-token",
+      "name": "Get Reddit Token",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.1,
+      "position": [
+        560,
+        -180
+      ]
+    },
+    {
+      "parameters": {
+        "curlImport": "",
+        "method": "POST",
+        "url": "https://oauth.reddit.com/api/comment",
+        "authentication": "none",
+        "provideSslCertificates": false,
+        "sendQuery": false,
+        "sendHeaders": true,
+        "specifyHeaders": "keypair",
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Authorization",
+              "value": "={{ 'Bearer ' + $json.access_token }}"
+            },
+            {
+              "name": "User-Agent",
+              "value": "={{ $node['Build Reddit Auth'].json.userAgent }}"
+            },
+            {
+              "name": "Content-Type",
+              "value": "application/x-www-form-urlencoded"
+            }
+          ]
+        },
+        "sendBody": true,
+        "contentType": "raw",
+        "rawContentType": "application/x-www-form-urlencoded",
+        "body": "={{ 'api_type=json&thing_id=' + encodeURIComponent($node['Build Reddit Auth'].json.redditThingId) + '&text=' + encodeURIComponent($node['Build Reddit Auth'].json.replyText) }}",
+        "options": {
+          "response": {
+            "response": {
+              "neverError": true
+            }
+          }
+        },
+        "infoMessage": ""
+      },
+      "id": "post-reddit-comment",
+      "name": "Post Reddit Comment",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.1,
+      "position": [
+        800,
+        -180
+      ]
+    },
+    {
+      "parameters": {
+        "jsCode": "const response = $input.first().json;\nconst draft = $node['Build Reddit Auth'].json;\nconst staticData = $getWorkflowStaticData('global');\nconst today = new Date().toISOString().slice(0, 10);\nif (staticData.day !== today) {\n  staticData.day = today;\n  staticData.approvedCount = 0;\n}\nconst errors = response?.json?.errors || [];\nconst posted = Array.isArray(errors) ? errors.length === 0 : true;\nif (posted) staticData.approvedCount = (staticData.approvedCount || 0) + 1;\nreturn [{ json: { ok: posted, action: 'approve', message: posted ? 'Reddit comment posted for r/' + draft.subreddit + '. Daily count: ' + staticData.approvedCount + '/' + (draft.dailyLimit || draft.dailyApprovedPostLimit || 5) : 'Reddit API rejected the comment. Daily count was not incremented.', permalink: draft.permalink, response } }];"
+      },
+      "id": "build-approve-response",
+      "name": "Build Approve Response",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        1040,
+        -180
+      ]
+    },
+    {
+      "parameters": {
+        "jsCode": "return [{ json: { ok: false, action: $json.action || 'blocked', message: $json.message || 'Rejected or blocked. No Reddit comment was posted.', safetyDecision: $json.safetyDecision, permalink: $json.permalink } }];"
+      },
+      "id": "build-blocked-response",
+      "name": "Build Blocked Response",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        320,
+        40
+      ]
+    }
+  ],
+  "connections": {
+    "Approval Webhook": {
+      "main": [
+        [
+          {
+            "node": "Get Source Execution",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get Source Execution": {
+      "main": [
+        [
+          {
+            "node": "Extract Review",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Extract Review": {
+      "main": [
+        [
+          {
+            "node": "If Approved?",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If Approved?": {
+      "main": [
+        [
+          {
+            "node": "Daily Limit Guard",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Build Blocked Response",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Daily Limit Guard": {
+      "main": [
+        [
+          {
+            "node": "If Limit OK?",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If Limit OK?": {
+      "main": [
+        [
+          {
+            "node": "Build Reddit Auth",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Build Blocked Response",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Build Reddit Auth": {
+      "main": [
+        [
+          {
+            "node": "Get Reddit Token",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get Reddit Token": {
+      "main": [
+        [
+          {
+            "node": "Post Reddit Comment",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Post Reddit Comment": {
+      "main": [
+        [
+          {
+            "node": "Build Approve Response",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "settings": {
+    "callerPolicy": "workflowsFromSameOwner",
+    "availableInMCP": false
+  },
+  "staticData": null,
+  "pinData": null
+}

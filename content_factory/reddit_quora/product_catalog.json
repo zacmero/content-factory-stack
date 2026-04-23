@@ -1,0 +1,44 @@
+{
+  "products": [
+    {
+      "slug": "hydration-electrolytes",
+      "name": "Senior-friendly hydration support",
+      "affiliate_url": "https://example.com/affiliate/hydration",
+      "match_keywords": ["hydration", "dehydrated", "electrolyte", "cramps", "water"],
+      "use_when": "The person is asking about hydration habits, mild dehydration prevention, or staying hydrated during heat or low appetite.",
+      "avoid_when": "The person reports confusion, fainting, severe illness, kidney disease, heart failure, or medication changes."
+    },
+    {
+      "slug": "protein-shake",
+      "name": "Easy protein nutrition shake",
+      "affiliate_url": "https://example.com/affiliate/protein-shake",
+      "match_keywords": ["protein", "appetite", "muscle", "weak", "weight loss", "meal replacement"],
+      "use_when": "The question is about low appetite, simple protein intake, or maintaining muscle with aging.",
+      "avoid_when": "The person has kidney disease, unexplained weight loss, swallowing problems, or needs medical nutrition therapy."
+    },
+    {
+      "slug": "fiber-support",
+      "name": "Gentle fiber support",
+      "affiliate_url": "https://example.com/affiliate/fiber",
+      "match_keywords": ["constipation", "fiber", "regular", "digestion", "bowel"],
+      "use_when": "The person asks about simple food and routine support for occasional constipation.",
+      "avoid_when": "The person reports blood, severe pain, bowel obstruction risk, sudden major bowel changes, or unexplained weight loss."
+    },
+    {
+      "slug": "mobility-bands",
+      "name": "Light resistance bands",
+      "affiliate_url": "https://example.com/affiliate/resistance-bands",
+      "match_keywords": ["mobility", "walking", "strength", "exercise", "balance", "chair exercise"],
+      "use_when": "The person asks about gentle strength, balance, or simple home movement for older adults.",
+      "avoid_when": "The person has acute injury, falls, severe pain, fracture concern, or needs physical therapy clearance."
+    },
+    {
+      "slug": "sleep-routine",
+      "name": "Sleep routine support kit",
+      "affiliate_url": "https://example.com/affiliate/sleep",
+      "match_keywords": ["sleep", "insomnia", "night", "routine", "tired"],
+      "use_when": "The person asks about sleep hygiene, bedtime routine, or non-medical sleep habits.",
+      "avoid_when": "The person mentions sedatives, sleep apnea, confusion, falls, medication interactions, or severe depression."
+    }
+  ]
+}

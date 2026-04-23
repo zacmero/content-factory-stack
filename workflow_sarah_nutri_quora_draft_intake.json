@@ -1,0 +1,287 @@
+{
+  "name": "Sarah Nutri - Quora Draft Intake -> Discord Review",
+  "nodes": [
+    {
+      "parameters": {
+        "notice": ""
+      },
+      "id": "manual-trigger",
+      "name": "Manual Trigger",
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [
+        -980,
+        120
+      ]
+    },
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "sarah-nutri-quora-draft",
+        "responseMode": "lastNode",
+        "responseData": "firstEntryJson",
+        "options": {}
+      },
+      "id": "quora-webhook",
+      "name": "Quora Draft Webhook",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 1,
+      "position": [
+        -980,
+        -80
+      ],
+      "webhookId": "sarah-nutri-quora-draft"
+    },
+    {
+      "parameters": {
+        "jsCode": "const products = [\n  {\n    \"slug\": \"hydration-electrolytes\",\n    \"name\": \"Senior-friendly hydration support\",\n    \"affiliate_url\": \"https://example.com/affiliate/hydration\",\n    \"match_keywords\": [\n      \"hydration\",\n      \"dehydrated\",\n      \"electrolyte\",\n      \"cramps\",\n      \"water\"\n    ],\n    \"use_when\": \"The person is asking about hydration habits, mild dehydration prevention, or staying hydrated during heat or low appetite.\",\n    \"avoid_when\": \"The person reports confusion, fainting, severe illness, kidney disease, heart failure, or medication changes.\"\n  },\n  {\n    \"slug\": \"protein-shake\",\n    \"name\": \"Easy protein nutrition shake\",\n    \"affiliate_url\": \"https://example.com/affiliate/protein-shake\",\n    \"match_keywords\": [\n      \"protein\",\n      \"appetite\",\n      \"muscle\",\n      \"weak\",\n      \"weight loss\",\n      \"meal replacement\"\n    ],\n    \"use_when\": \"The question is about low appetite, simple protein intake, or maintaining muscle with aging.\",\n    \"avoid_when\": \"The person has kidney disease, unexplained weight loss, swallowing problems, or needs medical nutrition therapy.\"\n  },\n  {\n    \"slug\": \"fiber-support\",\n    \"name\": \"Gentle fiber support\",\n    \"affiliate_url\": \"https://example.com/affiliate/fiber\",\n    \"match_keywords\": [\n      \"constipation\",\n      \"fiber\",\n      \"regular\",\n      \"digestion\",\n      \"bowel\"\n    ],\n    \"use_when\": \"The person asks about simple food and routine support for occasional constipation.\",\n    \"avoid_when\": \"The person reports blood, severe pain, bowel obstruction risk, sudden major bowel changes, or unexplained weight loss.\"\n  },\n  {\n    \"slug\": \"mobility-bands\",\n    \"name\": \"Light resistance bands\",\n    \"affiliate_url\": \"https://example.com/affiliate/resistance-bands\",\n    \"match_keywords\": [\n      \"mobility\",\n      \"walking\",\n      \"strength\",\n      \"exercise\",\n      \"balance\",\n      \"chair exercise\"\n    ],\n    \"use_when\": \"The person asks about gentle strength, balance, or simple home movement for older adults.\",\n    \"avoid_when\": \"The person has acute injury, falls, severe pain, fracture concern, or needs physical therapy clearance.\"\n  },\n  {\n    \"slug\": \"sleep-routine\",\n    \"name\": \"Sleep routine support kit\",\n    \"affiliate_url\": \"https://example.com/affiliate/sleep\",\n    \"match_keywords\": [\n      \"sleep\",\n      \"insomnia\",\n      \"night\",\n      \"routine\",\n      \"tired\"\n    ],\n    \"use_when\": \"The person asks about sleep hygiene, bedtime routine, or non-medical sleep habits.\",\n    \"avoid_when\": \"The person mentions sedatives, sleep apnea, confusion, falls, medication interactions, or severe depression.\"\n  }\n];\nconst input = $json.body || $json;\nconst title = input.title || 'How can an older adult improve daily nutrition safely?';\nconst url = input.url || '';\nconst body = input.body || input.text || 'General senior nutrition question.';\nconst prompt = \"You are drafting a Quora answer for Sarah Nutri.\\n\\nThe answer should be higher effort than a Reddit comment: clear structure, practical steps, and a calm healthy-aging tone. Do not post directly from automation. Produce a draft for manual review.\\n\\nHard rules:\\n- General education only, not medical diagnosis.\\n- Include a clinician/registered dietitian caveat when the question is condition-specific.\\n- Use product links sparingly and only when directly relevant.\\n- Include an affiliate disclosure when a link is used.\\n- Avoid repetitive templates.\\n\\nReturn strict JSON only:\\n{\\n  \\\"safety\\\": \\\"answer|human_review|emergency|skip\\\",\\n  \\\"affiliate_allowed\\\": false,\\n  \\\"selected_product_slug\\\": null,\\n  \\\"answer\\\": \\\"final Quora draft answer\\\",\\n  \\\"reason\\\": \\\"short internal reason\\\"\\n}\\n\" + '\\n\\nQuora question context:\\n' + JSON.stringify({ title, url, body }, null, 2) + '\\n\\nProduct catalog:\\n' + JSON.stringify(products, null, 2) + '\\n\\nReturn strict JSON only.';\nreturn [{ json: { platform: 'quora', title, url, body, products, prompt } }];"
+      },
+      "id": "build-quora-prompt",
+      "name": "Build Quora Prompt",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        -720,
+        0
+      ]
+    },
+    {
+      "parameters": {
+        "notice": "",
+        "promptType": "define",
+        "text": "={{ $json.prompt }}",
+        "hasOutputParser": false,
+        "needsFallback": false,
+        "messages": {}
+      },
+      "id": "bonsai-draft",
+      "name": "Bonsai Quora Draft",
+      "type": "@n8n/n8n-nodes-langchain.chainLlm",
+      "typeVersion": 1.4,
+      "position": [
+        -480,
+        0
+      ]
+    },
+    {
+      "parameters": {
+        "model": {
+          "mode": "id",
+          "value": "bonsai-8b"
+        },
+        "options": {}
+      },
+      "id": "bonsai-model",
+      "name": "Bonsai Model",
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
+      "typeVersion": 1.2,
+      "position": [
+        -560,
+        200
+      ],
+      "credentials": {
+        "openAiApi": {
+          "id": "b0nsa1OpenAi8081",
+          "name": "Bonsai OpenAI account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsCode": "const source = $node['Build Quora Prompt'].json;\nconst raw = String($json.text || '').trim();\nfunction parseJson(text) {\n  const fenced = text.match(/\\`\\`\\`(?:json)?\\s*([\\s\\S]*?)\\`\\`\\`/i);\n  const body = fenced ? fenced[1] : text;\n  const first = body.indexOf('{');\n  const last = body.lastIndexOf('}');\n  if (first < 0 || last < first) throw new Error('Bonsai did not return JSON: ' + text.slice(0, 300));\n  return JSON.parse(body.slice(first, last + 1));\n}\nconst parsed = parseJson(raw);\nconst product = (source.products || []).find((p) => p.slug === parsed.selected_product_slug) || null;\nreturn [{ json: { ...source, draftRaw: raw, safetyDecision: parsed.safety || 'human_review', affiliateAllowed: parsed.affiliate_allowed === true, selectedProductSlug: parsed.selected_product_slug || '', selectedProductName: product ? product.name : '', answerText: String(parsed.answer || '').trim(), draftReason: parsed.reason || '' } }];"
+      },
+      "id": "parse-quora-draft",
+      "name": "Parse Quora Draft",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        -240,
+        0
+      ]
+    },
+    {
+      "parameters": {
+        "mode": "manual",
+        "duplicateItem": false,
+        "assignments": {
+          "assignments": [
+            {
+              "id": "platform",
+              "name": "platform",
+              "value": "quora",
+              "type": "string"
+            },
+            {
+              "id": "title",
+              "name": "title",
+              "value": "={{ $json.title }}",
+              "type": "string"
+            },
+            {
+              "id": "url",
+              "name": "url",
+              "value": "={{ $json.url }}",
+              "type": "string"
+            },
+            {
+              "id": "answerText",
+              "name": "answerText",
+              "value": "={{ $json.answerText }}",
+              "type": "string"
+            },
+            {
+              "id": "safetyDecision",
+              "name": "safetyDecision",
+              "value": "={{ $json.safetyDecision }}",
+              "type": "string"
+            },
+            {
+              "id": "affiliateAllowed",
+              "name": "affiliateAllowed",
+              "value": "={{ $json.affiliateAllowed }}",
+              "type": "boolean"
+            },
+            {
+              "id": "selectedProductSlug",
+              "name": "selectedProductSlug",
+              "value": "={{ $json.selectedProductSlug }}",
+              "type": "string"
+            },
+            {
+              "id": "draftReason",
+              "name": "draftReason",
+              "value": "={{ $json.draftReason }}",
+              "type": "string"
+            },
+            {
+              "id": "discordMessage",
+              "name": "discordMessage",
+              "value": "={{ `Sarah Nutri Quora draft review\\n\\nQuestion: ${$json.title}\\nURL: ${$json.url || 'manual intake'}\\nSafety: ${$json.safetyDecision}\\nAffiliate: ${$json.affiliateAllowed ? 'yes - ' + $json.selectedProductSlug : 'no'}\\nReason: ${$json.draftReason}\\n\\nDraft answer:\\n${($json.answerText || '').substring(0, 1800)}${($json.answerText || '').length > 1800 ? '...' : ''}\\n\\nStatus: manual posting only for now.` }}",
+              "type": "string"
+            }
+          ]
+        },
+        "includeOtherFields": false,
+        "options": {}
+      },
+      "id": "assemble-quora-review",
+      "name": "Assemble Quora Review",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        0,
+        0
+      ]
+    },
+    {
+      "parameters": {
+        "authentication": "webhook",
+        "operation": "sendLegacy",
+        "content": "={{ $json.discordMessage }}",
+        "options": {},
+        "embeds": {},
+        "files": {}
+      },
+      "id": "discord-notify",
+      "name": "Discord Notify",
+      "type": "n8n-nodes-base.discord",
+      "typeVersion": 2,
+      "position": [
+        240,
+        0
+      ],
+      "credentials": {
+        "discordWebhookApi": {
+          "id": "7i15uQZ2xyb2Y3zH",
+          "name": "Discord Webhook account"
+        }
+      },
+      "webhookId": "sarah-discord-quora-draft"
+    }
+  ],
+  "connections": {
+    "Manual Trigger": {
+      "main": [
+        [
+          {
+            "node": "Build Quora Prompt",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Quora Draft Webhook": {
+      "main": [
+        [
+          {
+            "node": "Build Quora Prompt",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Build Quora Prompt": {
+      "main": [
+        [
+          {
+            "node": "Bonsai Quora Draft",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Bonsai Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "Bonsai Quora Draft",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Bonsai Quora Draft": {
+      "main": [
+        [
+          {
+            "node": "Parse Quora Draft",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Parse Quora Draft": {
+      "main": [
+        [
+          {
+            "node": "Assemble Quora Review",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Assemble Quora Review": {
+      "main": [
+        [
+          {
+            "node": "Discord Notify",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "settings": {
+    "callerPolicy": "workflowsFromSameOwner",
+    "availableInMCP": false
+  },
+  "staticData": null,
+  "pinData": null
+}

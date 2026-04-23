@@ -4,7 +4,7 @@
 Wire Bonsai as the default text model for the content-factory pipeline, keep Gemini for image generation and future video work, repair Temporal so Postiz boots cleanly again, and document the root cause and current milestones.
 
 ## Current Phase
-Phase 5
+Phase 7
 
 ## Phases
 
@@ -40,6 +40,27 @@ Phase 5
 - [x] Leave milestone/state files updated
 - **Status:** complete
 
+### Phase 6: Reddit/Quora Response Pipeline
+- [x] Create isolated config and product catalog
+- [x] Create Reddit OAuth helper
+- [x] Create Reddit collector/drafter workflow export
+- [x] Create Reddit approval/post callback workflow export
+- [x] Create Quora draft intake workflow export
+- [x] Create n8n import helper
+- [ ] Wait for Reddit OAuth app credentials and refresh token
+- **Status:** in_progress
+
+### Phase 7: Manual Forum Queue + Digistore24
+- [x] Pivot around Reddit API approval block with a manual posting queue
+- [x] Create combined Reddit + Quora candidate intake workflow export
+- [x] Add Digistore24 credential docs
+- [x] Add Digistore24 catalog sync helper
+- [x] Wire Digistore24 env vars into n8n compose
+- [ ] Wait for Digistore24 read-only API key
+- [ ] Import and activate manual queue in n8n
+- [ ] Test one real Reddit candidate and one real Quora candidate
+- **Status:** in_progress
+
 ## Key Questions
 1. Which files currently control text interpretation vs image/video generation?
 2. Is Bonsai already reachable from containers, or do we need to add env/proxy plumbing?
@@ -51,6 +72,12 @@ Phase 5
 | Use planning files in repo root | Keeps milestones and findings persistent across sessions |
 | Use Bonsai OpenAI credential for n8n text nodes | Keeps text routing local while leaving image/video paths untouched |
 | Keep Gemini nodes only for media-specific paths | Preserves image/video generation behavior |
+| Keep Reddit/Quora workflows isolated | Avoids affecting current production video/RSS workflows |
+| Require human approval for Reddit posting | Reduces medical and platform risk |
+| Keep Quora draft-only for now | Avoids brittle direct posting before account and source behavior are settled |
+| Use manual posting queue while Reddit API is blocked | Validates answer format without waiting for Reddit approval or bypassing platform controls |
+| Use Digistore24 HTTP API for n8n | Simpler and more deterministic than MCP for scheduled workflows |
+| Use Digistore24 MCP for interactive exploration only | Good for agent-assisted browsing, less suitable as the workflow runtime path |
 
 ## Errors Encountered
 | Error | Attempt | Resolution |

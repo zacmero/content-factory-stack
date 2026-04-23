@@ -86,3 +86,81 @@
 | What's the goal? | Bonsai for text, Gemini for media, Temporal healthy |
 | What have I learned? | See findings.md |
 | What have I done? | See above |
+
+## Session: 2026-04-23
+
+### Phase 6: Reddit/Quora Response Pipeline
+- **Status:** in_progress
+- Actions taken:
+  - Created isolated Reddit/Quora config, product catalog, and prompt files.
+  - Added Reddit OAuth refresh-token helper script.
+  - Added n8n import helper for inactive workflow import.
+  - Generated Reddit collector/drafter workflow export.
+  - Generated Reddit approval/post callback workflow export.
+  - Generated Quora draft intake workflow export.
+  - Added Reddit env passthrough to the root n8n compose service.
+  - Added Reddit env placeholders to `.env.template`.
+  - Corrected Reddit setup docs to reflect the current approval-gated Data API path.
+- Files created/modified:
+  - `content_factory/reddit_quora/config.json`
+  - `content_factory/reddit_quora/product_catalog.json`
+  - `content_factory/reddit_quora/prompts/reddit_reply_system.md`
+  - `content_factory/reddit_quora/prompts/quora_reply_system.md`
+  - `content_factory/reddit_quora/README.md`
+  - `scripts/reddit_oauth_setup.mjs`
+  - `scripts/build_reddit_workflows.mjs`
+  - `scripts/import_social_response_workflows.mjs`
+  - `workflow_sarah_nutri_reddit_research_main.json`
+  - `workflow_sarah_nutri_reddit_approval_callback.json`
+  - `workflow_sarah_nutri_quora_draft_intake.json`
+  - `.env.template`
+  - `docker-compose.yml`
+
+## Additional Test Results
+| Test | Input | Expected | Actual | Status |
+|------|-------|----------|--------|--------|
+| Workflow generator syntax | `node --check scripts/build_reddit_workflows.mjs` | Valid JS | Passed | pass |
+| OAuth/import scripts syntax | `node --check` | Valid JS | Passed | pass |
+| Workflow JSON validation | `require()` generated JSON | Valid workflow objects | 3 workflow exports loaded | pass |
+| Compose config | `docker-compose config` | n8n env renders | Reddit env vars render blank/default | pass |
+
+## Additional Error Log
+| Timestamp | Error | Attempt | Resolution |
+|-----------|-------|---------|------------|
+| 2026-04-23 | Semantic code search returned `429` | 1 | Used direct repo search and workflow JSON inspection |
+| 2026-04-23 | Workflow builder template string broke on raw Markdown fence backticks | 1 | Escaped fence regex and regenerated exports |
+| 2026-04-23 | Reddit portal pushed Devvit instead of legacy OAuth app creation | 1 | Documented that external Data API access requires Reddit approval before OAuth credentials are available |
+
+### Phase 7: Manual Forum Queue + Digistore24
+- **Status:** in_progress
+- Actions taken:
+  - Researched Digistore24 official API key, API call, and MCP setup docs.
+  - Added Digistore24 credential and runtime notes.
+  - Added Digistore24 env vars to `.env.template` and n8n compose.
+  - Added `scripts/digistore24_sync_catalog.mjs` to pull account/marketplace products into the local catalog.
+  - Added `scripts/build_forum_manual_queue.mjs`.
+  - Generated `workflow_sarah_nutri_forum_manual_queue.json`.
+  - Changed import helper to import the manual queue by default and leave blocked Reddit API workflows opt-in.
+- Files created/modified:
+  - `content_factory/reddit_quora/digistore24.md`
+  - `scripts/digistore24_sync_catalog.mjs`
+  - `scripts/build_forum_manual_queue.mjs`
+  - `workflow_sarah_nutri_forum_manual_queue.json`
+  - `scripts/import_social_response_workflows.mjs`
+  - `.env.template`
+  - `docker-compose.yml`
+  - `content_factory/reddit_quora/README.md`
+
+## Phase 7 Test Results
+| Test | Input | Expected | Actual | Status |
+|------|-------|----------|--------|--------|
+| Manual queue builder syntax | `node --check scripts/build_forum_manual_queue.mjs` | Valid JS | Passed | pass |
+| Digistore sync syntax | `node --check scripts/digistore24_sync_catalog.mjs` | Valid JS | Passed | pass |
+| Manual queue generation | `node scripts/build_forum_manual_queue.mjs` | Workflow export written | Export written | pass |
+| Manual queue JSON validation | `JSON.parse` export | Valid JSON | Passed | pass |
+| Compose config | `docker-compose config` | Digistore env vars render | Rendered cleanly | pass |
+
+## Phase 7 Error Log
+| Timestamp | Error | Attempt | Resolution |
+|-----------|-------|---------|------------|
+| 2026-04-23 | Discord packet node accidentally interpolated runtime variables during workflow generation | 1 | Rewrote packet composition with string joins and regenerated export |

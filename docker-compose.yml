@@ -24,6 +24,15 @@ services:
       - OPENAI_API_KEY=local
       - OPENAI_BASE_URL=http://host.docker.internal:8081/v1
       - OPENAI_MODEL=bonsai-8b
+      - REDDIT_CLIENT_ID=${REDDIT_CLIENT_ID:-}
+      - REDDIT_CLIENT_SECRET=${REDDIT_CLIENT_SECRET:-}
+      - REDDIT_REFRESH_TOKEN=${REDDIT_REFRESH_TOKEN:-}
+      - REDDIT_USERNAME=${REDDIT_USERNAME:-sarah_nutri}
+      - REDDIT_USER_AGENT=${REDDIT_USER_AGENT:-linux:content-factory-sarah-nutri:0.1.0 by /u/sarah_nutri}
+      - DIGISTORE24_API_KEY=${DIGISTORE24_API_KEY:-}
+      - DIGISTORE24_AFFILIATE_ID=${DIGISTORE24_AFFILIATE_ID:-}
+      - DIGISTORE24_MARKETPLACE_KEYWORDS=${DIGISTORE24_MARKETPLACE_KEYWORDS:-senior,elderly,caregiver,nutrition,mobility,sleep,joint,arthritis,memory,digestion}
+      - DIGISTORE24_MAX_PRODUCTS=${DIGISTORE24_MAX_PRODUCTS:-40}
     volumes:
       - ./n8n_data:/home/node/.n8n
       - ./content_factory:/files

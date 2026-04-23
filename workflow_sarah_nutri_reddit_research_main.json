@@ -1,0 +1,587 @@
+{
+  "name": "Sarah Nutri - Reddit Research -> Discord Review",
+  "nodes": [
+    {
+      "parameters": {
+        "notice": ""
+      },
+      "id": "manual-trigger",
+      "name": "Manual Trigger",
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [
+        -1240,
+        40
+      ]
+    },
+    {
+      "parameters": {
+        "rule": {
+          "interval": [
+            {
+              "field": "hours",
+              "hoursInterval": 6
+            }
+          ]
+        }
+      },
+      "id": "schedule-trigger",
+      "name": "Daily Schedule",
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1.2,
+      "position": [
+        -1240,
+        -160
+      ]
+    },
+    {
+      "parameters": {
+        "httpMethod": "GET",
+        "path": "sarah-nutri-reddit-run",
+        "responseMode": "lastNode",
+        "responseData": "firstEntryJson",
+        "options": {}
+      },
+      "id": "api-trigger",
+      "name": "API Trigger",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 1,
+      "position": [
+        -1240,
+        240
+      ],
+      "webhookId": "sarah-nutri-reddit-run"
+    },
+    {
+      "parameters": {
+        "jsCode": "const config = {\n  \"brand\": \"Sarah Nutri\",\n  \"mode\": \"human_approval_required\",\n  \"daily_approved_post_limit\": 5,\n  \"affiliate_link_probability\": 0.15,\n  \"default_disclosure\": \"Disclosure: this may be an affiliate link, which means I may earn a small commission at no extra cost to you.\",\n  \"reddit\": {\n    \"search_limit\": 15,\n    \"search_query\": \"(elderly OR senior OR \\\"aging parent\\\" OR caregiver OR arthritis OR mobility OR sleep OR constipation OR appetite OR hydration OR \\\"blood pressure\\\")\",\n    \"target_subreddits\": [\n      \"AgingParents\",\n      \"CaregiverSupport\",\n      \"eldercare\",\n      \"AskOldPeopleAdvice\",\n      \"nutrition\",\n      \"Supplements\"\n    ],\n    \"blocked_subreddits\": [\n      \"AskDocs\",\n      \"medical\",\n      \"DiagnoseMe\"\n    ]\n  },\n  \"quora\": {\n    \"daily_manual_post_limit\": 5,\n    \"source_mode\": \"draft_only_until_reviewed\",\n    \"google_query\": \"site:quora.com elderly senior health caregiver nutrition sleep mobility question\"\n  },\n  \"safety\": {\n    \"block_if_contains\": [\n      \"chest pain\",\n      \"stroke\",\n      \"suicidal\",\n      \"suicide\",\n      \"overdose\",\n      \"can't breathe\",\n      \"cannot breathe\",\n      \"severe bleeding\",\n      \"fainted\",\n      \"unconscious\",\n      \"sepsis\",\n      \"blood in stool\",\n      \"blood in urine\"\n    ],\n    \"requires_human_review\": [\n      \"medication\",\n      \"dose\",\n      \"dosage\",\n      \"diagnosis\",\n      \"treatment\",\n      \"cancer\",\n      \"diabetes\",\n      \"kidney disease\",\n      \"heart failure\",\n      \"dementia\"\n    ]\n  }\n};\nconst catalog = [\n  {\n    \"slug\": \"hydration-electrolytes\",\n    \"name\": \"Senior-friendly hydration support\",\n    \"affiliate_url\": \"https://example.com/affiliate/hydration\",\n    \"match_keywords\": [\n      \"hydration\",\n      \"dehydrated\",\n      \"electrolyte\",\n      \"cramps\",\n      \"water\"\n    ],\n    \"use_when\": \"The person is asking about hydration habits, mild dehydration prevention, or staying hydrated during heat or low appetite.\",\n    \"avoid_when\": \"The person reports confusion, fainting, severe illness, kidney disease, heart failure, or medication changes.\"\n  },\n  {\n    \"slug\": \"protein-shake\",\n    \"name\": \"Easy protein nutrition shake\",\n    \"affiliate_url\": \"https://example.com/affiliate/protein-shake\",\n    \"match_keywords\": [\n      \"protein\",\n      \"appetite\",\n      \"muscle\",\n      \"weak\",\n      \"weight loss\",\n      \"meal replacement\"\n    ],\n    \"use_when\": \"The question is about low appetite, simple protein intake, or maintaining muscle with aging.\",\n    \"avoid_when\": \"The person has kidney disease, unexplained weight loss, swallowing problems, or needs medical nutrition therapy.\"\n  },\n  {\n    \"slug\": \"fiber-support\",\n    \"name\": \"Gentle fiber support\",\n    \"affiliate_url\": \"https://example.com/affiliate/fiber\",\n    \"match_keywords\": [\n      \"constipation\",\n      \"fiber\",\n      \"regular\",\n      \"digestion\",\n      \"bowel\"\n    ],\n    \"use_when\": \"The person asks about simple food and routine support for occasional constipation.\",\n    \"avoid_when\": \"The person reports blood, severe pain, bowel obstruction risk, sudden major bowel changes, or unexplained weight loss.\"\n  },\n  {\n    \"slug\": \"mobility-bands\",\n    \"name\": \"Light resistance bands\",\n    \"affiliate_url\": \"https://example.com/affiliate/resistance-bands\",\n    \"match_keywords\": [\n      \"mobility\",\n      \"walking\",\n      \"strength\",\n      \"exercise\",\n      \"balance\",\n      \"chair exercise\"\n    ],\n    \"use_when\": \"The person asks about gentle strength, balance, or simple home movement for older adults.\",\n    \"avoid_when\": \"The person has acute injury, falls, severe pain, fracture concern, or needs physical therapy clearance.\"\n  },\n  {\n    \"slug\": \"sleep-routine\",\n    \"name\": \"Sleep routine support kit\",\n    \"affiliate_url\": \"https://example.com/affiliate/sleep\",\n    \"match_keywords\": [\n      \"sleep\",\n      \"insomnia\",\n      \"night\",\n      \"routine\",\n      \"tired\"\n    ],\n    \"use_when\": \"The person asks about sleep hygiene, bedtime routine, or non-medical sleep habits.\",\n    \"avoid_when\": \"The person mentions sedatives, sleep apnea, confusion, falls, medication interactions, or severe depression.\"\n  }\n];\nreturn [{ json: { ...config, products: catalog } }];"
+      },
+      "id": "build-config",
+      "name": "Build Config",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        -1000,
+        40
+      ]
+    },
+    {
+      "parameters": {
+        "jsCode": "const clientId = $env.REDDIT_CLIENT_ID || '';\nconst clientSecret = $env.REDDIT_CLIENT_SECRET || '';\nconst refreshToken = $env.REDDIT_REFRESH_TOKEN || '';\nconst userAgent = $env.REDDIT_USER_AGENT || 'linux:content-factory-sarah-nutri:0.1.0 by /u/sarah_nutri';\nif (!clientId || !clientSecret || !refreshToken) {\n  throw new Error('Missing Reddit OAuth env vars: REDDIT_CLIENT_ID, REDDIT_CLIENT_SECRET, REDDIT_REFRESH_TOKEN');\n}\nconst subredditQuery = ($json.reddit.target_subreddits || []).map((sub) => 'subreddit:' + sub).join(' OR ');\nconst redditSearchQuery = '(' + subredditQuery + ') ' + ($json.reddit.search_query || '');\nreturn [{ json: { ...$json, redditSearchQuery, redditBasicAuth: 'Basic ' + Buffer.from(clientId + ':' + clientSecret).toString('base64'), redditRefreshToken: refreshToken, userAgent } }];"
+      },
+      "id": "build-reddit-auth",
+      "name": "Build Reddit Auth",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        -760,
+        40
+      ]
+    },
+    {
+      "parameters": {
+        "curlImport": "",
+        "method": "POST",
+        "url": "https://www.reddit.com/api/v1/access_token",
+        "authentication": "none",
+        "provideSslCertificates": false,
+        "sendQuery": false,
+        "sendHeaders": true,
+        "specifyHeaders": "keypair",
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Authorization",
+              "value": "={{ $json.redditBasicAuth }}"
+            },
+            {
+              "name": "User-Agent",
+              "value": "={{ $json.userAgent }}"
+            },
+            {
+              "name": "Content-Type",
+              "value": "application/x-www-form-urlencoded"
+            }
+          ]
+        },
+        "sendBody": true,
+        "contentType": "raw",
+        "rawContentType": "application/x-www-form-urlencoded",
+        "body": "={{ 'grant_type=refresh_token&refresh_token=' + encodeURIComponent($json.redditRefreshToken) }}",
+        "options": {},
+        "infoMessage": ""
+      },
+      "id": "get-reddit-token",
+      "name": "Get Reddit Token",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.1,
+      "position": [
+        -520,
+        40
+      ]
+    },
+    {
+      "parameters": {
+        "curlImport": "",
+        "method": "GET",
+        "url": "={{ 'https://oauth.reddit.com/search?sort=new&t=day&limit=' + encodeURIComponent($node['Build Reddit Auth'].json.reddit.search_limit || 15) + '&q=' + encodeURIComponent($node['Build Reddit Auth'].json.redditSearchQuery || '') }}",
+        "authentication": "none",
+        "provideSslCertificates": false,
+        "sendQuery": false,
+        "sendHeaders": true,
+        "specifyHeaders": "keypair",
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Authorization",
+              "value": "={{ 'Bearer ' + $json.access_token }}"
+            },
+            {
+              "name": "User-Agent",
+              "value": "={{ $node['Build Reddit Auth'].json.userAgent }}"
+            }
+          ]
+        },
+        "options": {},
+        "infoMessage": ""
+      },
+      "id": "search-reddit",
+      "name": "Search Reddit",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.1,
+      "position": [
+        -280,
+        40
+      ]
+    },
+    {
+      "parameters": {
+        "jsCode": "const config = $node['Build Reddit Auth'].json;\nconst children = (($input.first().json.data || {}).children || []).map((child) => child.data || {});\nconst blockedSubs = new Set((config.reddit.blocked_subreddits || []).map((s) => s.toLowerCase()));\nconst targetSubs = new Set((config.reddit.target_subreddits || []).map((s) => s.toLowerCase()));\nconst hardBlocks = (config.safety.block_if_contains || []).map((s) => s.toLowerCase());\nconst reviewTerms = (config.safety.requires_human_review || []).map((s) => s.toLowerCase());\nfunction score(post) {\n  const text = ((post.title || '') + ' ' + (post.selftext || '')).toLowerCase();\n  if (!post.name || post.over_18 || blockedSubs.has(String(post.subreddit || '').toLowerCase())) return -1;\n  if (!targetSubs.has(String(post.subreddit || '').toLowerCase())) return -1;\n  if (hardBlocks.some((term) => text.includes(term))) return -1;\n  let value = 0;\n  if (post.is_self) value += 3;\n  if ((post.selftext || '').length > 120) value += 3;\n  if (reviewTerms.some((term) => text.includes(term))) value -= 1;\n  if ((post.num_comments || 0) < 50) value += 1;\n  if ((post.score || 0) < 1000) value += 1;\n  return value;\n}\nconst ranked = children.map((post) => ({ post, score: score(post) })).filter((x) => x.score >= 0).sort((a, b) => b.score - a.score);\nif (!ranked.length) {\n  return [{ json: { hasCandidate: false, skipReason: 'No target Reddit questions passed filters this run.' } }];\n}\nconst p = ranked[0].post;\nreturn [{ json: {\n  hasCandidate: true,\n  platform: 'reddit',\n  redditThingId: p.name,\n  subreddit: p.subreddit,\n  title: p.title || '',\n  body: p.selftext || '',\n  author: p.author || '',\n  permalink: 'https://www.reddit.com' + (p.permalink || ''),\n  createdUtc: p.created_utc || null,\n  score: p.score || 0,\n  commentCount: p.num_comments || 0,\n  products: config.products,\n  affiliateLinkProbability: config.affiliate_link_probability,\n  dailyApprovedPostLimit: config.daily_approved_post_limit,\n  defaultDisclosure: config.default_disclosure,\n  safety: config.safety\n} }];"
+      },
+      "id": "select-candidate",
+      "name": "Select Candidate",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        -40,
+        40
+      ]
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict"
+          },
+          "conditions": [
+            {
+              "id": "candidate-check",
+              "leftValue": "={{ $json.hasCandidate }}",
+              "rightValue": true,
+              "operator": {
+                "type": "boolean",
+                "operation": "true",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "id": "if-candidate",
+      "name": "If Candidate?",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        200,
+        40
+      ]
+    },
+    {
+      "parameters": {
+        "jsCode": "return [{ json: { ok: true, message: 'Sarah Nutri Reddit scan finished: ' + ($json.skipReason || 'No usable candidate found.') } }];"
+      },
+      "id": "build-no-candidate-message",
+      "name": "Build No Candidate Message",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        440,
+        180
+      ]
+    },
+    {
+      "parameters": {
+        "jsCode": "const products = ($json.products || []).map((p) => ({ slug: p.slug, name: p.name, match_keywords: p.match_keywords, use_when: p.use_when, avoid_when: p.avoid_when, affiliate_url: p.affiliate_url }));\nconst randomGate = Math.random() < Number($json.affiliateLinkProbability || 0);\nconst prompt = \"You are Sarah Nutri, writing as a warm, practical nutrition and healthy-aging voice.\\n\\nThe audience is older adults, caregivers, and families. Give useful general education, not diagnosis or treatment. Be kind, direct, and low-drama.\\n\\nHard rules:\\n- Do not claim to be the person's clinician.\\n- Do not diagnose, prescribe, or tell someone to change medication.\\n- If emergency symptoms appear, recommend urgent medical care and do not add a product link.\\n- If the question involves medication, dosing, cancer, diabetes, kidney disease, heart failure, dementia, severe symptoms, or unexplained weight loss, mark it as human_review.\\n- No product link unless the product is directly relevant and the answer is still useful without the product.\\n- If a product link is included, include the affiliate disclosure in plain language.\\n- Write like a real person helping, not an ad.\\n\\nReturn strict JSON only:\\n{\\n  \\\"safety\\\": \\\"answer|human_review|emergency|skip\\\",\\n  \\\"affiliate_allowed\\\": false,\\n  \\\"selected_product_slug\\\": null,\\n  \\\"reply\\\": \\\"final Reddit comment text\\\",\\n  \\\"reason\\\": \\\"short internal reason\\\"\\n}\\n\" + '\\n\\nReddit question context:\\n' + JSON.stringify({ subreddit: $json.subreddit, title: $json.title, body: $json.body, permalink: $json.permalink }, null, 2) + '\\n\\nProduct catalog:\\n' + JSON.stringify(products, null, 2) + '\\n\\nAffiliate link random gate for this run: ' + randomGate + '. If false, affiliate_allowed must be false even if a product fits. Disclosure text: ' + $json.defaultDisclosure;\nreturn [{ json: { ...$json, affiliateRandomGate: randomGate, prompt } }];"
+      },
+      "id": "build-prompt",
+      "name": "Build Prompt",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        440,
+        -60
+      ]
+    },
+    {
+      "parameters": {
+        "notice": "",
+        "promptType": "define",
+        "text": "={{ $json.prompt }}",
+        "hasOutputParser": false,
+        "needsFallback": false,
+        "messages": {}
+      },
+      "id": "bonsai-draft",
+      "name": "Bonsai Draft Reply",
+      "type": "@n8n/n8n-nodes-langchain.chainLlm",
+      "typeVersion": 1.4,
+      "position": [
+        680,
+        -60
+      ]
+    },
+    {
+      "parameters": {
+        "model": {
+          "mode": "id",
+          "value": "bonsai-8b"
+        },
+        "options": {}
+      },
+      "id": "bonsai-model",
+      "name": "Bonsai Model",
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
+      "typeVersion": 1.2,
+      "position": [
+        600,
+        140
+      ],
+      "credentials": {
+        "openAiApi": {
+          "id": "b0nsa1OpenAi8081",
+          "name": "Bonsai OpenAI account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsCode": "const source = $node['Build Prompt'].json;\nconst raw = String($json.text || '').trim();\nfunction parseJson(text) {\n  const fenced = text.match(/\\`\\`\\`(?:json)?\\s*([\\s\\S]*?)\\`\\`\\`/i);\n  const body = fenced ? fenced[1] : text;\n  const first = body.indexOf('{');\n  const last = body.lastIndexOf('}');\n  if (first < 0 || last < first) throw new Error('Bonsai did not return JSON: ' + text.slice(0, 300));\n  return JSON.parse(body.slice(first, last + 1));\n}\nconst parsed = parseJson(raw);\nlet reply = String(parsed.reply || '').trim();\nconst product = (source.products || []).find((p) => p.slug === parsed.selected_product_slug) || null;\nconst allowProduct = parsed.affiliate_allowed === true && source.affiliateRandomGate === true && product && reply.length > 80 && parsed.safety === 'answer';\nif (allowProduct && !reply.includes(product.affiliate_url)) {\n  reply += '\\n\\nResource that may help: ' + product.name + ' - ' + product.affiliate_url;\n  reply += '\\n' + source.defaultDisclosure;\n}\nif (!allowProduct) {\n  parsed.affiliate_allowed = false;\n  parsed.selected_product_slug = null;\n}\nreturn [{ json: { ...source, draftRaw: raw, safetyDecision: parsed.safety || 'human_review', affiliateAllowed: parsed.affiliate_allowed === true, selectedProductSlug: parsed.selected_product_slug || '', selectedProductName: product ? product.name : '', replyText: reply, draftReason: parsed.reason || '' } }];"
+      },
+      "id": "parse-draft",
+      "name": "Parse Draft",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        920,
+        -60
+      ]
+    },
+    {
+      "parameters": {
+        "mode": "manual",
+        "duplicateItem": false,
+        "assignments": {
+          "assignments": [
+            {
+              "id": "platform",
+              "name": "platform",
+              "value": "reddit",
+              "type": "string"
+            },
+            {
+              "id": "redditThingId",
+              "name": "redditThingId",
+              "value": "={{ $json.redditThingId }}",
+              "type": "string"
+            },
+            {
+              "id": "subreddit",
+              "name": "subreddit",
+              "value": "={{ $json.subreddit }}",
+              "type": "string"
+            },
+            {
+              "id": "title",
+              "name": "title",
+              "value": "={{ $json.title }}",
+              "type": "string"
+            },
+            {
+              "id": "body",
+              "name": "body",
+              "value": "={{ $json.body }}",
+              "type": "string"
+            },
+            {
+              "id": "permalink",
+              "name": "permalink",
+              "value": "={{ $json.permalink }}",
+              "type": "string"
+            },
+            {
+              "id": "replyText",
+              "name": "replyText",
+              "value": "={{ $json.replyText }}",
+              "type": "string"
+            },
+            {
+              "id": "safetyDecision",
+              "name": "safetyDecision",
+              "value": "={{ $json.safetyDecision }}",
+              "type": "string"
+            },
+            {
+              "id": "affiliateAllowed",
+              "name": "affiliateAllowed",
+              "value": "={{ $json.affiliateAllowed }}",
+              "type": "boolean"
+            },
+            {
+              "id": "selectedProductSlug",
+              "name": "selectedProductSlug",
+              "value": "={{ $json.selectedProductSlug }}",
+              "type": "string"
+            },
+            {
+              "id": "draftReason",
+              "name": "draftReason",
+              "value": "={{ $json.draftReason }}",
+              "type": "string"
+            },
+            {
+              "id": "dailyApprovedPostLimit",
+              "name": "dailyApprovedPostLimit",
+              "value": "={{ $json.dailyApprovedPostLimit }}",
+              "type": "number"
+            },
+            {
+              "id": "discordMessage",
+              "name": "discordMessage",
+              "value": "={{ `Sarah Nutri Reddit review\\n\\nSubreddit: r/${$json.subreddit}\\nQuestion: ${$json.title}\\nPost: <${$json.permalink}>\\nSafety: ${$json.safetyDecision}\\nAffiliate: ${$json.affiliateAllowed ? 'yes - ' + $json.selectedProductSlug : 'no'}\\nReason: ${$json.draftReason}\\n\\nDraft reply:\\n${($json.replyText || '').substring(0, 1400)}${($json.replyText || '').length > 1400 ? '...' : ''}\\n\\nApprove post:\\n<http://192.168.1.59:8080/webhook/sarah-nutri-reddit-approval?action=approve&executionId=${$execution.id}>\\n\\nReject:\\n<http://192.168.1.59:8080/webhook/sarah-nutri-reddit-approval?action=reject&executionId=${$execution.id}>` }}",
+              "type": "string"
+            }
+          ]
+        },
+        "includeOtherFields": false,
+        "options": {}
+      },
+      "id": "assemble-review",
+      "name": "Assemble Review",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        1160,
+        -60
+      ]
+    },
+    {
+      "parameters": {
+        "authentication": "webhook",
+        "operation": "sendLegacy",
+        "content": "={{ $json.discordMessage || $json.message }}",
+        "options": {},
+        "embeds": {},
+        "files": {}
+      },
+      "id": "discord-notify",
+      "name": "Discord Notify",
+      "type": "n8n-nodes-base.discord",
+      "typeVersion": 2,
+      "position": [
+        1400,
+        -60
+      ],
+      "credentials": {
+        "discordWebhookApi": {
+          "id": "7i15uQZ2xyb2Y3zH",
+          "name": "Discord Webhook account"
+        }
+      },
+      "webhookId": "sarah-discord-reddit-main"
+    }
+  ],
+  "connections": {
+    "Manual Trigger": {
+      "main": [
+        [
+          {
+            "node": "Build Config",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Daily Schedule": {
+      "main": [
+        [
+          {
+            "node": "Build Config",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "API Trigger": {
+      "main": [
+        [
+          {
+            "node": "Build Config",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Build Config": {
+      "main": [
+        [
+          {
+            "node": "Build Reddit Auth",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Build Reddit Auth": {
+      "main": [
+        [
+          {
+            "node": "Get Reddit Token",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get Reddit Token": {
+      "main": [
+        [
+          {
+            "node": "Search Reddit",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Search Reddit": {
+      "main": [
+        [
+          {
+            "node": "Select Candidate",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Select Candidate": {
+      "main": [
+        [
+          {
+            "node": "If Candidate?",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If Candidate?": {
+      "main": [
+        [
+          {
+            "node": "Build Prompt",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Build No Candidate Message",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Build No Candidate Message": {
+      "main": [
+        [
+          {
+            "node": "Discord Notify",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Build Prompt": {
+      "main": [
+        [
+          {
+            "node": "Bonsai Draft Reply",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Bonsai Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "Bonsai Draft Reply",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Bonsai Draft Reply": {
+      "main": [
+        [
+          {
+            "node": "Parse Draft",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Parse Draft": {
+      "main": [
+        [
+          {
+            "node": "Assemble Review",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Assemble Review": {
+      "main": [
+        [
+          {
+            "node": "Discord Notify",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "settings": {
+    "callerPolicy": "workflowsFromSameOwner",
+    "availableInMCP": false
+  },
+  "staticData": null,
+  "pinData": null
+}
