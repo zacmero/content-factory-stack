@@ -1,1 +1,275 @@
-[{"updatedAt":"2025-08-26T23:26:43.000Z","createdAt":"2025-08-26T21:01:20.990Z","id":"TfCWdQgkHoI83Ohs","name":"Metal News - Suzy","description":null,"active":false,"isArchived":false,"nodes":[{"parameters":{},"type":"n8n-nodes-base.manualTrigger","typeVersion":1,"position":[-560,-112],"id":"4319da74-6dfd-4e3b-bbbb-5956160cb660","name":"When clicking ‘Execute workflow’"},{"parameters":{"rule":{"interval":[{},{}]}},"type":"n8n-nodes-base.scheduleTrigger","typeVersion":1.2,"position":[-640,208],"id":"f14f11e5-0e53-42ab-aedf-2c0f6e1ddae8","name":"Schedule Trigger"},{"parameters":{"url":"https://metalinjection.net/feed","options":{}},"type":"n8n-nodes-base.rssFeedRead","typeVersion":1.2,"position":[-368,-112],"id":"defd1512-aec1-47dc-b441-664fb2bd0156","name":"RSS Read"},{"parameters":{"authentication":"webhook","content":"={{ $json.text }}","options":{}},"type":"n8n-nodes-base.discord","typeVersion":2,"position":[720,-112],"id":"1fe530b9-eee3-42f9-8660-59b6abf62dae","name":"Discord","webhookId":"664c8369-4245-4d18-a22d-27de4ece2789","credentials":{"discordWebhookApi":{"id":"7i15uQZ2xyb2Y3zH","name":"Discord Webhook account"}}},{"parameters":{"maxItems":2},"type":"n8n-nodes-base.limit","typeVersion":1,"position":[-192,-112],"id":"0b31a78e-4ea4-45b4-8458-fb9f0a71f1b0","name":"Limit"},{"parameters":{"promptType":"define","text":"=Your job is to summarize these news:   {{ $json.content }}","batching":{}},"type":"@n8n/n8n-nodes-langchain.chainLlm","typeVersion":1.7,"position":[0,-112],"id":"3cb2e02d-32a1-4796-b6ef-d77db82d5de7","name":"Basic LLM Chain"},{"parameters":{"options":{}},"type":"@n8n/n8n-nodes-langchain.lmChatGoogleGemini","typeVersion":1,"position":[48,176],"id":"f079c36e-2901-4625-ae13-edbd2d74a004","name":"Google Gemini Chat Model","credentials":{"googlePalmApi":{"id":"ZYtHRqXd2R1ruL4K","name":"Google Gemini(PaLM) Api account"}}},{"parameters":{"assignments":{"assignments":[{"id":"b0e1efe4-2b42-429c-a037-cec306765860","name":"title","value":"={{ $('Limit').item.json.title }}","type":"string"},{"id":"0a1bd75b-3ffe-405f-938b-23e59784d8ec","name":"creator","value":"={{ $('Limit').item.json.creator }}","type":"string"},{"id":"9fd523e7-ae62-4909-9036-cfa87bd104a7","name":"link","value":"={{ $('Limit').item.json.link }}","type":"string"},{"id":"a5b6f994-62f8-4518-9dac-6bfe81cae689","name":"text","value":"={{ $json.text }}","type":"string"}]},"options":{}},"type":"n8n-nodes-base.set","typeVersion":3.4,"position":[352,-112],"id":"6f053796-0798-4ef4-8426-6d90e1d02f58","name":"Edit Fields"}],"connections":{"When clicking ‘Execute workflow’":{"main":[[{"node":"RSS Read","type":"main","index":0}]]},"Schedule Trigger":{"main":[[]]},"RSS Read":{"main":[[{"node":"Limit","type":"main","index":0}]]},"Limit":{"main":[[{"node":"Basic LLM Chain","type":"main","index":0}]]},"Google Gemini Chat Model":{"ai_languageModel":[[{"node":"Basic LLM Chain","type":"ai_languageModel","index":0}]]},"Basic LLM Chain":{"main":[[{"node":"Edit Fields","type":"main","index":0}]]},"Edit Fields":{"main":[[{"node":"Discord","type":"main","index":0}]]}},"settings":{"executionOrder":"v1"},"staticData":null,"meta":{"templateCredsSetupCompleted":true},"pinData":{},"versionId":"ffdde32d-62a1-4f58-83dc-9d9ea712b3f1","activeVersionId":null,"versionCounter":1,"triggerCount":0,"tags":[],"shared":[{"updatedAt":"2025-08-26T21:01:20.998Z","createdAt":"2025-08-26T21:01:20.998Z","role":"workflow:owner","workflowId":"TfCWdQgkHoI83Ohs","projectId":"ttc1G1ptMP8pWUzI","project":{"updatedAt":"2025-08-26T05:13:06.200Z","createdAt":"2025-08-26T05:13:06.200Z","id":"ttc1G1ptMP8pWUzI","name":"Zac Mero <z4cmero@gmail.com>","type":"personal","icon":null,"description":null,"creatorId":"6984a9bb-f2c9-4c15-bf74-cd5fd5cbd5ad"}}]}]
+[
+  {
+    "updatedAt": "2025-08-26T23:26:43.000Z",
+    "createdAt": "2025-08-26T21:01:20.990Z",
+    "id": "TfCWdQgkHoI83Ohs",
+    "name": "Metal News - Suzy",
+    "description": null,
+    "active": false,
+    "isArchived": false,
+    "nodes": [
+      {
+        "parameters": {},
+        "type": "n8n-nodes-base.manualTrigger",
+        "typeVersion": 1,
+        "position": [
+          -560,
+          -112
+        ],
+        "id": "4319da74-6dfd-4e3b-bbbb-5956160cb660",
+        "name": "When clicking ‘Execute workflow’"
+      },
+      {
+        "parameters": {
+          "rule": {
+            "interval": [
+              {},
+              {}
+            ]
+          }
+        },
+        "type": "n8n-nodes-base.scheduleTrigger",
+        "typeVersion": 1.2,
+        "position": [
+          -640,
+          208
+        ],
+        "id": "f14f11e5-0e53-42ab-aedf-2c0f6e1ddae8",
+        "name": "Schedule Trigger"
+      },
+      {
+        "parameters": {
+          "url": "https://metalinjection.net/feed",
+          "options": {}
+        },
+        "type": "n8n-nodes-base.rssFeedRead",
+        "typeVersion": 1.2,
+        "position": [
+          -368,
+          -112
+        ],
+        "id": "defd1512-aec1-47dc-b441-664fb2bd0156",
+        "name": "RSS Read"
+      },
+      {
+        "parameters": {
+          "authentication": "webhook",
+          "content": "={{ $json.text }}",
+          "options": {}
+        },
+        "type": "n8n-nodes-base.discord",
+        "typeVersion": 2,
+        "position": [
+          720,
+          -112
+        ],
+        "id": "1fe530b9-eee3-42f9-8660-59b6abf62dae",
+        "name": "Discord",
+        "webhookId": "664c8369-4245-4d18-a22d-27de4ece2789",
+        "credentials": {
+          "discordWebhookApi": {
+            "id": "7i15uQZ2xyb2Y3zH",
+            "name": "Discord Webhook account"
+          }
+        }
+      },
+      {
+        "parameters": {
+          "maxItems": 2
+        },
+        "type": "n8n-nodes-base.limit",
+        "typeVersion": 1,
+        "position": [
+          -192,
+          -112
+        ],
+        "id": "0b31a78e-4ea4-45b4-8458-fb9f0a71f1b0",
+        "name": "Limit"
+      },
+      {
+        "parameters": {
+          "promptType": "define",
+          "text": "=Your job is to summarize these news:   {{ $json.content }}",
+          "batching": {}
+        },
+        "type": "@n8n/n8n-nodes-langchain.chainLlm",
+        "typeVersion": 1.7,
+        "position": [
+          0,
+          -112
+        ],
+        "id": "3cb2e02d-32a1-4796-b6ef-d77db82d5de7",
+        "name": "Basic LLM Chain"
+      },
+      {
+        "parameters": {
+          "model": {
+            "mode": "id",
+            "value": "bonsai-8b"
+          },
+          "options": {}
+        },
+        "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
+        "typeVersion": 1.2,
+        "position": [
+          48,
+          176
+        ],
+        "id": "f079c36e-2901-4625-ae13-edbd2d74a004",
+        "name": "Google Gemini Chat Model",
+        "credentials": {
+          "openAiApi": {
+            "id": "b0nsa1OpenAi8081",
+            "name": "Bonsai OpenAI account"
+          }
+        }
+      },
+      {
+        "parameters": {
+          "assignments": {
+            "assignments": [
+              {
+                "id": "b0e1efe4-2b42-429c-a037-cec306765860",
+                "name": "title",
+                "value": "={{ $('Limit').item.json.title }}",
+                "type": "string"
+              },
+              {
+                "id": "0a1bd75b-3ffe-405f-938b-23e59784d8ec",
+                "name": "creator",
+                "value": "={{ $('Limit').item.json.creator }}",
+                "type": "string"
+              },
+              {
+                "id": "9fd523e7-ae62-4909-9036-cfa87bd104a7",
+                "name": "link",
+                "value": "={{ $('Limit').item.json.link }}",
+                "type": "string"
+              },
+              {
+                "id": "a5b6f994-62f8-4518-9dac-6bfe81cae689",
+                "name": "text",
+                "value": "={{ $json.text }}",
+                "type": "string"
+              }
+            ]
+          },
+          "options": {}
+        },
+        "type": "n8n-nodes-base.set",
+        "typeVersion": 3.4,
+        "position": [
+          352,
+          -112
+        ],
+        "id": "6f053796-0798-4ef4-8426-6d90e1d02f58",
+        "name": "Edit Fields"
+      }
+    ],
+    "connections": {
+      "When clicking ‘Execute workflow’": {
+        "main": [
+          [
+            {
+              "node": "RSS Read",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Schedule Trigger": {
+        "main": [
+          []
+        ]
+      },
+      "RSS Read": {
+        "main": [
+          [
+            {
+              "node": "Limit",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Limit": {
+        "main": [
+          [
+            {
+              "node": "Basic LLM Chain",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Google Gemini Chat Model": {
+        "ai_languageModel": [
+          [
+            {
+              "node": "Basic LLM Chain",
+              "type": "ai_languageModel",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Basic LLM Chain": {
+        "main": [
+          [
+            {
+              "node": "Edit Fields",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Edit Fields": {
+        "main": [
+          [
+            {
+              "node": "Discord",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      }
+    },
+    "settings": {
+      "executionOrder": "v1"
+    },
+    "staticData": null,
+    "meta": {
+      "templateCredsSetupCompleted": true
+    },
+    "pinData": {},
+    "versionId": "ffdde32d-62a1-4f58-83dc-9d9ea712b3f1",
+    "activeVersionId": null,
+    "versionCounter": 1,
+    "triggerCount": 0,
+    "tags": [],
+    "shared": [
+      {
+        "updatedAt": "2025-08-26T21:01:20.998Z",
+        "createdAt": "2025-08-26T21:01:20.998Z",
+        "role": "workflow:owner",
+        "workflowId": "TfCWdQgkHoI83Ohs",
+        "projectId": "ttc1G1ptMP8pWUzI",
+        "project": {
+          "updatedAt": "2025-08-26T05:13:06.200Z",
+          "createdAt": "2025-08-26T05:13:06.200Z",
+          "id": "ttc1G1ptMP8pWUzI",
+          "name": "Zac Mero <z4cmero@gmail.com>",
+          "type": "personal",
+          "icon": null,
+          "description": null,
+          "creatorId": "6984a9bb-f2c9-4c15-bf74-cd5fd5cbd5ad"
+        }
+      }
+    ]
+  }
+]

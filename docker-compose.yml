@@ -21,6 +21,9 @@ services:
       - N8N_BASIC_AUTH_ACTIVE=true
       - N8N_BASIC_AUTH_USER=${N8N_BASIC_AUTH_USER}
       - N8N_BASIC_AUTH_PASSWORD=${N8N_BASIC_AUTH_PASSWORD}
+      - OPENAI_API_KEY=local
+      - OPENAI_BASE_URL=http://host.docker.internal:8081/v1
+      - OPENAI_MODEL=bonsai-8b
     volumes:
       - ./n8n_data:/home/node/.n8n
       - ./content_factory:/files

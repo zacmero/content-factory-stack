@@ -62,6 +62,37 @@ Current rolling source list:
 
 The puller selects one real post from one of these sources and rehosts its media before rewrite.
 
+### Add New Source Links
+
+To add more sources for the rolling video workflow:
+
+1. Open [workflow_sarah_nutri_video_rebuilt_main.json](/home/zacmero/projects/content-factory-stack/workflow_sarah_nutri_video_rebuilt_main.json).
+2. Find `Target Page Config`.
+3. Edit the `sourcePool` JSON string.
+4. Add one new object per source:
+
+```json
+{
+  "title": "source-handle",
+  "link": "https://www.instagram.com/example.page/",
+  "contentSnippet": "Pull one real post from this source and rewrite it for Sarah Nutri."
+}
+```
+
+Rules:
+
+- `title` should be short, human-readable, and stable.
+- `link` should point to the page/profile you want the puller to scan.
+- `contentSnippet` should say what kind of post to pull or how to frame the rewrite.
+- Keep one source per object.
+- Keep source pool focused on same niche.
+
+What happens next:
+
+- Main workflow picks one source from `sourcePool`.
+- Source puller grabs one real post from that page.
+- Reject flow can exclude the rejected post link, so next run avoids same item.
+
 ## Postiz Routing
 
 Approved drafts currently route to:

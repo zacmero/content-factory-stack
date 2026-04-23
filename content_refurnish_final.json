@@ -11,7 +11,10 @@
       "name": "Webhook Trigger",
       "type": "n8n-nodes-base.webhook",
       "typeVersion": 1,
-      "position": [-700, 0],
+      "position": [
+        -700,
+        0
+      ],
       "webhookId": "trigger-refurnish-webhook"
     },
     {
@@ -23,7 +26,10 @@
       "name": "Scrape Healthline",
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 4.1,
-      "position": [-500, 0]
+      "position": [
+        -500,
+        0
+      ]
     },
     {
       "parameters": {
@@ -41,7 +47,10 @@
       "name": "Extract Text",
       "type": "n8n-nodes-base.htmlExtract",
       "typeVersion": 1,
-      "position": [-300, 0]
+      "position": [
+        -300,
+        0
+      ]
     },
     {
       "parameters": {
@@ -52,19 +61,32 @@
       "name": "Gemini Chain: Rewrite",
       "type": "@n8n/n8n-nodes-langchain.chainLlm",
       "typeVersion": 1.4,
-      "position": [-100, 0]
+      "position": [
+        -100,
+        0
+      ]
     },
     {
       "parameters": {
+        "model": {
+          "mode": "id",
+          "value": "bonsai-8b"
+        },
         "options": {}
       },
       "id": "node-gemini-1",
       "name": "Google Gemini Chat Model",
-      "type": "@n8n/n8n-nodes-langchain.lmChatGoogleGemini",
-      "typeVersion": 1,
-      "position": [-200, 200],
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
+      "typeVersion": 1.2,
+      "position": [
+        -200,
+        200
+      ],
       "credentials": {
-        "googlePalmApi": { "id": "ZYtHRqXd2R1ruL4K" }
+        "openAiApi": {
+          "id": "b0nsa1OpenAi8081",
+          "name": "Bonsai OpenAI account"
+        }
       }
     },
     {
@@ -76,19 +98,32 @@
       "name": "Gemini Chain: Nano Banana",
       "type": "@n8n/n8n-nodes-langchain.chainLlm",
       "typeVersion": 1.4,
-      "position": [200, 0]
+      "position": [
+        200,
+        0
+      ]
     },
     {
       "parameters": {
+        "model": {
+          "mode": "id",
+          "value": "bonsai-8b"
+        },
         "options": {}
       },
       "id": "node-gemini-2",
       "name": "Google Gemini Chat Model 2",
-      "type": "@n8n/n8n-nodes-langchain.lmChatGoogleGemini",
-      "typeVersion": 1,
-      "position": [100, 200],
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
+      "typeVersion": 1.2,
+      "position": [
+        100,
+        200
+      ],
       "credentials": {
-        "googlePalmApi": { "id": "ZYtHRqXd2R1ruL4K" }
+        "openAiApi": {
+          "id": "b0nsa1OpenAi8081",
+          "name": "Bonsai OpenAI account"
+        }
       }
     },
     {
@@ -101,9 +136,14 @@
       "name": "Send to Discord",
       "type": "n8n-nodes-base.discord",
       "typeVersion": 2,
-      "position": [400, 0],
+      "position": [
+        400,
+        0
+      ],
       "credentials": {
-        "discordWebhookApi": { "id": "7i15uQZ2xyb2Y3zH" }
+        "discordWebhookApi": {
+          "id": "7i15uQZ2xyb2Y3zH"
+        }
       }
     },
     {
@@ -114,7 +154,10 @@
       "name": "Wait for Approval",
       "type": "n8n-nodes-base.wait",
       "typeVersion": 1.1,
-      "position": [600, 0]
+      "position": [
+        600,
+        0
+      ]
     },
     {
       "parameters": {
@@ -123,13 +166,19 @@
         "sendHeaders": true,
         "headerParameters": {
           "parameters": [
-            { "name": "Content-Type", "value": "application/json" }
+            {
+              "name": "Content-Type",
+              "value": "application/json"
+            }
           ]
         },
         "sendBody": true,
         "bodyParameters": {
           "parameters": [
-            { "name": "content", "value": "={{ $('Gemini Chain: Rewrite').item.json.text }}" }
+            {
+              "name": "content",
+              "value": "={{ $('Gemini Chain: Rewrite').item.json.text }}"
+            }
           ]
         }
       },
@@ -137,22 +186,117 @@
       "name": "Post to Postiz",
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 4.1,
-      "position": [800, 0],
+      "position": [
+        800,
+        0
+      ],
       "credentials": {
-        "httpBearerAuth": { "id": "PQBPODFShCWLqouN" }
+        "httpBearerAuth": {
+          "id": "PQBPODFShCWLqouN"
+        }
       }
     }
   ],
   "connections": {
-    "Webhook Trigger": { "main": [ [ { "node": "Scrape Healthline", "type": "main", "index": 0 } ] ] },
-    "Scrape Healthline": { "main": [ [ { "node": "Extract Text", "type": "main", "index": 0 } ] ] },
-    "Extract Text": { "main": [ [ { "node": "Gemini Chain: Rewrite", "type": "main", "index": 0 } ] ] },
-    "Google Gemini Chat Model": { "ai_languageModel": [ [ { "node": "Gemini Chain: Rewrite", "type": "ai_languageModel", "index": 0 } ] ] },
-    "Gemini Chain: Rewrite": { "main": [ [ { "node": "Gemini Chain: Nano Banana", "type": "main", "index": 0 } ] ] },
-    "Google Gemini Chat Model 2": { "ai_languageModel": [ [ { "node": "Gemini Chain: Nano Banana", "type": "ai_languageModel", "index": 0 } ] ] },
-    "Gemini Chain: Nano Banana": { "main": [ [ { "node": "Send to Discord", "type": "main", "index": 0 } ] ] },
-    "Send to Discord": { "main": [ [ { "node": "Wait for Approval", "type": "main", "index": 0 } ] ] },
-    "Wait for Approval": { "main": [ [ { "node": "Post to Postiz", "type": "main", "index": 0 } ] ] }
+    "Webhook Trigger": {
+      "main": [
+        [
+          {
+            "node": "Scrape Healthline",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Scrape Healthline": {
+      "main": [
+        [
+          {
+            "node": "Extract Text",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Extract Text": {
+      "main": [
+        [
+          {
+            "node": "Gemini Chain: Rewrite",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Gemini Chat Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "Gemini Chain: Rewrite",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Gemini Chain: Rewrite": {
+      "main": [
+        [
+          {
+            "node": "Gemini Chain: Nano Banana",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Gemini Chat Model 2": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "Gemini Chain: Nano Banana",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Gemini Chain: Nano Banana": {
+      "main": [
+        [
+          {
+            "node": "Send to Discord",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Send to Discord": {
+      "main": [
+        [
+          {
+            "node": "Wait for Approval",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Wait for Approval": {
+      "main": [
+        [
+          {
+            "node": "Post to Postiz",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
   },
   "settings": {}
 }

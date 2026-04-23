@@ -11,7 +11,10 @@
       "name": "Trigger",
       "type": "n8n-nodes-base.webhook",
       "typeVersion": 1,
-      "position": [0, 0],
+      "position": [
+        0,
+        0
+      ],
       "webhookId": "test-webhook"
     },
     {
@@ -32,7 +35,10 @@
       "name": "Set Content",
       "type": "n8n-nodes-base.set",
       "typeVersion": 3.4,
-      "position": [200, 0]
+      "position": [
+        200,
+        0
+      ]
     },
     {
       "parameters": {
@@ -43,19 +49,32 @@
       "name": "Rewrite",
       "type": "@n8n/n8n-nodes-langchain.chainLlm",
       "typeVersion": 1.4,
-      "position": [400, 0]
+      "position": [
+        400,
+        0
+      ]
     },
     {
       "parameters": {
+        "model": {
+          "mode": "id",
+          "value": "bonsai-8b"
+        },
         "options": {}
       },
       "id": "model-id",
       "name": "Gemini Model",
-      "type": "@n8n/n8n-nodes-langchain.lmChatGoogleGemini",
-      "typeVersion": 1,
-      "position": [300, 200],
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
+      "typeVersion": 1.2,
+      "position": [
+        300,
+        200
+      ],
       "credentials": {
-        "googlePalmApi": { "id": "ZYtHRqXd2R1ruL4K" }
+        "openAiApi": {
+          "id": "b0nsa1OpenAi8081",
+          "name": "Bonsai OpenAI account"
+        }
       }
     },
     {
@@ -68,17 +87,62 @@
       "name": "Discord",
       "type": "n8n-nodes-base.discord",
       "typeVersion": 2,
-      "position": [600, 0],
+      "position": [
+        600,
+        0
+      ],
       "credentials": {
-        "discordWebhookApi": { "id": "7i15uQZ2xyb2Y3zH" }
+        "discordWebhookApi": {
+          "id": "7i15uQZ2xyb2Y3zH"
+        }
       }
     }
   ],
   "connections": {
-    "Trigger": { "main": [ [ { "node": "Set Content", "type": "main", "index": 0 } ] ] },
-    "Set Content": { "main": [ [ { "node": "Rewrite", "type": "main", "index": 0 } ] ] },
-    "Gemini Model": { "ai_languageModel": [ [ { "node": "Rewrite", "type": "ai_languageModel", "index": 0 } ] ] },
-    "Rewrite": { "main": [ [ { "node": "Discord", "type": "main", "index": 0 } ] ] }
+    "Trigger": {
+      "main": [
+        [
+          {
+            "node": "Set Content",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Set Content": {
+      "main": [
+        [
+          {
+            "node": "Rewrite",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Gemini Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "Rewrite",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Rewrite": {
+      "main": [
+        [
+          {
+            "node": "Discord",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
   },
   "settings": {}
 }

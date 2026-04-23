@@ -2,13 +2,20 @@
   "name": "Sarah Nutri - RSS -> Discord -> Postiz (LOOP)",
   "nodes": [
     {
-      "parameters": {"httpMethod":"GET","path":"test-loop-trigger","options":{}},
-      "id":"trigger-id",
-      "name":"Webhook Trigger",
-      "type":"n8n-nodes-base.webhook",
-      "typeVersion":1,
-      "position":[-700,0],
-      "webhookId":"6ea031bd-9a6f-4f14-be2d-66fdbcfc12cb"
+      "parameters": {
+        "httpMethod": "GET",
+        "path": "test-loop-trigger",
+        "options": {}
+      },
+      "id": "trigger-id",
+      "name": "Webhook Trigger",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 1,
+      "position": [
+        -700,
+        0
+      ],
+      "webhookId": "6ea031bd-9a6f-4f14-be2d-66fdbcfc12cb"
     },
     {
       "parameters": {
@@ -18,7 +25,10 @@
       "name": "RSS Health News",
       "type": "n8n-nodes-base.rssFeedRead",
       "typeVersion": 1.2,
-      "position": [-500, 0]
+      "position": [
+        -500,
+        0
+      ]
     },
     {
       "parameters": {
@@ -28,7 +38,10 @@
       "name": "Latest Article",
       "type": "n8n-nodes-base.limit",
       "typeVersion": 1,
-      "position": [-300, 0]
+      "position": [
+        -300,
+        0
+      ]
     },
     {
       "parameters": {
@@ -48,7 +61,10 @@
       "name": "Set Initial Prompt",
       "type": "n8n-nodes-base.set",
       "typeVersion": 3.4,
-      "position": [-100, 0]
+      "position": [
+        -100,
+        0
+      ]
     },
     {
       "parameters": {
@@ -59,19 +75,32 @@
       "name": "Gemini: Rewrite",
       "type": "@n8n/n8n-nodes-langchain.chainLlm",
       "typeVersion": 1.4,
-      "position": [100, 0]
+      "position": [
+        100,
+        0
+      ]
     },
     {
       "parameters": {
+        "model": {
+          "mode": "id",
+          "value": "bonsai-8b"
+        },
         "options": {}
       },
       "id": "model-id",
       "name": "Gemini Model",
-      "type": "@n8n/n8n-nodes-langchain.lmChatGoogleGemini",
-      "typeVersion": 1,
-      "position": [0, 200],
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
+      "typeVersion": 1.2,
+      "position": [
+        0,
+        200
+      ],
       "credentials": {
-        "googlePalmApi": { "id": "ZYtHRqXd2R1ruL4K" }
+        "openAiApi": {
+          "id": "b0nsa1OpenAi8081",
+          "name": "Bonsai OpenAI account"
+        }
       }
     },
     {
@@ -83,19 +112,32 @@
       "name": "Nano Banana AI",
       "type": "@n8n/n8n-nodes-langchain.chainLlm",
       "typeVersion": 1.4,
-      "position": [300, 0]
+      "position": [
+        300,
+        0
+      ]
     },
     {
       "parameters": {
+        "model": {
+          "mode": "id",
+          "value": "bonsai-8b"
+        },
         "options": {}
       },
       "id": "model-id-2",
       "name": "Gemini Model 2",
-      "type": "@n8n/n8n-nodes-langchain.lmChatGoogleGemini",
-      "typeVersion": 1,
-      "position": [200, 200],
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
+      "typeVersion": 1.2,
+      "position": [
+        200,
+        200
+      ],
       "credentials": {
-        "googlePalmApi": { "id": "ZYtHRqXd2R1ruL4K" }
+        "openAiApi": {
+          "id": "b0nsa1OpenAi8081",
+          "name": "Bonsai OpenAI account"
+        }
       }
     },
     {
@@ -108,9 +150,14 @@
       "name": "Discord Notify",
       "type": "n8n-nodes-base.discord",
       "typeVersion": 2,
-      "position": [500, 0],
+      "position": [
+        500,
+        0
+      ],
       "credentials": {
-        "discordWebhookApi": { "id": "7i15uQZ2xyb2Y3zH" }
+        "discordWebhookApi": {
+          "id": "7i15uQZ2xyb2Y3zH"
+        }
       }
     },
     {
@@ -125,7 +172,10 @@
       "name": "Wait Approval",
       "type": "n8n-nodes-base.wait",
       "typeVersion": 1.1,
-      "position": [700, 0],
+      "position": [
+        700,
+        0
+      ],
       "webhookId": "resume-webhook-rss"
     },
     {
@@ -155,7 +205,10 @@
       "name": "If Approved?",
       "type": "n8n-nodes-base.if",
       "typeVersion": 2.2,
-      "position": [900, 0]
+      "position": [
+        900,
+        0
+      ]
     },
     {
       "parameters": {
@@ -175,7 +228,10 @@
       "name": "Set Loop Prompt",
       "type": "n8n-nodes-base.set",
       "typeVersion": 3.4,
-      "position": [900, -200]
+      "position": [
+        900,
+        -200
+      ]
     },
     {
       "parameters": {
@@ -184,13 +240,19 @@
         "sendHeaders": true,
         "headerParameters": {
           "parameters": [
-            { "name": "Content-Type", "value": "application/json" }
+            {
+              "name": "Content-Type",
+              "value": "application/json"
+            }
           ]
         },
         "sendBody": true,
         "bodyParameters": {
           "parameters": [
-            { "name": "content", "value": "={{ $('Gemini: Rewrite').item.json.text }}" }
+            {
+              "name": "content",
+              "value": "={{ $('Gemini: Rewrite').item.json.text }}"
+            }
           ]
         }
       },
@@ -198,25 +260,157 @@
       "name": "Post to Postiz",
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 4.1,
-      "position": [1100, 0],
+      "position": [
+        1100,
+        0
+      ],
       "credentials": {
-        "httpBearerAuth": { "id": "PQBPODFShCWLqouN" }
+        "httpBearerAuth": {
+          "id": "PQBPODFShCWLqouN"
+        }
       }
     }
   ],
   "connections": {
-    "Webhook Trigger": { "main": [ [ { "node": "RSS Health News", "type": "main", "index": 0 } ] ] },
-    "RSS Health News": { "main": [ [ { "node": "Latest Article", "type": "main", "index": 0 } ] ] },
-    "Latest Article": { "main": [ [ { "node": "Set Initial Prompt", "type": "main", "index": 0 } ] ] },
-    "Set Initial Prompt": { "main": [ [ { "node": "Gemini: Rewrite", "type": "main", "index": 0 } ] ] },
-    "Gemini Model": { "ai_languageModel": [ [ { "node": "Gemini: Rewrite", "type": "ai_languageModel", "index": 0 } ] ] },
-    "Gemini: Rewrite": { "main": [ [ { "node": "Nano Banana AI", "type": "main", "index": 0 } ] ] },
-    "Gemini Model 2": { "ai_languageModel": [ [ { "node": "Nano Banana AI", "type": "ai_languageModel", "index": 0 } ] ] },
-    "Nano Banana AI": { "main": [ [ { "node": "Discord Notify", "type": "main", "index": 0 } ] ] },
-    "Discord Notify": { "main": [ [ { "node": "Wait Approval", "type": "main", "index": 0 } ] ] },
-    "Wait Approval": { "main": [ [ { "node": "If Approved?", "type": "main", "index": 0 } ] ] },
-    "If Approved?": { "main": [ [ { "node": "Post to Postiz", "type": "main", "index": 0 } ], [ { "node": "Set Loop Prompt", "type": "main", "index": 0 } ] ] },
-    "Set Loop Prompt": { "main": [ [ { "node": "Gemini: Rewrite", "type": "main", "index": 0 } ] ] }
+    "Webhook Trigger": {
+      "main": [
+        [
+          {
+            "node": "RSS Health News",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "RSS Health News": {
+      "main": [
+        [
+          {
+            "node": "Latest Article",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Latest Article": {
+      "main": [
+        [
+          {
+            "node": "Set Initial Prompt",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Set Initial Prompt": {
+      "main": [
+        [
+          {
+            "node": "Gemini: Rewrite",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Gemini Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "Gemini: Rewrite",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Gemini: Rewrite": {
+      "main": [
+        [
+          {
+            "node": "Nano Banana AI",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Gemini Model 2": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "Nano Banana AI",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Nano Banana AI": {
+      "main": [
+        [
+          {
+            "node": "Discord Notify",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Discord Notify": {
+      "main": [
+        [
+          {
+            "node": "Wait Approval",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Wait Approval": {
+      "main": [
+        [
+          {
+            "node": "If Approved?",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If Approved?": {
+      "main": [
+        [
+          {
+            "node": "Post to Postiz",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Set Loop Prompt",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Set Loop Prompt": {
+      "main": [
+        [
+          {
+            "node": "Gemini: Rewrite",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
   },
   "settings": {}
 }
