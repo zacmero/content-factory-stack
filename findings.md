@@ -39,6 +39,11 @@
 - Temporal was not actually dead after the latest restart. It was listening on the container IP at `172.20.x.x:7233`, but the compose healthcheck probed `localhost:7233`, so Docker kept it unhealthy and blocked Postiz startup.
 - Once Temporal healthcheck was corrected and the `postiz` app container was restarted against a healthy Temporal instance, Postiz returned `401 Unauthorized` on `/api/user/self`, confirming the blank-UI `502` state was cleared.
 - The recurring error was operational plus one compose bug, not data corruption from powering off the machine.
+- Digistore24 OpenAPI confirms `listMarketplaceEntries` is vendor marketplace data, not affiliate marketplace browsing.
+- `getMarketplaceEntry` exposes the exact commercial fields needed for ranking new offers: affiliate profit per sale, conversion rate, cancellation rate, created date, stars, and order counts.
+- The live family catalog now collapses pack-size variants into product families such as `NeuroQuiet`, `EchoXen`, `Ring Quiet Plus`, and `Nervix`.
+- The current scoring model combines relevance + earnings per sale + conversion + cancellation + newness, then adds lighter weighting for sales volume, recency, and approval state.
+- The remaining marketplace-expansion gap is not ranking logic anymore; it is affiliate-side discovery of new `entry_id`s.
 
 ## Technical Decisions
 | Decision | Rationale |
@@ -63,6 +68,7 @@
 | Start Bonsai on `0.0.0.0:8081` | Lets n8n reach the local OpenAI-compatible endpoint through `host.docker.internal` without a proxy |
 | Change Temporal healthcheck from `localhost` to `$(hostname -i)` | Matches how Temporal binds in this container and prevents false unhealthy status |
 | Add unified start/stop helper scripts | Reduces operator error across the split n8n/Postiz compose projects |
+| Keep the workflow suggestion pool restricted to approved live product families | Prevents non-approved marketplace candidates from leaking into affiliate links |
 
 ## Issues Encountered
 | Issue | Resolution |

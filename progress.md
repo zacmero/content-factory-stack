@@ -146,7 +146,11 @@
   - Confirmed `listProducts` and `listMarketplaceEntries` are vendor-oriented and return zero for this account.
   - Mined affiliate product IDs from `listPurchases` and `listTransactions`.
   - Validated products with `validateAffiliate` and generated `sarah_nutri` Promolinks.
-  - Synced 12 approved active affiliate products into the active product catalog.
+  - Rebuilt the sync logic to normalize pack variants into family-level products.
+  - Added product-family scoring based on relevance, earnings per sale, conversion, cancellation, newness, sales volume, recency, and approval state.
+  - Synced 4 approved live affiliate product families into the active product catalog.
+  - Confirmed Digistore24 OpenAPI documents `listMarketplaceEntries` as vendor marketplace data.
+  - Confirmed `getMarketplaceEntry` has the exact stats fields needed for ranking if affiliate-side marketplace enumeration becomes available.
   - Imported and activated `Sarah Nutri - Forum Manual Queue -> Discord Review`.
   - Removed the need for the Bonsai host proxy by restarting Bonsai on `0.0.0.0:8081`.
   - Smoke-tested the forum webhook successfully with product-relevant and unrelated posts.
@@ -162,6 +166,7 @@
   - `docker-compose.yml`
   - `.dockerignore`
   - `content_factory/reddit_quora/README.md`
+  - `content_factory/reddit_quora/digistore24.md`
 
 ## Phase 7 Test Results
 | Test | Input | Expected | Actual | Status |
@@ -171,13 +176,14 @@
 | Manual queue generation | `node scripts/build_forum_manual_queue.mjs` | Workflow export written | Export written | pass |
 | Manual queue JSON validation | `JSON.parse` export | Valid JSON | Passed | pass |
 | Compose config | `docker-compose config` | Digistore env vars render | Rendered cleanly | pass |
-| Digistore API sync | `node scripts/digistore24_sync_catalog.mjs --write-catalog` | Catalog sync succeeds | 12 approved affiliate products written | pass |
+| Digistore API sync | `node scripts/digistore24_sync_catalog.mjs --write-catalog` | Catalog sync succeeds | 4 approved affiliate families written, marketplace attempts recorded | pass |
 | n8n import | `node scripts/import_social_response_workflows.mjs` | Workflows imported | Manual queue and Quora intake imported | pass |
 | n8n activation | API activate call | Manual queue active | Active workflow id `Rz60m7Gr2YYSoDS1` | pass |
 | Bonsai container reachability | `docker exec n8n node fetch(...)` | HTTP 200 from `/v1/models` | Passed directly via `0.0.0.0:8081` | pass |
 | Forum webhook smoke test | POST candidate pair | HTTP 200 | Execution `178` success | pass |
 | Product-link smoke test | Hearing-related Reddit/Quora candidate | Relevant approved Digistore link when safe | Reddit included `checkout-ds24.com/redir/.../sarah_nutri/...`; Quora withheld link due safety | pass |
 | Irrelevant-link guard | Protein/low-appetite candidate | No hearing-product link | No Digistore links included | pass |
+| Family-catalog webhook smoke test | POST hearing-related candidate after family rewrite | Workflow still succeeds with family-level product pool | Execution `183` success after Bonsai restart | pass |
 
 ## Phase 7 Error Log
 | Timestamp | Error | Attempt | Resolution |
@@ -188,6 +194,7 @@
 | 2026-04-23 | Bonsai connection failed from n8n container | 1 | Confirmed Bonsai was bound only to `127.0.0.1:8081`; restarted Bonsai directly on `0.0.0.0:8081` |
 | 2026-04-23 | Digistore `listProducts` and `listMarketplaceEntries` returned no products | 1 | Identified those endpoints as vendor-oriented; switched catalog sync to affiliate sales history plus `validateAffiliate` |
 | 2026-04-23 | Bonsai generated a product mention without setting affiliate JSON fields | 1 | Hardened parser to attach a catalog product link when a safe draft mentions an approved product |
+| 2026-04-23 | Live webhook smoke test failed after family rewrite | 1 | Root cause was Bonsai server being down, not the catalog rewrite; restarted `llmero-bonsai` and reran successfully |
 
 ### Phase 8: Postiz Startup Hardening
 - **Status:** complete

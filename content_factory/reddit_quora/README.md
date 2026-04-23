@@ -128,6 +128,29 @@ Digistore API behavior observed for this affiliate account:
 
 The sync helper now builds the active catalog from affiliate sales history, filters inactive/deleted products, validates approved affiliation, and generates `sarah_nutri` Promolinks.
 
+The live catalog is now family-based, not bottle-SKU-based. Example: `NeuroQuiet (1 Bottle)`, `NeuroQuiet (3 Bottles)`, and `NeuroQuiet 3 More Bottles` are collapsed into one `NeuroQuiet` family so the drafting workflow works with real product families instead of pack variants.
+
+Current family-scoring factors:
+
+- relevance
+- earnings per sale
+- conversion
+- cancellation
+- newness
+- sales volume
+- recency
+- approval state
+
+Only approved live families with a valid affiliate URL are allowed into the workflow's suggestion pool.
+
+Important API limitation confirmed in this repo:
+
+- `statsMarketplace` shows the global marketplace count.
+- `listMarketplaceEntries` returns zero for this affiliate account and Digistore's OpenAPI describes it as vendor marketplace data.
+- `getMarketplaceEntry` exposes rich scoring fields, but only if an `entry_id` is already known.
+
+So the current workflow is fully live for approved families, but new affiliate marketplace discovery still needs a second path.
+
 To add a Digistore24 product manually when you know the product ID:
 
 ```bash

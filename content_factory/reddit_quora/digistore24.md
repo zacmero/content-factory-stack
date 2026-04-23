@@ -51,9 +51,9 @@ Accept: application/json
 Useful functions for this project:
 
 - `getUserInfo`: verify the key works.
-- `listProducts`: list products in the account.
-- `listMarketplaceEntries`: find possible products to promote.
-- `getMarketplaceEntry`: inspect one marketplace entry.
+- `listProducts`: vendor-owned products only.
+- `listMarketplaceEntries`: vendor marketplace entries only, not the affiliate marketplace browser.
+- `getMarketplaceEntry`: inspect one marketplace entry if you already have an `entry_id`.
 - `createBuyUrl`: generate a personalized buy URL when needed.
 - `listBuyUrls`: inspect existing buy URLs.
 
@@ -75,8 +75,41 @@ MCP exposes the same core actions, including `listMarketplaceEntries`, `getMarke
 
 ## Current Workflow Strategy
 
-1. Sync useful Digistore24 products into `product_catalog.json`.
-2. n8n drafts Reddit and Quora replies using that local catalog.
-3. The draft includes a product link only when the product is directly relevant.
-4. You manually post the answer.
-5. Later, we can replace the static catalog with live API lookup once credentials are present and tested.
+1. Sync approved affiliate products into `product_catalog.json`.
+2. Normalize product variants into product families so bottle-count SKUs do not flood the catalog.
+3. Score families by relevance + earnings per sale + conversion + cancellation + newness, with approval state as a gate.
+4. n8n drafts Reddit and Quora replies using that local family catalog.
+5. The draft includes a product link only when the product is directly relevant.
+6. You manually post the answer.
+
+## Confirmed API Behavior In This Repo
+
+- `statsMarketplace` confirms the marketplace exists globally.
+- `listMarketplaceEntries` returns `0` entries for this affiliate account across all documented `sort_by` values.
+- Digistore24's OpenAPI description for `listMarketplaceEntries` explicitly describes vendor marketplace data, not affiliate-side marketplace browsing.
+- `getMarketplaceEntry` exposes the scoring fields we want:
+  - `stats_affiliate_profit_sale`
+  - `stats_conversion_rate`
+  - `stats_cancel_rate`
+  - `product_created_at`
+  - `stats_count_orders_w_aff`
+  - `stats_stars`
+- That means the HTTP API can score marketplace entries once we have `entry_id`s, but it does not currently give this affiliate account a documented way to enumerate new marketplace offers.
+
+## Current Catalog Buckets
+
+- `approved_live_families`: usable now, already approved, affiliate URL present
+- `marketplace_candidate_families`: discovered but not yet approved/live
+- `manual_approval_families`: ignore for live posting until approved
+
+The workflow only uses `approved_live_families` for suggestions.
+
+## Current Gap
+
+The remaining discovery gap is affiliate-side marketplace enumeration for new products.
+
+Current best options:
+
+1. Keep using approved live families immediately.
+2. Add MCP-based marketplace discovery if MCP exposes affiliate-side listing better than the HTTP API.
+3. If MCP does not solve it, add a separate marketplace discovery source instead of overloading the live posting workflow.

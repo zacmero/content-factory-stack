@@ -1,17 +1,25 @@
 {
   "products": [
     {
-      "slug": "digistore24-576857",
-      "name": "NeuroQuiet (3 Bottles)",
-      "affiliate_url": "https://www.checkout-ds24.com/redir/576857/sarah_nutri/sarahnutri_forum",
+      "slug": "digistore24-family-skyhighperformers-neuroquiet",
+      "name": "NeuroQuiet",
+      "family_name": "NeuroQuiet",
+      "affiliate_url": "https://www.checkout-ds24.com/redir/576858/sarah_nutri/sarahnutri_forum",
       "source": "affiliate_sales_history",
-      "digistore24_id": "576857",
+      "digistore24_id": "576858",
       "vendor_name": "skyhighperformers",
       "product_type_name": "Supplements - health",
-      "sales_count": 20,
-      "total_affiliate_amount": 1447.04,
-      "latest_sale_at": "2025-06-27 20:52:41",
-      "affiliation_status": "approved",
+      "discovery_state": "approved_live",
+      "variant_count": 7,
+      "variant_names": [
+        "NeuroQuiet (6 Bottles)",
+        "NeuroQuiet (3 Bottles)",
+        "NeuroQuiet (1 Bottle)",
+        "NeuroQuiet 3 More Bottles",
+        "NeuroQuiet 6 More Bottles",
+        "NeuroQuiet 2 More Bottles",
+        "NeuroQuiet 6 More Bottles"
+      ],
       "match_keywords": [
         "neuroquiet",
         "tinnitus",
@@ -21,45 +29,38 @@
         "ear comfort",
         "night ringing"
       ],
-      "use_when": "Use only when the forum question clearly matches NeuroQuiet (3 Bottles) or these themes: neuroquiet, tinnitus, ringing ears, ear ringing, hearing, ear comfort, night ringing.",
-      "avoid_when": "Avoid for emergency symptoms, diagnosis requests, medication changes, severe disease, inactive/deleted products, or when the product is not directly relevant."
+      "score_breakdown": {
+        "relevance": 1,
+        "earnings_per_sale": 1,
+        "conversion": 0.5,
+        "cancellation": 0.5,
+        "newness": 0.5,
+        "sales": 0.0952,
+        "recency": 0.2829,
+        "approval": 1,
+        "total": 0.7468
+      },
+      "total_score": 0.7468,
+      "scoring_reason": "strong keyword relevance, high earnings per sale, already approved",
+      "use_when": "Use only when the forum question clearly matches NeuroQuiet or these themes: neuroquiet, tinnitus, ringing ears, ear ringing, hearing, ear comfort, night ringing.",
+      "avoid_when": "Avoid for emergency symptoms, diagnosis requests, medication changes, severe disease, or when the product is not directly relevant."
     },
     {
-      "slug": "digistore24-576856",
-      "name": "NeuroQuiet (1 Bottle)",
-      "affiliate_url": "https://www.checkout-ds24.com/redir/576856/sarah_nutri/sarahnutri_forum",
-      "source": "affiliate_sales_history",
-      "digistore24_id": "576856",
-      "vendor_name": "skyhighperformers",
-      "product_type_name": "Supplements - health",
-      "sales_count": 21,
-      "total_affiliate_amount": 777.59,
-      "latest_sale_at": "2025-07-23 00:42:45",
-      "affiliation_status": "approved",
-      "match_keywords": [
-        "neuroquiet",
-        "tinnitus",
-        "ringing ears",
-        "ear ringing",
-        "hearing",
-        "ear comfort",
-        "night ringing"
-      ],
-      "use_when": "Use only when the forum question clearly matches NeuroQuiet (1 Bottle) or these themes: neuroquiet, tinnitus, ringing ears, ear ringing, hearing, ear comfort, night ringing.",
-      "avoid_when": "Avoid for emergency symptoms, diagnosis requests, medication changes, severe disease, inactive/deleted products, or when the product is not directly relevant."
-    },
-    {
-      "slug": "digistore24-578370",
-      "name": "EchoXen (3 Bottles)",
+      "slug": "digistore24-family-rm7866-echoxen",
+      "name": "EchoXen",
+      "family_name": "EchoXen",
       "affiliate_url": "https://www.checkout-ds24.com/redir/578370/sarah_nutri/sarahnutri_forum",
       "source": "affiliate_sales_history",
       "digistore24_id": "578370",
       "vendor_name": "RM7866",
       "product_type_name": "Supplements - health",
-      "sales_count": 4,
-      "total_affiliate_amount": 451.64,
-      "latest_sale_at": "2025-07-01 18:30:54",
-      "affiliation_status": "approved",
+      "discovery_state": "approved_live",
+      "variant_count": 3,
+      "variant_names": [
+        "EchoXen (3 Bottles)",
+        "EchoXen 3 More Bottles",
+        "EchoXen (2 Bottles)"
+      ],
       "match_keywords": [
         "echoxen",
         "tinnitus",
@@ -69,93 +70,36 @@
         "ear comfort",
         "night ringing"
       ],
-      "use_when": "Use only when the forum question clearly matches EchoXen (3 Bottles) or these themes: echoxen, tinnitus, ringing ears, ear ringing, hearing, ear comfort, night ringing.",
-      "avoid_when": "Avoid for emergency symptoms, diagnosis requests, medication changes, severe disease, inactive/deleted products, or when the product is not directly relevant."
+      "score_breakdown": {
+        "relevance": 1,
+        "earnings_per_sale": 0.6589,
+        "conversion": 0.5,
+        "cancellation": 0.5,
+        "newness": 0.5,
+        "sales": 0.1905,
+        "recency": 0.6031,
+        "approval": 1,
+        "total": 0.709
+      },
+      "total_score": 0.709,
+      "scoring_reason": "strong keyword relevance, already approved",
+      "use_when": "Use only when the forum question clearly matches EchoXen or these themes: echoxen, tinnitus, ringing ears, ear ringing, hearing, ear comfort, night ringing.",
+      "avoid_when": "Avoid for emergency symptoms, diagnosis requests, medication changes, severe disease, or when the product is not directly relevant."
     },
     {
-      "slug": "digistore24-576858",
-      "name": "NeuroQuiet (6 Bottles)",
-      "affiliate_url": "https://www.checkout-ds24.com/redir/576858/sarah_nutri/sarahnutri_forum",
-      "source": "affiliate_sales_history",
-      "digistore24_id": "576858",
-      "vendor_name": "skyhighperformers",
-      "product_type_name": "Supplements - health",
-      "sales_count": 2,
-      "total_affiliate_amount": 342.74,
-      "latest_sale_at": "2025-06-13 18:15:29",
-      "affiliation_status": "approved",
-      "match_keywords": [
-        "neuroquiet",
-        "tinnitus",
-        "ringing ears",
-        "ear ringing",
-        "hearing",
-        "ear comfort",
-        "night ringing"
-      ],
-      "use_when": "Use only when the forum question clearly matches NeuroQuiet (6 Bottles) or these themes: neuroquiet, tinnitus, ringing ears, ear ringing, hearing, ear comfort, night ringing.",
-      "avoid_when": "Avoid for emergency symptoms, diagnosis requests, medication changes, severe disease, inactive/deleted products, or when the product is not directly relevant."
-    },
-    {
-      "slug": "digistore24-576861",
-      "name": "NeuroQuiet 3 More Bottles",
-      "affiliate_url": "https://www.checkout-ds24.com/redir/576861/sarah_nutri/sarahnutri_forum",
-      "source": "affiliate_sales_history",
-      "digistore24_id": "576861",
-      "vendor_name": "skyhighperformers",
-      "product_type_name": "Supplements - health",
-      "sales_count": 7,
-      "total_affiliate_amount": 189.92,
-      "latest_sale_at": "2025-07-23 00:43:20",
-      "affiliation_status": "approved",
-      "match_keywords": [
-        "neuroquiet",
-        "tinnitus",
-        "ringing ears",
-        "ear ringing",
-        "hearing",
-        "ear comfort",
-        "night ringing"
-      ],
-      "use_when": "Use only when the forum question clearly matches NeuroQuiet 3 More Bottles or these themes: neuroquiet, tinnitus, ringing ears, ear ringing, hearing, ear comfort, night ringing.",
-      "avoid_when": "Avoid for emergency symptoms, diagnosis requests, medication changes, severe disease, inactive/deleted products, or when the product is not directly relevant."
-    },
-    {
-      "slug": "digistore24-576864",
-      "name": "NeuroQuiet 6 More Bottles",
-      "affiliate_url": "https://www.checkout-ds24.com/redir/576864/sarah_nutri/sarahnutri_forum",
-      "source": "affiliate_sales_history",
-      "digistore24_id": "576864",
-      "vendor_name": "skyhighperformers",
-      "product_type_name": "Supplements - health",
-      "sales_count": 3,
-      "total_affiliate_amount": 162,
-      "latest_sale_at": "2025-06-13 18:16:29",
-      "affiliation_status": "approved",
-      "match_keywords": [
-        "neuroquiet",
-        "tinnitus",
-        "ringing ears",
-        "ear ringing",
-        "hearing",
-        "ear comfort",
-        "night ringing"
-      ],
-      "use_when": "Use only when the forum question clearly matches NeuroQuiet 6 More Bottles or these themes: neuroquiet, tinnitus, ringing ears, ear ringing, hearing, ear comfort, night ringing.",
-      "avoid_when": "Avoid for emergency symptoms, diagnosis requests, medication changes, severe disease, inactive/deleted products, or when the product is not directly relevant."
-    },
-    {
-      "slug": "digistore24-595448",
-      "name": "Ring Quiet Plus 2 bottles",
+      "slug": "digistore24-family-superwebj-ring-quiet-plus",
+      "name": "Ring Quiet Plus",
+      "family_name": "Ring Quiet Plus",
       "affiliate_url": "https://www.checkout-ds24.com/redir/595448/sarah_nutri/sarahnutri_forum",
       "source": "affiliate_sales_history",
       "digistore24_id": "595448",
       "vendor_name": "superwebj",
       "product_type_name": "Supplements - health",
-      "sales_count": 2,
-      "total_affiliate_amount": 136.72,
-      "latest_sale_at": "2025-06-18 14:47:31",
-      "affiliation_status": "approved",
+      "discovery_state": "approved_live",
+      "variant_count": 1,
+      "variant_names": [
+        "Ring Quiet Plus 2 bottles"
+      ],
       "match_keywords": [
         "ring",
         "quiet",
@@ -167,93 +111,36 @@
         "ear comfort",
         "night ringing"
       ],
-      "use_when": "Use only when the forum question clearly matches Ring Quiet Plus 2 bottles or these themes: ring, quiet, plus, tinnitus, ringing ears, ear ringing, hearing, ear comfort, night ringing.",
-      "avoid_when": "Avoid for emergency symptoms, diagnosis requests, medication changes, severe disease, inactive/deleted products, or when the product is not directly relevant."
+      "score_breakdown": {
+        "relevance": 1,
+        "earnings_per_sale": 0.3989,
+        "conversion": 0.5,
+        "cancellation": 0.5,
+        "newness": 0.5,
+        "sales": 0.0952,
+        "recency": 0.3692,
+        "approval": 1,
+        "total": 0.6429
+      },
+      "total_score": 0.6429,
+      "scoring_reason": "strong keyword relevance, already approved",
+      "use_when": "Use only when the forum question clearly matches Ring Quiet Plus or these themes: ring, quiet, plus, tinnitus, ringing ears, ear ringing, hearing, ear comfort, night ringing.",
+      "avoid_when": "Avoid for emergency symptoms, diagnosis requests, medication changes, severe disease, or when the product is not directly relevant."
     },
     {
-      "slug": "digistore24-576862",
-      "name": "NeuroQuiet 2 More Bottles",
-      "affiliate_url": "https://www.checkout-ds24.com/redir/576862/sarah_nutri/sarahnutri_forum",
-      "source": "affiliate_sales_history",
-      "digistore24_id": "576862",
-      "vendor_name": "skyhighperformers",
-      "product_type_name": "Supplements - health",
-      "sales_count": 5,
-      "total_affiliate_amount": 109.39,
-      "latest_sale_at": "2025-05-28 20:24:45",
-      "affiliation_status": "approved",
-      "match_keywords": [
-        "neuroquiet",
-        "tinnitus",
-        "ringing ears",
-        "ear ringing",
-        "hearing",
-        "ear comfort",
-        "night ringing"
-      ],
-      "use_when": "Use only when the forum question clearly matches NeuroQuiet 2 More Bottles or these themes: neuroquiet, tinnitus, ringing ears, ear ringing, hearing, ear comfort, night ringing.",
-      "avoid_when": "Avoid for emergency symptoms, diagnosis requests, medication changes, severe disease, inactive/deleted products, or when the product is not directly relevant."
-    },
-    {
-      "slug": "digistore24-578372",
-      "name": "EchoXen 3 More Bottles",
-      "affiliate_url": "https://www.checkout-ds24.com/redir/578372/sarah_nutri/sarahnutri_forum",
-      "source": "affiliate_sales_history",
-      "digistore24_id": "578372",
-      "vendor_name": "RM7866",
-      "product_type_name": "Supplements - health",
-      "sales_count": 2,
-      "total_affiliate_amount": 94.16,
-      "latest_sale_at": "2025-06-15 07:56:46",
-      "affiliation_status": "approved",
-      "match_keywords": [
-        "echoxen",
-        "tinnitus",
-        "ringing ears",
-        "ear ringing",
-        "hearing",
-        "ear comfort",
-        "night ringing"
-      ],
-      "use_when": "Use only when the forum question clearly matches EchoXen 3 More Bottles or these themes: echoxen, tinnitus, ringing ears, ear ringing, hearing, ear comfort, night ringing.",
-      "avoid_when": "Avoid for emergency symptoms, diagnosis requests, medication changes, severe disease, inactive/deleted products, or when the product is not directly relevant."
-    },
-    {
-      "slug": "digistore24-576859",
-      "name": "NeuroQuiet 6 More Bottles",
-      "affiliate_url": "https://www.checkout-ds24.com/redir/576859/sarah_nutri/sarahnutri_forum",
-      "source": "affiliate_sales_history",
-      "digistore24_id": "576859",
-      "vendor_name": "skyhighperformers",
-      "product_type_name": "Supplements - health",
-      "sales_count": 3,
-      "total_affiliate_amount": 0,
-      "latest_sale_at": "2025-06-14 00:50:40",
-      "affiliation_status": "approved",
-      "match_keywords": [
-        "neuroquiet",
-        "tinnitus",
-        "ringing ears",
-        "ear ringing",
-        "hearing",
-        "ear comfort",
-        "night ringing"
-      ],
-      "use_when": "Use only when the forum question clearly matches NeuroQuiet 6 More Bottles or these themes: neuroquiet, tinnitus, ringing ears, ear ringing, hearing, ear comfort, night ringing.",
-      "avoid_when": "Avoid for emergency symptoms, diagnosis requests, medication changes, severe disease, inactive/deleted products, or when the product is not directly relevant."
-    },
-    {
-      "slug": "digistore24-577608",
-      "name": "Nervix (6 Bottles)",
+      "slug": "digistore24-family-skyhighperformers-nervix",
+      "name": "Nervix",
+      "family_name": "Nervix",
       "affiliate_url": "https://www.checkout-ds24.com/redir/577608/sarah_nutri/sarahnutri_forum",
       "source": "affiliate_sales_history",
       "digistore24_id": "577608",
       "vendor_name": "skyhighperformers",
       "product_type_name": "Supplements - health",
-      "sales_count": 3,
-      "total_affiliate_amount": 0,
-      "latest_sale_at": "2025-06-14 00:50:53",
-      "affiliation_status": "approved",
+      "discovery_state": "approved_live",
+      "variant_count": 1,
+      "variant_names": [
+        "Nervix (6 Bottles)"
+      ],
       "match_keywords": [
         "nervix",
         "nerve",
@@ -261,32 +148,21 @@
         "tingling",
         "nerve discomfort"
       ],
-      "use_when": "Use only when the forum question clearly matches Nervix (6 Bottles) or these themes: nervix, nerve, neuropathy, tingling, nerve discomfort.",
-      "avoid_when": "Avoid for emergency symptoms, diagnosis requests, medication changes, severe disease, inactive/deleted products, or when the product is not directly relevant."
-    },
-    {
-      "slug": "digistore24-621480",
-      "name": "EchoXen (2 Bottles)",
-      "affiliate_url": "https://www.checkout-ds24.com/redir/621480/sarah_nutri/sarahnutri_forum",
-      "source": "affiliate_sales_history",
-      "digistore24_id": "621480",
-      "vendor_name": "RM7866",
-      "product_type_name": "Supplements - health",
-      "sales_count": 3,
-      "total_affiliate_amount": 0,
-      "latest_sale_at": "2025-07-24 02:10:41",
-      "affiliation_status": "approved",
-      "match_keywords": [
-        "echoxen",
-        "tinnitus",
-        "ringing ears",
-        "ear ringing",
-        "hearing",
-        "ear comfort",
-        "night ringing"
-      ],
-      "use_when": "Use only when the forum question clearly matches EchoXen (2 Bottles) or these themes: echoxen, tinnitus, ringing ears, ear ringing, hearing, ear comfort, night ringing.",
-      "avoid_when": "Avoid for emergency symptoms, diagnosis requests, medication changes, severe disease, inactive/deleted products, or when the product is not directly relevant."
+      "score_breakdown": {
+        "relevance": 1,
+        "earnings_per_sale": 0,
+        "conversion": 0.5,
+        "cancellation": 0.5,
+        "newness": 0.5,
+        "sales": 0.1429,
+        "recency": 0.2878,
+        "approval": 1,
+        "total": 0.5708
+      },
+      "total_score": 0.5708,
+      "scoring_reason": "strong keyword relevance, already approved",
+      "use_when": "Use only when the forum question clearly matches Nervix or these themes: nervix, nerve, neuropathy, tingling, nerve discomfort.",
+      "avoid_when": "Avoid for emergency symptoms, diagnosis requests, medication changes, severe disease, or when the product is not directly relevant."
     }
   ]
 }

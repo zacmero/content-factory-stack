@@ -62,7 +62,9 @@ Phase 7
 - [x] Sync approved active Digistore products from affiliate sales history
 - [x] Validate products through Digistore `validateAffiliate`
 - [x] Confirm relevant product links include `sarah_nutri`
-- [ ] Investigate whether MCP exposes public marketplace search beyond the HTTP API docs
+- [x] Normalize approved products into family-level catalog entries
+- [x] Add family scoring based on relevance/commercial signals
+- [ ] Investigate whether MCP exposes affiliate-side marketplace enumeration beyond the HTTP API docs
 - **Status:** in_progress
 
 ### Phase 8: Postiz Startup Hardening
@@ -79,6 +81,7 @@ Phase 7
 2. Is Bonsai already reachable from containers, or do we need to add env/proxy plumbing?
 3. What specifically caused Temporal to fail, and what reset is safe?
 4. Does Digistore24 MCP expose public marketplace search beyond affiliate history?
+5. Does Digistore24 MCP expose affiliate marketplace listing where the HTTP API currently does not?
 
 ## Decisions Made
 | Decision | Rationale |
@@ -93,6 +96,7 @@ Phase 7
 | Use Digistore24 HTTP API for n8n | Simpler and more deterministic than MCP for scheduled workflows |
 | Use Digistore24 MCP for interactive exploration only | Good for agent-assisted browsing, less suitable as the workflow runtime path |
 | Start/stop the full stack with root helper scripts | Avoids leaving Postiz running without its Temporal services |
+| Collapse Digistore24 variants into family-level products | Matches the real sales-page decision unit and avoids bottle-count noise in prompts |
 
 ## Errors Encountered
 | Error | Attempt | Resolution |
