@@ -161,10 +161,13 @@
   - Installed the exact Firefox browser revision required by the resolved Node Playwright package.
   - Isolated the Playwright Firefox profile path and added a fresh-profile fallback for browser-version conflicts.
   - Discovered Digistore's authenticated affiliate product-options API from inside the logged-in app and switched the sync to use it before any DOM scraping.
-  - Synced 100 affiliated products from the authenticated Digistore affiliate API path into `digistore24_partnerships.raw.json`.
-  - Rebuilt the live family catalog from the full affiliated-product pool, producing 101 approved live families.
-  - Imported and activated `Sarah Nutri - Forum Manual Queue -> Discord Review`.
-  - Identified that a stale host `llama-server` still bound to `127.0.0.1:8081` was the real cause of the live workflow regression after the catalog expansion.
+- Synced 100 affiliated products from the authenticated Digistore affiliate API path into `digistore24_partnerships.raw.json`.
+- Rebuilt the live family catalog from the full affiliated-product pool, producing 101 approved live families.
+- Imported and activated `Sarah Nutri - Forum Manual Queue -> Discord Review`.
+- Added Dub.co link-tracking support with a stable per-family cache, a 25-link/month cap, and raw affiliate URL fallback.
+- Sanitized `content_factory/reddit_quora/product_catalog.json` to remove temporary Dub helper fields after the write attempt was blocked.
+- Rebuilt `workflow_sarah_nutri_forum_manual_queue.json` against the cleaned catalog.
+- Identified that a stale host `llama-server` still bound to `127.0.0.1:8081` was the real cause of the live workflow regression after the catalog expansion.
   - Killed the stale loopback-only Bonsai process, patched the LLMero Bonsai profile to `0.0.0.0`, and created an enabled user `systemd` service `llmero-bonsai.service`.
   - Verified `docker exec n8n ... /v1/models` returns HTTP `200` against `host.docker.internal:8081`.
   - Smoke-tested the live forum webhook successfully again after the persistent Bonsai fix.
@@ -259,3 +262,42 @@
 |-----------|-------|---------|------------|
 | 2026-04-23 | Temporal stayed unhealthy even though the process was running | 1 | Confirmed healthcheck was probing `localhost`; patched it to use the container IP |
 | 2026-04-23 | Postiz still returned `502` immediately after Temporal fix | 1 | Restarted only the `postiz` app container after Temporal was healthy; backend then bound to `3000` |
+
+## Session: 2026-04-24
+
+### Phase 9: Dub.co Link Tracking
+- **Status:** in_progress
+- Actions taken:
+  - Read official Dub docs for link creation, retrieval, update, API keys, and permissions.
+  - Added `DUB_API_KEY`, `DUB_BASE_URL`, `DUB_DOMAIN`, `DUB_CAMPAIGN`, `DUB_TAG_NAMES`, and `DUB_MAX_NEW_LINKS` to `.env.template` and local `.env`.
+  - Added `scripts/dub_sync_catalog.mjs` to cache stable Dub links per product family with `externalId`.
+  - Patched the Dub sync to preserve `raw_affiliate_url` and write `tracked_affiliate_url`/`dub_short_url` into the catalog when tracking exists.
+  - Added Dub operations docs to `content_factory/reddit_quora/README.md` and `content_factory/reddit_quora/digistore24.md`.
+  - Updated the planning files for a new Dub tracking phase.
+  - Ran syntax checks on the new script and existing workflow builder.
+  - Ran a dry-run of the Dub sync and confirmed the catalog selection logic and monthly cap gating.
+  - Ran the real Dub sync, which authenticated but returned `403 Forbidden` and later `429 Too Many Requests` on `POST /links`, so no new short links were created yet.
+  - Hardened the Dub sync to stop hammering the API after the first write block and to fall back to raw affiliate URLs.
+- Files created/modified:
+  - `.env`
+  - `.env.template`
+  - `content_factory/reddit_quora/README.md`
+  - `content_factory/reddit_quora/digistore24.md`
+  - `findings.md`
+  - `progress.md`
+  - `scripts/dub_sync_catalog.mjs`
+  - `task_plan.md`
+
+### Phase 9 Test Results
+| Test | Input | Expected | Actual | Status |
+|------|-------|----------|--------|--------|
+| Dub sync syntax | `node --check scripts/dub_sync_catalog.mjs` | Valid JS | Passed | pass |
+| Workflow builder syntax | `node --check scripts/build_forum_manual_queue.mjs` | Valid JS | Passed | pass |
+| Dub dry-run | `node scripts/dub_sync_catalog.mjs --dry-run` | No writes, planned link reuse visible | Passed; 101 eligible products, 0 created, 0 reused | pass |
+| Dub live sync | `node scripts/dub_sync_catalog.mjs --write-catalog` | Create tracked links and write catalog | Authenticated, but `POST /links` returned `403 Forbidden` then `429 Too Many Requests`; no links created | blocked |
+
+### Phase 9 Error Log
+| Timestamp | Error | Attempt | Resolution |
+|-----------|-------|---------|------------|
+| 2026-04-24 | Dub `POST /links` returned `403 Forbidden` with the provided API key | 1 | Added docs noting the key must have write permission for `links`; sync now falls back to raw URLs |
+| 2026-04-24 | Dub write attempts then hit `429 Too Many Requests` after repeated retries | 1 | Hardened the sync to stop hammering the API after the first write block and to preserve the raw affiliate URL |

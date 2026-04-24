@@ -4,7 +4,7 @@
 Wire Bonsai as the default text model for the content-factory pipeline, keep Gemini for image generation and future video work, repair Temporal so Postiz boots cleanly again, and document the root cause and current milestones.
 
 ## Current Phase
-Phase 7
+Phase 9
 
 ## Phases
 
@@ -81,6 +81,14 @@ Phase 7
 - [x] Document the root cause and the corrected operational path
 - **Status:** complete
 
+### Phase 9: Dub.co Link Tracking
+- [x] Confirm Dub API link model and retrieval endpoints
+- [x] Add a stable link-cache strategy so product families reuse the same short link
+- [ ] Sync Dub links for the approved Digistore catalog
+- [ ] Write tracked URLs back into the live forum workflow export
+- [x] Document the 25-link/month free-plan guardrail and reuse policy
+- **Status:** in_progress
+
 ## Key Questions
 1. Which files currently control text interpretation vs image/video generation?
 2. Is Bonsai already reachable from containers, or do we need to add env/proxy plumbing?
@@ -103,12 +111,14 @@ Phase 7
 | Start/stop the full stack with root helper scripts | Avoids leaving Postiz running without its Temporal services |
 | Collapse Digistore24 variants into family-level products | Matches the real sales-page decision unit and avoids bottle-count noise in prompts |
 | Treat Digistore24 MCP marketplace actions as the same capability boundary as the HTTP API unless proven otherwise | MCP docs link directly to the same API references for marketplace tools |
+| Use Dub short links once per product family and cache them by stable external ID | Reuse avoids burning the 25-link/month free-plan cap |
 
 ## Errors Encountered
 | Error | Attempt | Resolution |
 |-------|---------|------------|
 | Docker socket blocked on `docker stop` | 1 | Retried with elevated permission and paused n8n safely |
 | `sqlite3` spawn blocked inside Node child_process | 1 | Split work into shell SQL steps and file-only Node transforms |
+| Dub `POST /links` returned `403 Forbidden` | 1 | Documented that the API key needs write permission for `links`; integration now falls back to raw affiliate URLs until a writable key or reset is available |
 
 ## Notes
 - Update phase status as work progresses.

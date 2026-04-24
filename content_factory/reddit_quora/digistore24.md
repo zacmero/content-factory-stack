@@ -83,6 +83,29 @@ MCP exposes the same core actions, including `listMarketplaceEntries`, `getMarke
 6. The draft includes a product link only when the product is directly relevant.
 7. You manually post the answer.
 
+## Dub Tracking
+
+Use Dub.co as the short-link tracking layer for approved live families.
+
+Policy:
+
+- one Dub link per product family
+- reuse by stable `externalId`
+- no blind per-reply link creation
+- stay under the free-plan `25 links/month` cap
+- write access is required on the Dub API key; read-only keys will return `403` on link creation
+- stable link mappings are cached in `content_factory/reddit_quora/dub_links.json`
+
+Refresh command:
+
+```bash
+cd /home/zacmero/projects/content-factory-stack
+node scripts/dub_sync_catalog.mjs --write-catalog
+node scripts/build_forum_manual_queue.mjs
+```
+
+The Dub sync writes tracked links back into `product_catalog.json` and keeps the raw Digistore destination in `raw_affiliate_url` for later recovery.
+
 ## Partnership Source
 
 The correct source of truth for "all products I am affiliated with" is Digistore24's affiliate UI, not affiliate sales history.

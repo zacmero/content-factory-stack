@@ -60,6 +60,10 @@
 - Rebuilding the catalog from the full affiliated-product pool produced 101 approved live product families in `content_factory/reddit_quora/product_catalog.json`.
 - The live forum workflow failed after the catalog expansion only because a stale host `llama-server` was still bound to `127.0.0.1:8081`; Docker could not reach it through `host.docker.internal`.
 - The durable Bonsai fix is a user `systemd` service at `/home/zacmero/.config/systemd/user/llmero-bonsai.service` plus `LLAMA_SERVER_HOST=\"0.0.0.0\"` in `LLMero/profiles/llmero-bonsai.env`.
+- Dub.co link creation is done through the workspace API with stable `externalId` values so product-family links can be reused instead of recreated.
+- Dub API keys can be permission-scoped. A read-only or restricted key can return `403 Forbidden` on `POST /links`.
+- The current Dub key authenticated read-style requests, but `POST /links` returned `403 Forbidden` and later `429 Too Many Requests` after repeated retries, so the live short-link creation step is currently blocked until the key permissions or rate-limit state are fixed.
+- The new Dub sync script writes `raw_affiliate_url` alongside `tracked_affiliate_url`/`dub_short_url` so the forum workflow can fall back to the raw affiliate URL when tracking is unavailable.
 
 ## Technical Decisions
 | Decision | Rationale |
@@ -87,6 +91,7 @@
 | Keep the workflow suggestion pool restricted to approved live product families | Prevents non-approved marketplace candidates from leaking into affiliate links |
 | Prefer Digistore's authenticated affiliate product-options API over UI scraping | It exposes the full affiliated-product pool, including unsold products, with less DOM fragility |
 | Run Bonsai as an enabled user `systemd` service | Makes the OpenAI-compatible endpoint survive reboots and keeps the bind reachable from Docker |
+| Use Dub short links once per product family and cache them by stable `externalId` | Reuse avoids burning the 25-link/month free-plan cap |
 
 ## Issues Encountered
 | Issue | Resolution |

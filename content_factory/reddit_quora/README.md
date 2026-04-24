@@ -173,6 +173,33 @@ node scripts/digistore24_sync_catalog.mjs --write-catalog
 node scripts/build_forum_manual_queue.mjs
 ```
 
+Track approved affiliate links with Dub.co:
+
+```bash
+cd /home/zacmero/projects/content-factory-stack
+node scripts/dub_sync_catalog.mjs --write-catalog
+node scripts/build_forum_manual_queue.mjs
+```
+
+Full refresh sequence for this pipeline:
+
+```bash
+cd /home/zacmero/projects/content-factory-stack
+node scripts/digistore24_sync_partnerships_playwright.mjs
+node scripts/digistore24_sync_catalog.mjs --write-catalog
+node scripts/dub_sync_catalog.mjs --write-catalog
+node scripts/build_forum_manual_queue.mjs
+```
+
+Dub plan guardrails:
+
+- reuse existing short links by stable `externalId`
+- only create new links for approved product families
+- keep new-link creation under `DUB_MAX_NEW_LINKS` per month, default `25`
+- if a product has no Dub link yet, the workflow still falls back to the raw affiliate URL
+- the Dub API key must have write permission for `links`; read-only keys will not create short links
+- the local cache lives at `content_factory/reddit_quora/dub_links.json`
+
 Playwright loader check:
 
 ```bash
