@@ -44,6 +44,13 @@
 - The live family catalog now collapses pack-size variants into product families such as `NeuroQuiet`, `EchoXen`, `Ring Quiet Plus`, and `Nervix`.
 - The current scoring model combines relevance + earnings per sale + conversion + cancellation + newness, then adds lighter weighting for sales volume, recency, and approval state.
 - The remaining marketplace-expansion gap is not ranking logic anymore; it is affiliate-side discovery of new `entry_id`s.
+- Digistore24's MCP documentation lists `listMarketplaceEntries` and `getMarketplaceEntry`, but it explicitly links both tools to the same API references already inspected. That strongly suggests MCP does not add a separate affiliate-side marketplace enumeration capability by itself.
+- Digistore24's affiliate marketplace help page confirms that affiliates can browse products in the web UI, request partnerships, and receive affiliate links there. That UI capability is broader than the currently documented HTTP/MCP marketplace listing surface.
+- Vendor mode does not solve third-party discovery: the vendor marketplace docs describe listing your own products so affiliates can find them. With no vendor products of your own, vendor-mode marketplace listing remains empty by design.
+- Digistore24's help docs explicitly identify two affiliate UI views that matter for this project: `Sales & partners > Vendor partnerships` and `Sales & partners > Content links`. Those pages cover status, commission, support page, and promolinks for approved products.
+- The repo now has a browser-backed sync helper, `scripts/digistore24_sync_partnerships_playwright.mjs`, which captures approved promolinks and partnership rows into `content_factory/reddit_quora/digistore24_partnerships.raw.json`.
+- The catalog sync now prefers `affiliate_partnership_ui` entries when present and falls back to `affiliate_sales_history` only when the UI snapshot is absent.
+- The forum manual-queue workflow no longer passes a flat score-sorted product list to Bonsai. It now computes a question-specific shortlist first, using direct keyword/family hits, then uses the existing family score only as a tiebreaker.
 
 ## Technical Decisions
 | Decision | Rationale |

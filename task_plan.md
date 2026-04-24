@@ -64,7 +64,9 @@ Phase 7
 - [x] Confirm relevant product links include `sarah_nutri`
 - [x] Normalize approved products into family-level catalog entries
 - [x] Add family scoring based on relevance/commercial signals
-- [ ] Investigate whether MCP exposes affiliate-side marketplace enumeration beyond the HTTP API docs
+- [x] Investigate whether MCP exposes affiliate-side marketplace enumeration beyond the HTTP API docs
+- [x] Add affiliate partnership UI as a first-class Digistore24 source path
+- [x] Change forum drafting to pre-rank products by post relevance before model selection
 - **Status:** in_progress
 
 ### Phase 8: Postiz Startup Hardening
@@ -97,6 +99,7 @@ Phase 7
 | Use Digistore24 MCP for interactive exploration only | Good for agent-assisted browsing, less suitable as the workflow runtime path |
 | Start/stop the full stack with root helper scripts | Avoids leaving Postiz running without its Temporal services |
 | Collapse Digistore24 variants into family-level products | Matches the real sales-page decision unit and avoids bottle-count noise in prompts |
+| Treat Digistore24 MCP marketplace actions as the same capability boundary as the HTTP API unless proven otherwise | MCP docs link directly to the same API references for marketplace tools |
 
 ## Errors Encountered
 | Error | Attempt | Resolution |

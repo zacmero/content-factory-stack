@@ -151,12 +151,18 @@
   - Synced 4 approved live affiliate product families into the active product catalog.
   - Confirmed Digistore24 OpenAPI documents `listMarketplaceEntries` as vendor marketplace data.
   - Confirmed `getMarketplaceEntry` has the exact stats fields needed for ranking if affiliate-side marketplace enumeration becomes available.
+  - Reviewed Digistore24 MCP docs and confirmed the marketplace MCP actions map to the same API references, so MCP does not currently document a broader affiliate-side listing surface than HTTP API.
+  - Added `scripts/digistore24_sync_partnerships_playwright.mjs` to capture approved affiliate products/promolinks from Digistore24's affiliate UI.
+  - Updated the catalog sync to merge `digistore24_partnerships.raw.json` when present and prefer partnership-derived promolinks.
+  - Updated the forum manual-queue builder so Reddit/Quora prompts receive a question-specific product shortlist ranked by direct relevance first and family score second.
   - Imported and activated `Sarah Nutri - Forum Manual Queue -> Discord Review`.
   - Removed the need for the Bonsai host proxy by restarting Bonsai on `0.0.0.0:8081`.
   - Smoke-tested the forum webhook successfully with product-relevant and unrelated posts.
+  - Verified the updated live workflow still executes successfully after the relevance-first rewrite.
 - Files created/modified:
   - `content_factory/reddit_quora/digistore24.md`
   - `scripts/digistore24_sync_catalog.mjs`
+  - `scripts/digistore24_sync_partnerships_playwright.mjs`
   - `scripts/build_forum_manual_queue.mjs`
   - `workflow_sarah_nutri_forum_manual_queue.json`
   - `scripts/import_social_response_workflows.mjs`
@@ -184,6 +190,7 @@
 | Product-link smoke test | Hearing-related Reddit/Quora candidate | Relevant approved Digistore link when safe | Reddit included `checkout-ds24.com/redir/.../sarah_nutri/...`; Quora withheld link due safety | pass |
 | Irrelevant-link guard | Protein/low-appetite candidate | No hearing-product link | No Digistore links included | pass |
 | Family-catalog webhook smoke test | POST hearing-related candidate after family rewrite | Workflow still succeeds with family-level product pool | Execution `183` success after Bonsai restart | pass |
+| Relevance-first webhook smoke test | POST hearing-related candidate after shortlist rewrite | Workflow still succeeds with question-ranked product pool | Webhook returned `{"success":true}` and local ranking check put hearing products first | pass |
 
 ## Phase 7 Error Log
 | Timestamp | Error | Attempt | Resolution |

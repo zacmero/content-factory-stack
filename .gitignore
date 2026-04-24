@@ -9,3 +9,4 @@ node_modules/
 n8n-mcp-server/node_modules/
 postgres_data/
 content_factory/reddit_quora/digistore24_catalog.raw.json
+content_factory/reddit_quora/digistore24_partnerships.raw.json

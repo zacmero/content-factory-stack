@@ -77,10 +77,43 @@ MCP exposes the same core actions, including `listMarketplaceEntries`, `getMarke
 
 1. Sync approved affiliate products into `product_catalog.json`.
 2. Normalize product variants into product families so bottle-count SKUs do not flood the catalog.
-3. Score families by relevance + earnings per sale + conversion + cancellation + newness, with approval state as a gate.
-4. n8n drafts Reddit and Quora replies using that local family catalog.
-5. The draft includes a product link only when the product is directly relevant.
-6. You manually post the answer.
+3. Pre-rank products by direct question relevance inside the workflow, then use family score only as a tiebreaker.
+4. Score families by relevance + earnings per sale + conversion + cancellation + newness, with approval state as a gate.
+5. n8n drafts Reddit and Quora replies using that local family catalog.
+6. The draft includes a product link only when the product is directly relevant.
+7. You manually post the answer.
+
+## Partnership Source
+
+The correct source of truth for "all products I am affiliated with" is Digistore24's affiliate UI, not affiliate sales history.
+
+Two affiliate UI views matter:
+
+- `Sales & partners > Vendor partnerships`: all partnerships and their status, commission, support page, and promolink in the detail view.
+- `Sales & partners > Content links`: all products for which you already have an affiliate partnership, with a promolink generator.
+
+This repo now includes a browser-backed sync helper:
+
+```bash
+cd /home/zacmero/projects/content-factory-stack
+node scripts/digistore24_sync_partnerships_playwright.mjs
+```
+
+It writes:
+
+```text
+content_factory/reddit_quora/digistore24_partnerships.raw.json
+```
+
+Then merge it into the live catalog:
+
+```bash
+cd /home/zacmero/projects/content-factory-stack
+node scripts/digistore24_sync_catalog.mjs --write-catalog
+node scripts/build_forum_manual_queue.mjs
+```
+
+If the partnership snapshot exists, the sync prefers exact UI promolinks from that file over reconstructed history-only links.
 
 ## Confirmed API Behavior In This Repo
 
@@ -106,10 +139,11 @@ The workflow only uses `approved_live_families` for suggestions.
 
 ## Current Gap
 
-The remaining discovery gap is affiliate-side marketplace enumeration for new products.
+The remaining discovery gap is affiliate-side marketplace enumeration for brand-new marketplace products you are not yet affiliated with.
 
 Current best options:
 
-1. Keep using approved live families immediately.
-2. Add MCP-based marketplace discovery if MCP exposes affiliate-side listing better than the HTTP API.
-3. If MCP does not solve it, add a separate marketplace discovery source instead of overloading the live posting workflow.
+1. Use the affiliate partnership/content-link UI as the source for all currently approved products.
+2. Keep using approved live families immediately.
+3. Add MCP-based marketplace discovery if MCP exposes affiliate-side listing better than the HTTP API.
+4. If MCP does not solve it, add a separate marketplace discovery source instead of overloading the live posting workflow.

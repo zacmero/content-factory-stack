@@ -112,6 +112,15 @@ node scripts/digistore24_sync_catalog.mjs --write-catalog
 node scripts/build_forum_manual_queue.mjs
 ```
 
+Sync all currently affiliated Digistore24 products from the affiliate UI:
+
+```bash
+cd /home/zacmero/projects/content-factory-stack
+node scripts/digistore24_sync_partnerships_playwright.mjs
+node scripts/digistore24_sync_catalog.mjs --write-catalog
+node scripts/build_forum_manual_queue.mjs
+```
+
 Affiliate links in Discord are only suggested if `product_catalog.json` contains a real `affiliate_url`. For Digistore24 products with a product ID and no URL, the sync helper generates a Promolink in this format:
 
 ```text
@@ -126,7 +135,12 @@ Digistore API behavior observed for this affiliate account:
 - `listPurchases` and `listTransactions` expose historic affiliate sales with product IDs/names.
 - `validateAffiliate` confirms whether `sarah_nutri` is approved for each product ID.
 
-The sync helper now builds the active catalog from affiliate sales history, filters inactive/deleted products, validates approved affiliation, and generates `sarah_nutri` Promolinks.
+The sync helper now supports two sources:
+
+- `affiliate_partnership_ui`: Digistore24 affiliate UI snapshot from `Vendor partnerships` / `Content links`
+- `affiliate_sales_history`: historic affiliate sales fallback
+
+If the UI snapshot exists, it is preferred because it reflects all currently approved affiliations, including products you have not sold yet.
 
 The live catalog is now family-based, not bottle-SKU-based. Example: `NeuroQuiet (1 Bottle)`, `NeuroQuiet (3 Bottles)`, and `NeuroQuiet 3 More Bottles` are collapsed into one `NeuroQuiet` family so the drafting workflow works with real product families instead of pack variants.
 
@@ -142,6 +156,8 @@ Current family-scoring factors:
 - approval state
 
 Only approved live families with a valid affiliate URL are allowed into the workflow's suggestion pool.
+
+The drafting workflow now pre-ranks the product shortlist by direct question relevance before it calls Bonsai. Catalog score is only a tiebreaker among already relevant products.
 
 Important API limitation confirmed in this repo:
 

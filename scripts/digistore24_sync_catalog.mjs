@@ -16,6 +16,7 @@ const keywordList = String(
   .filter(Boolean);
 
 const rawOut = 'content_factory/reddit_quora/digistore24_catalog.raw.json';
+const partnershipRawPath = 'content_factory/reddit_quora/digistore24_partnerships.raw.json';
 const catalogPath = 'content_factory/reddit_quora/product_catalog.json';
 const shouldWriteCatalog = process.argv.includes('--write-catalog');
 const marketplaceSorts = ['rank', 'revenue', 'profit', 'conversion', 'created', 'name', 'stars', 'cancel'];
@@ -232,6 +233,29 @@ function buildAffiliateUrl(productId) {
   return `https://www.checkout-ds24.com/redir/${encodeURIComponent(productId)}/${encodeURIComponent(affiliateId)}/sarahnutri_forum`;
 }
 
+function parsePromolink(value) {
+  const text = String(value || '').trim();
+  if (!text) return { url: '', productId: '', contentLinkId: '' };
+  const redirMatch = text.match(/\/redir\/(\d+)\//i);
+  if (redirMatch) {
+    return { url: text, productId: redirMatch[1], contentLinkId: '' };
+  }
+  const contentMatch = text.match(/\/content\/(\d+)\/(\d+)\//i);
+  if (contentMatch) {
+    return { url: text, productId: contentMatch[1], contentLinkId: contentMatch[2] };
+  }
+  return { url: text, productId: '', contentLinkId: '' };
+}
+
+function readPartnershipSnapshot() {
+  if (!fs.existsSync(partnershipRawPath)) return null;
+  try {
+    return JSON.parse(fs.readFileSync(partnershipRawPath, 'utf8'));
+  } catch (error) {
+    return { read_error: error.message, approved_products: [], partnership_rows: [] };
+  }
+}
+
 function extractAffiliateProducts(purchases = [], transactions = []) {
   const byId = new Map();
 
@@ -342,6 +366,58 @@ function normalizeHistoryCandidate(product, validation) {
     total_affiliate_amount: Number(product.total_affiliate_amount.toFixed(2)),
     latest_sale_at: parseDate(product.latest_sale_at),
     affiliation_status: validation.affiliation_status || 'approved'
+  };
+}
+
+function normalizePartnershipCandidate(product, validation = {}) {
+  const promolink = parsePromolink(product.promolink || product.affiliate_url || '');
+  const productId = String(product.product_id || promolink.productId || '').trim();
+  const vendorName = String(product.vendor_name || '').trim();
+  const variantName = String(product.product_name || product.name || `Digistore24 product ${productId || 'unknown'}`).trim();
+  const family = buildFamilyKey(variantName, vendorName);
+  const matchKeywords = unique([
+    ...inferMatchedKeywords(variantName, vendorName, product.commission_text, product.product_label),
+    ...inferNameKeywords(variantName)
+  ]);
+  const approvedByUi = String(product.status || '').toLowerCase() === 'approved';
+  const approvedByApi = validation.have_affiliation === 'Y' && validation.affiliation_status === 'approved';
+  const affiliateUrl = promolink.url || (productId ? buildAffiliateUrl(productId) : '');
+
+  return {
+    variant_slug: `digistore24-partnership-${slugify([vendorName, variantName, productId].filter(Boolean).join('-'))}`,
+    variant_name: variantName,
+    family_key: family.familyKey,
+    family_slug: family.familySlug,
+    family_name: family.familyName,
+    digistore24_id: productId,
+    marketplace_entry_id: '',
+    vendor_name: vendorName,
+    product_type_name: String(product.product_type_name || '').trim(),
+    source: 'affiliate_partnership_ui',
+    discovery_state: approvedByUi || approvedByApi ? 'approved_live' : 'manual_approval',
+    approval_state:
+      validation.affiliation_status ||
+      String(product.status || '').trim().toLowerCase() ||
+      (approvedByUi ? 'approved' : 'unknown'),
+    auto_approval: false,
+    affiliate_url: affiliateUrl,
+    affiliate_support_url: String(product.affiliate_support_url || '').trim(),
+    commission_text: String(product.commission_text || '').trim(),
+    match_keywords: matchKeywords,
+    signals: {
+      earnings_per_sale: null,
+      conversion_rate: null,
+      cancellation_rate: null,
+      sales_count: 0,
+      created_at: null,
+      latest_activity_at: parseDate(product.synced_at || ''),
+      is_new: null,
+      stars: null
+    },
+    sales_count: 0,
+    total_affiliate_amount: 0,
+    latest_sale_at: null,
+    affiliation_status: validation.affiliation_status || (approvedByUi ? 'approved' : 'unknown')
   };
 }
 
@@ -556,7 +632,10 @@ function aggregateFamilies(candidates) {
           .map(([keyword]) => keyword)
       ]).slice(0, 14);
 
-      const liveVariant = approvedVariants[0] || null;
+      const liveVariant =
+        approvedVariants.find((variant) => variant.source === 'affiliate_partnership_ui' && variant.affiliate_url) ||
+        approvedVariants[0] ||
+        null;
       const familyProduct = {
         slug: `digistore24-family-${representative.family_slug}`,
         name: representative.family_name,
@@ -706,6 +785,11 @@ const result = {
   score_weights: scoreWeights,
   user_info: null,
   marketplace_stats: null,
+  partnership_snapshot_present: false,
+  partnership_snapshot_error: '',
+  partnership_rows_count: 0,
+  approved_partnership_products_count: 0,
+  approved_partnership_candidates_count: 0,
   marketplace_entry_fetch_attempts: [],
   raw_marketplace_entries_count: 0,
   hydrated_marketplace_entries_count: 0,
@@ -719,6 +803,18 @@ const result = {
   manual_approval_families: [],
   normalized_products: []
 };
+
+const partnershipSnapshot = readPartnershipSnapshot();
+if (partnershipSnapshot) {
+  result.partnership_snapshot_present = true;
+  result.partnership_snapshot_error = partnershipSnapshot.read_error || '';
+  result.partnership_rows_count = Array.isArray(partnershipSnapshot.partnership_rows)
+    ? partnershipSnapshot.partnership_rows.length
+    : 0;
+  result.approved_partnership_products_count = Array.isArray(partnershipSnapshot.approved_products)
+    ? partnershipSnapshot.approved_products.length
+    : 0;
+}
 
 try {
   result.user_info = (await callDigistore('getUserInfo')).data || null;
@@ -787,6 +883,18 @@ for (const product of historyProducts) {
   historyCandidates.push(normalizeHistoryCandidate(product, validation));
 }
 
+const partnershipCandidates = [];
+for (const product of partnershipSnapshot?.approved_products || []) {
+  const promolink = parsePromolink(product.promolink || product.affiliate_url || '');
+  const productId = String(product.product_id || promolink.productId || '').trim();
+  const validation = productId ? await validateAffiliateProduct(productId) : { status: 'missing_product_id' };
+  const candidate = normalizePartnershipCandidate(product, validation);
+  if (candidate.discovery_state === 'approved_live' && candidate.affiliate_url) {
+    partnershipCandidates.push(candidate);
+  }
+}
+result.approved_partnership_candidates_count = partnershipCandidates.length;
+
 const marketplaceCandidates = [];
 for (const entry of hydratedMarketplaceEntries) {
   const productId = String(pick(entry, ['main_product_id', 'product_id']) || '').trim();
@@ -794,7 +902,7 @@ for (const entry of hydratedMarketplaceEntries) {
   marketplaceCandidates.push(normalizeMarketplaceCandidate(entry, validation));
 }
 
-const scoredCandidates = scoreCandidates([...historyCandidates, ...marketplaceCandidates]);
+const scoredCandidates = scoreCandidates([...partnershipCandidates, ...historyCandidates, ...marketplaceCandidates]);
 const familyRecords = aggregateFamilies(scoredCandidates);
 const approvedLiveFamilies = familyRecords.filter((family) => family.discovery_state === 'approved_live');
 const marketplaceCandidateFamilies = familyRecords.filter((family) =>
