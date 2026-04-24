@@ -1,6 +1,21 @@
 #!/usr/bin/env node
 
 import fs from 'node:fs';
+import path from 'node:path';
+
+const envPath = path.resolve(process.cwd(), '.env');
+if (fs.existsSync(envPath)) {
+  const envText = fs.readFileSync(envPath, 'utf8');
+  for (const line of envText.split('\n')) {
+    const trimmed = line.trim();
+    if (!trimmed || trimmed.startsWith('#')) continue;
+    const eq = trimmed.indexOf('=');
+    if (eq < 1) continue;
+    const key = trimmed.slice(0, eq).trim();
+    const value = trimmed.slice(eq + 1);
+    if (!(key in process.env)) process.env[key] = value;
+  }
+}
 
 const apiKey = process.env.DIGISTORE24_API_KEY || '';
 const affiliateId = process.env.DIGISTORE24_AFFILIATE_ID || '';

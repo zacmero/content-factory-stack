@@ -51,6 +51,15 @@
 - The repo now has a browser-backed sync helper, `scripts/digistore24_sync_partnerships_playwright.mjs`, which captures approved promolinks and partnership rows into `content_factory/reddit_quora/digistore24_partnerships.raw.json`.
 - The catalog sync now prefers `affiliate_partnership_ui` entries when present and falls back to `affiliate_sales_history` only when the UI snapshot is absent.
 - The forum manual-queue workflow no longer passes a flat score-sorted product list to Bonsai. It now computes a question-specific shortlist first, using direct keyword/family hits, then uses the existing family score only as a tiebreaker.
+- The local machine's `playwright` command is a Python-installed CLI shim at `/home/zacmero/.local/bin/playwright`, not a local npm dependency. The Digistore sync script now resolves Playwright dynamically from the CLI's own reference path (`playwright install --list`) and from cached npx installs.
+- The Digistore sync script now defaults to Playwright `firefox` and enters through `https://www.digistore24.com/`. The previous hardcoded `https://www.digistore24-app.com/en/home` path was the source of the page-not-found behavior.
+- `playwright install firefox` from the Python CLI was not enough because the script was loading a different Node Playwright package that expected Firefox revision `1511`. Installing the exact browser revision for the resolved Node package fixed that mismatch.
+- A reused `/tmp/digistore24-playwright-profile` created by a newer system Firefox caused Playwright Firefox to refuse startup. The script now isolates the default profile path by browser and auto-falls back to a fresh profile when versions conflict.
+- After login, Digistore24's authenticated affiliate app exposes a product-options API at `https://analytics.digistore24.com/api/generic/products/options?types=affiliation...`. That endpoint returns the current affiliated products directly, including products never sold.
+- The Playwright sync now uses the authenticated affiliate API path first and captures 100 affiliated products into `content_factory/reddit_quora/digistore24_partnerships.raw.json`, instead of relying only on brittle table scraping.
+- Rebuilding the catalog from the full affiliated-product pool produced 101 approved live product families in `content_factory/reddit_quora/product_catalog.json`.
+- The live forum workflow failed after the catalog expansion only because a stale host `llama-server` was still bound to `127.0.0.1:8081`; Docker could not reach it through `host.docker.internal`.
+- The durable Bonsai fix is a user `systemd` service at `/home/zacmero/.config/systemd/user/llmero-bonsai.service` plus `LLAMA_SERVER_HOST=\"0.0.0.0\"` in `LLMero/profiles/llmero-bonsai.env`.
 
 ## Technical Decisions
 | Decision | Rationale |
@@ -76,6 +85,8 @@
 | Change Temporal healthcheck from `localhost` to `$(hostname -i)` | Matches how Temporal binds in this container and prevents false unhealthy status |
 | Add unified start/stop helper scripts | Reduces operator error across the split n8n/Postiz compose projects |
 | Keep the workflow suggestion pool restricted to approved live product families | Prevents non-approved marketplace candidates from leaking into affiliate links |
+| Prefer Digistore's authenticated affiliate product-options API over UI scraping | It exposes the full affiliated-product pool, including unsold products, with less DOM fragility |
+| Run Bonsai as an enabled user `systemd` service | Makes the OpenAI-compatible endpoint survive reboots and keeps the bind reachable from Docker |
 
 ## Issues Encountered
 | Issue | Resolution |

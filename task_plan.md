@@ -67,7 +67,10 @@ Phase 7
 - [x] Investigate whether MCP exposes affiliate-side marketplace enumeration beyond the HTTP API docs
 - [x] Add affiliate partnership UI as a first-class Digistore24 source path
 - [x] Change forum drafting to pre-rank products by post relevance before model selection
-- **Status:** in_progress
+- [x] Pull all currently affiliated Digistore24 products from the authenticated affiliate UI/API path
+- [x] Rebuild the live family catalog from full affiliated-product coverage
+- [x] Repair Bonsai availability with a persistent host service so the live forum workflow passes again
+- **Status:** complete
 
 ### Phase 8: Postiz Startup Hardening
 - [x] Reproduce the Postiz blank-screen failure after restart

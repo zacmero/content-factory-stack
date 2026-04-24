@@ -63,19 +63,33 @@ No Reddit or Quora posting API is used.
 
 ## Bonsai Container Access
 
-Docker containers cannot reach a host service that is bound only to `127.0.0.1`. LLMero's `serve.sh` supports host binding through the underlying `llama-server --host` option, but the current Bonsai profile hardcodes `127.0.0.1`.
+Docker containers cannot reach a host service that is bound only to `127.0.0.1`.
 
-Current working service command:
+The durable fix is now in place:
+
+- `LLMero/profiles/llmero-bonsai.env` binds Bonsai to `0.0.0.0`
+- a persistent user service exists at `~/.config/systemd/user/llmero-bonsai.service`
+
+Use:
 
 ```bash
-systemctl --user stop llmero-bonsai
-systemd-run --user --unit=llmero-bonsai \
-  --working-directory=/home/zacmero/projects/LLMero \
-  --setenv=LD_LIBRARY_PATH=/home/zacmero/projects/LLMero/.llmero/build/llmero-bonsai/cuda/bin:/opt/cuda-12.9/targets/x86_64-linux/lib \
-  /home/zacmero/projects/LLMero/.llmero/build/llmero-bonsai/cuda/bin/llama-server \
-  --host 0.0.0.0 --port 8081 --alias bonsai-8b -c 4096 -ngl 99 \
-  -m /home/zacmero/projects/LLMero/models/llmero-bonsai/Bonsai-8B.gguf \
-  --temp 0.5 --top-p 0.85 --top-k 20
+systemctl --user status llmero-bonsai.service --no-pager
+systemctl --user restart llmero-bonsai.service
+```
+
+Important:
+
+- binding to `0.0.0.0:8081` does not remove local access through `127.0.0.1:8081`
+- local CLI usage stays valid:
+
+```bash
+export OPENAI_BASE_URL=http://127.0.0.1:8081/v1
+```
+
+- browser/UI checks stay valid:
+
+```bash
+http://127.0.0.1:8081
 ```
 
 Verify from n8n:
@@ -87,6 +101,44 @@ docker exec n8n node -e "fetch('http://host.docker.internal:8081/v1/models',{hea
 ## Digistore24
 
 Use Digistore24 API first, MCP second.
+
+## Digistore24 Operations
+
+Main refresh sequence:
+
+```bash
+cd /home/zacmero/projects/content-factory-stack
+node scripts/digistore24_sync_partnerships_playwright.mjs
+node scripts/digistore24_sync_catalog.mjs --write-catalog
+node scripts/build_forum_manual_queue.mjs
+```
+
+Helper checks:
+
+```bash
+cd /home/zacmero/projects/content-factory-stack
+node scripts/digistore24_sync_partnerships_playwright.mjs --check-playwright
+DIGISTORE24_HEADLESS=true node scripts/digistore24_sync_partnerships_playwright.mjs --probe-start
+```
+
+What each step does:
+
+- `digistore24_sync_partnerships_playwright.mjs`
+  - logs into Digistore24
+  - reads current affiliated products from the authenticated affiliate source
+  - writes `content_factory/reddit_quora/digistore24_partnerships.raw.json`
+- `digistore24_sync_catalog.mjs --write-catalog`
+  - merges affiliated products with fallback sales history
+  - normalizes families
+  - writes `content_factory/reddit_quora/product_catalog.json`
+- `build_forum_manual_queue.mjs`
+  - rebuilds the workflow export with the latest catalog
+
+When to run it:
+
+- after adding new affiliations
+- after changing product-selection logic
+- after a Digistore login/session reset
 
 Create a read-only key in:
 
@@ -100,7 +152,7 @@ Add this to `.env`:
 DIGISTORE24_API_KEY=
 DIGISTORE24_AFFILIATE_ID=
 DIGISTORE24_MARKETPLACE_KEYWORDS=senior,elderly,caregiver,nutrition,mobility,sleep,joint,arthritis,memory,digestion
-DIGISTORE24_MAX_PRODUCTS=40
+DIGISTORE24_MAX_PRODUCTS=250
 ```
 
 Sync possible products into the local catalog:
@@ -120,6 +172,29 @@ node scripts/digistore24_sync_partnerships_playwright.mjs
 node scripts/digistore24_sync_catalog.mjs --write-catalog
 node scripts/build_forum_manual_queue.mjs
 ```
+
+Playwright loader check:
+
+```bash
+cd /home/zacmero/projects/content-factory-stack
+node scripts/digistore24_sync_partnerships_playwright.mjs --check-playwright
+```
+
+Digistore start-page probe:
+
+```bash
+cd /home/zacmero/projects/content-factory-stack
+DIGISTORE24_HEADLESS=true node scripts/digistore24_sync_partnerships_playwright.mjs --probe-start
+```
+
+This repo does not require a local `node_modules/playwright`. The sync script can resolve Playwright from:
+
+- local Node package installs
+- global npm roots
+- the Playwright CLI reference path reported by `playwright install --list`
+- cached `~/.npm/_npx/*/node_modules/playwright*` installs
+
+The Digistore sync now defaults to Playwright `firefox`, not Chromium. It starts from `https://www.digistore24.com/` and only uses a custom browser executable if `DIGISTORE24_BROWSER_PATH` is explicitly set.
 
 Affiliate links in Discord are only suggested if `product_catalog.json` contains a real `affiliate_url`. For Digistore24 products with a product ID and no URL, the sync helper generates a Promolink in this format:
 
@@ -141,6 +216,12 @@ The sync helper now supports two sources:
 - `affiliate_sales_history`: historic affiliate sales fallback
 
 If the UI snapshot exists, it is preferred because it reflects all currently approved affiliations, including products you have not sold yet.
+
+Current working affiliated-product discovery path:
+
+- log into Digistore24 once with the Playwright Firefox sync
+- the script uses the authenticated affiliate app/API product-options endpoint
+- that endpoint returns current affiliated products directly, including unsold approvals
 
 The live catalog is now family-based, not bottle-SKU-based. Example: `NeuroQuiet (1 Bottle)`, `NeuroQuiet (3 Bottles)`, and `NeuroQuiet 3 More Bottles` are collapsed into one `NeuroQuiet` family so the drafting workflow works with real product families instead of pack variants.
 

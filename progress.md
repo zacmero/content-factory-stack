@@ -155,10 +155,19 @@
   - Added `scripts/digistore24_sync_partnerships_playwright.mjs` to capture approved affiliate products/promolinks from Digistore24's affiliate UI.
   - Updated the catalog sync to merge `digistore24_partnerships.raw.json` when present and prefer partnership-derived promolinks.
   - Updated the forum manual-queue builder so Reddit/Quora prompts receive a question-specific product shortlist ranked by direct relevance first and family score second.
+  - Fixed the Digistore Playwright sync loader so it resolves Playwright from the actual machine install instead of assuming a local `node_modules/playwright`.
+  - Changed the Digistore Playwright sync to default to Firefox instead of Chromium.
+  - Changed the Digistore entry URL from the broken app URL to `https://www.digistore24.com/`.
+  - Installed the exact Firefox browser revision required by the resolved Node Playwright package.
+  - Isolated the Playwright Firefox profile path and added a fresh-profile fallback for browser-version conflicts.
+  - Discovered Digistore's authenticated affiliate product-options API from inside the logged-in app and switched the sync to use it before any DOM scraping.
+  - Synced 100 affiliated products from the authenticated Digistore affiliate API path into `digistore24_partnerships.raw.json`.
+  - Rebuilt the live family catalog from the full affiliated-product pool, producing 101 approved live families.
   - Imported and activated `Sarah Nutri - Forum Manual Queue -> Discord Review`.
-  - Removed the need for the Bonsai host proxy by restarting Bonsai on `0.0.0.0:8081`.
-  - Smoke-tested the forum webhook successfully with product-relevant and unrelated posts.
-  - Verified the updated live workflow still executes successfully after the relevance-first rewrite.
+  - Identified that a stale host `llama-server` still bound to `127.0.0.1:8081` was the real cause of the live workflow regression after the catalog expansion.
+  - Killed the stale loopback-only Bonsai process, patched the LLMero Bonsai profile to `0.0.0.0`, and created an enabled user `systemd` service `llmero-bonsai.service`.
+  - Verified `docker exec n8n ... /v1/models` returns HTTP `200` against `host.docker.internal:8081`.
+  - Smoke-tested the live forum webhook successfully again after the persistent Bonsai fix.
 - Files created/modified:
   - `content_factory/reddit_quora/digistore24.md`
   - `scripts/digistore24_sync_catalog.mjs`
@@ -191,6 +200,12 @@
 | Irrelevant-link guard | Protein/low-appetite candidate | No hearing-product link | No Digistore links included | pass |
 | Family-catalog webhook smoke test | POST hearing-related candidate after family rewrite | Workflow still succeeds with family-level product pool | Execution `183` success after Bonsai restart | pass |
 | Relevance-first webhook smoke test | POST hearing-related candidate after shortlist rewrite | Workflow still succeeds with question-ranked product pool | Webhook returned `{"success":true}` and local ranking check put hearing products first | pass |
+| Digistore affiliated-product sync | Logged-in Playwright run against affiliate app API | Capture current affiliated products, not just sold history | `Approved products captured: 100` and raw partnership snapshot written | pass |
+| Full-family catalog rebuild | `node scripts/digistore24_sync_catalog.mjs --write-catalog` | Rebuild live catalog from full affiliation pool | `Approved live Digistore24 families: 101` | pass |
+| Persistent Bonsai service | `systemctl --user status llmero-bonsai.service` | Service enabled and listening on `0.0.0.0:8081` | Active/running; n8n container reached `/v1/models` with HTTP `200` | pass |
+| Post-fix live forum webhook smoke test | POST candidate pair after service fix | Workflow succeeds end-to-end | Execution `186` success and execution `187` running to completion with webhook `{"success":true}` | pass |
+| Playwright loader check | `node scripts/digistore24_sync_partnerships_playwright.mjs --check-playwright` | Resolve Playwright without local `node_modules/playwright` | Resolved from `/home/zacmero/.npm/_npx/.../node_modules/playwright/index.js` | pass |
+| Digistore Firefox start-page probe | `DIGISTORE24_HEADLESS=true node scripts/digistore24_sync_partnerships_playwright.mjs --probe-start` | Launch Firefox and reach real Digistore entry page | Firefox launched with bundled browser and loaded `https://www.digistore24.com/` | pass |
 
 ## Phase 7 Error Log
 | Timestamp | Error | Attempt | Resolution |
@@ -202,6 +217,12 @@
 | 2026-04-23 | Digistore `listProducts` and `listMarketplaceEntries` returned no products | 1 | Identified those endpoints as vendor-oriented; switched catalog sync to affiliate sales history plus `validateAffiliate` |
 | 2026-04-23 | Bonsai generated a product mention without setting affiliate JSON fields | 1 | Hardened parser to attach a catalog product link when a safe draft mentions an approved product |
 | 2026-04-23 | Live webhook smoke test failed after family rewrite | 1 | Root cause was Bonsai server being down, not the catalog rewrite; restarted `llmero-bonsai` and reran successfully |
+| 2026-04-23 | `ERR_MODULE_NOT_FOUND` on `playwright` during Digistore UI sync | 1 | Patched loader to resolve Playwright from the CLI-reported reference path and cached npx installs |
+| 2026-04-23 | Digistore sync launched Chromium and hit a page-not-found app URL | 1 | Switched the script default to Firefox and changed the entry URL to `https://www.digistore24.com/` |
+| 2026-04-23 | Playwright Firefox browser revision mismatch (`1509` vs expected `1511`) | 1 | Installed Firefox using the exact Node Playwright CLI that the script resolved |
+| 2026-04-23 | Playwright Firefox refused the old profile because it was last used by a newer browser | 1 | Isolated the default profile path by browser and added a fresh-profile fallback |
+| 2026-04-23 | Full affiliated-product sync still missed unsold approvals | 1 | Switched from sales-history-only discovery to Digistore's authenticated affiliate product-options API |
+| 2026-04-23 | Live forum workflow failed after catalog expansion | 1 | Found stale loopback-only Bonsai listener on `127.0.0.1:8081`, replaced it with enabled user `systemd` service on `0.0.0.0:8081` |
 
 ### Phase 8: Postiz Startup Hardening
 - **Status:** complete

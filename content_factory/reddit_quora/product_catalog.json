@@ -15,8 +15,8 @@
         "NeuroQuiet (6 Bottles)",
         "NeuroQuiet (3 Bottles)",
         "NeuroQuiet (1 Bottle)",
-        "NeuroQuiet 3 More Bottles",
         "NeuroQuiet 6 More Bottles",
+        "NeuroQuiet 3 More Bottles",
         "NeuroQuiet 2 More Bottles",
         "NeuroQuiet 6 More Bottles"
       ],
@@ -36,13 +36,853 @@
         "cancellation": 0.5,
         "newness": 0.5,
         "sales": 0.0952,
-        "recency": 0.2829,
+        "recency": 0.0482,
         "approval": 1,
-        "total": 0.7468
+        "total": 0.735
       },
-      "total_score": 0.7468,
+      "total_score": 0.735,
       "scoring_reason": "strong keyword relevance, high earnings per sale, already approved",
       "use_when": "Use only when the forum question clearly matches NeuroQuiet or these themes: neuroquiet, tinnitus, ringing ears, ear ringing, hearing, ear comfort, night ringing.",
+      "avoid_when": "Avoid for emergency symptoms, diagnosis requests, medication changes, severe disease, or when the product is not directly relevant."
+    },
+    {
+      "slug": "digistore24-family-asperdigital-m1-neurofortis-pro-1-btl-69",
+      "name": "M1 NeuroFortis PRO 1 Btl $69",
+      "family_name": "M1 NeuroFortis PRO 1 Btl $69",
+      "affiliate_url": "https://www.checkout-ds24.com/redir/602881/sarah_nutri/sarahnutri_forum",
+      "source": "affiliate_partnership_ui",
+      "digistore24_id": "602881",
+      "vendor_name": "Asperdigital",
+      "product_type_name": "",
+      "discovery_state": "approved_live",
+      "variant_count": 1,
+      "variant_names": [
+        "M1 NeuroFortis PRO 1 btl $69"
+      ],
+      "match_keywords": [
+        "neurofortis",
+        "tinnitus",
+        "ringing ears",
+        "ear ringing",
+        "hearing",
+        "ear comfort",
+        "night ringing"
+      ],
+      "score_breakdown": {
+        "relevance": 1,
+        "earnings_per_sale": 0.5,
+        "conversion": 0.5,
+        "cancellation": 0.5,
+        "newness": 0.5,
+        "sales": 0,
+        "recency": 1,
+        "approval": 1,
+        "total": 0.685
+      },
+      "total_score": 0.685,
+      "scoring_reason": "strong keyword relevance, already approved",
+      "use_when": "Use only when the forum question clearly matches M1 NeuroFortis PRO 1 Btl $69 or these themes: neurofortis, tinnitus, ringing ears, ear ringing, hearing, ear comfort, night ringing.",
+      "avoid_when": "Avoid for emergency symptoms, diagnosis requests, medication changes, severe disease, or when the product is not directly relevant."
+    },
+    {
+      "slug": "digistore24-family-asperdigital-m2-neurofortis-pro-3-btls-177",
+      "name": "M2 NeuroFortis PRO 3 Btls $177",
+      "family_name": "M2 NeuroFortis PRO 3 Btls $177",
+      "affiliate_url": "https://www.checkout-ds24.com/redir/602883/sarah_nutri/sarahnutri_forum",
+      "source": "affiliate_partnership_ui",
+      "digistore24_id": "602883",
+      "vendor_name": "Asperdigital",
+      "product_type_name": "",
+      "discovery_state": "approved_live",
+      "variant_count": 1,
+      "variant_names": [
+        "M2 NeuroFortis PRO 3 btls $177"
+      ],
+      "match_keywords": [
+        "neurofortis",
+        "btls",
+        "tinnitus",
+        "ringing ears",
+        "ear ringing",
+        "hearing",
+        "ear comfort",
+        "night ringing"
+      ],
+      "score_breakdown": {
+        "relevance": 1,
+        "earnings_per_sale": 0.5,
+        "conversion": 0.5,
+        "cancellation": 0.5,
+        "newness": 0.5,
+        "sales": 0,
+        "recency": 1,
+        "approval": 1,
+        "total": 0.685
+      },
+      "total_score": 0.685,
+      "scoring_reason": "strong keyword relevance, already approved",
+      "use_when": "Use only when the forum question clearly matches M2 NeuroFortis PRO 3 Btls $177 or these themes: neurofortis, btls, tinnitus, ringing ears, ear ringing, hearing, ear comfort, night ringing.",
+      "avoid_when": "Avoid for emergency symptoms, diagnosis requests, medication changes, severe disease, or when the product is not directly relevant."
+    },
+    {
+      "slug": "digistore24-family-asperdigital-m3-neurofortis-pro-6-btls-294",
+      "name": "M3 NeuroFortis PRO 6 Btls $294",
+      "family_name": "M3 NeuroFortis PRO 6 Btls $294",
+      "affiliate_url": "https://www.checkout-ds24.com/redir/602884/sarah_nutri/sarahnutri_forum",
+      "source": "affiliate_partnership_ui",
+      "digistore24_id": "602884",
+      "vendor_name": "Asperdigital",
+      "product_type_name": "",
+      "discovery_state": "approved_live",
+      "variant_count": 1,
+      "variant_names": [
+        "M3 NeuroFortis PRO 6 btls $294"
+      ],
+      "match_keywords": [
+        "neurofortis",
+        "btls",
+        "tinnitus",
+        "ringing ears",
+        "ear ringing",
+        "hearing",
+        "ear comfort",
+        "night ringing"
+      ],
+      "score_breakdown": {
+        "relevance": 1,
+        "earnings_per_sale": 0.5,
+        "conversion": 0.5,
+        "cancellation": 0.5,
+        "newness": 0.5,
+        "sales": 0,
+        "recency": 1,
+        "approval": 1,
+        "total": 0.685
+      },
+      "total_score": 0.685,
+      "scoring_reason": "strong keyword relevance, already approved",
+      "use_when": "Use only when the forum question clearly matches M3 NeuroFortis PRO 6 Btls $294 or these themes: neurofortis, btls, tinnitus, ringing ears, ear ringing, hearing, ear comfort, night ringing.",
+      "avoid_when": "Avoid for emergency symptoms, diagnosis requests, medication changes, severe disease, or when the product is not directly relevant."
+    },
+    {
+      "slug": "digistore24-family-asperdigital-m4-neurofortis-pro-2-btls-118",
+      "name": "M4 NeuroFortis PRO 2 Btls $118",
+      "family_name": "M4 NeuroFortis PRO 2 Btls $118",
+      "affiliate_url": "https://www.checkout-ds24.com/redir/602886/sarah_nutri/sarahnutri_forum",
+      "source": "affiliate_partnership_ui",
+      "digistore24_id": "602886",
+      "vendor_name": "Asperdigital",
+      "product_type_name": "",
+      "discovery_state": "approved_live",
+      "variant_count": 1,
+      "variant_names": [
+        "M4 NeuroFortis PRO 2 btls $118"
+      ],
+      "match_keywords": [
+        "neurofortis",
+        "btls",
+        "tinnitus",
+        "ringing ears",
+        "ear ringing",
+        "hearing",
+        "ear comfort",
+        "night ringing"
+      ],
+      "score_breakdown": {
+        "relevance": 1,
+        "earnings_per_sale": 0.5,
+        "conversion": 0.5,
+        "cancellation": 0.5,
+        "newness": 0.5,
+        "sales": 0,
+        "recency": 1,
+        "approval": 1,
+        "total": 0.685
+      },
+      "total_score": 0.685,
+      "scoring_reason": "strong keyword relevance, already approved",
+      "use_when": "Use only when the forum question clearly matches M4 NeuroFortis PRO 2 Btls $118 or these themes: neurofortis, btls, tinnitus, ringing ears, ear ringing, hearing, ear comfort, night ringing.",
+      "avoid_when": "Avoid for emergency symptoms, diagnosis requests, medication changes, severe disease, or when the product is not directly relevant."
+    },
+    {
+      "slug": "digistore24-family-docsrem-the-doctor-s-book-of-survival-home-remedies",
+      "name": "The Doctor's Book Of Survival Home Remedies",
+      "family_name": "The Doctor's Book Of Survival Home Remedies",
+      "affiliate_url": "https://www.checkout-ds24.com/redir/467670/sarah_nutri/sarahnutri_forum",
+      "source": "affiliate_partnership_ui",
+      "digistore24_id": "467670",
+      "vendor_name": "docsrem",
+      "product_type_name": "",
+      "discovery_state": "approved_live",
+      "variant_count": 1,
+      "variant_names": [
+        "The Doctor's Book Of Survival Home Remedies"
+      ],
+      "match_keywords": [
+        "doctor",
+        "book",
+        "survival",
+        "home",
+        "remedies"
+      ],
+      "score_breakdown": {
+        "relevance": 1,
+        "earnings_per_sale": 0.5,
+        "conversion": 0.5,
+        "cancellation": 0.5,
+        "newness": 0.5,
+        "sales": 0,
+        "recency": 1,
+        "approval": 1,
+        "total": 0.685
+      },
+      "total_score": 0.685,
+      "scoring_reason": "strong keyword relevance, already approved",
+      "use_when": "Use only when the forum question clearly matches The Doctor's Book Of Survival Home Remedies or these themes: doctor, book, survival, home, remedies.",
+      "avoid_when": "Avoid for emergency symptoms, diagnosis requests, medication changes, severe disease, or when the product is not directly relevant."
+    },
+    {
+      "slug": "digistore24-family-durchstartenonline-30-days-ketogenic-meal-plan",
+      "name": "30-Days Ketogenic Meal Plan",
+      "family_name": "30-Days Ketogenic Meal Plan",
+      "affiliate_url": "https://www.checkout-ds24.com/redir/273309/sarah_nutri/sarahnutri_forum",
+      "source": "affiliate_partnership_ui",
+      "digistore24_id": "273309",
+      "vendor_name": "durchstartenonline",
+      "product_type_name": "",
+      "discovery_state": "approved_live",
+      "variant_count": 2,
+      "variant_names": [
+        "30-Days Ketogenic Meal Plan",
+        "30-Days Ketogenic Meal Plan"
+      ],
+      "match_keywords": [
+        "days",
+        "ketogenic",
+        "meal",
+        "plan"
+      ],
+      "score_breakdown": {
+        "relevance": 1,
+        "earnings_per_sale": 0.5,
+        "conversion": 0.5,
+        "cancellation": 0.5,
+        "newness": 0.5,
+        "sales": 0,
+        "recency": 1,
+        "approval": 1,
+        "total": 0.685
+      },
+      "total_score": 0.685,
+      "scoring_reason": "strong keyword relevance, already approved",
+      "use_when": "Use only when the forum question clearly matches 30-Days Ketogenic Meal Plan or these themes: days, ketogenic, meal, plan.",
+      "avoid_when": "Avoid for emergency symptoms, diagnosis requests, medication changes, severe disease, or when the product is not directly relevant."
+    },
+    {
+      "slug": "digistore24-family-flightpathgolfllc-main-1-1-flightpath-golf-tees-24-tees-2-75-49-99",
+      "name": "MAIN 1.1 - Flightpath Golf Tees 24 Tees - 2.75 - $49.99",
+      "family_name": "MAIN 1.1 - Flightpath Golf Tees 24 Tees - 2.75 - $49.99",
+      "affiliate_url": "https://www.checkout-ds24.com/redir/481177/sarah_nutri/sarahnutri_forum",
+      "source": "affiliate_partnership_ui",
+      "digistore24_id": "481177",
+      "vendor_name": "FlightpathGolfLLC",
+      "product_type_name": "",
+      "discovery_state": "approved_live",
+      "variant_count": 1,
+      "variant_names": [
+        "MAIN 1.1 - Flightpath Golf Tees 24 tees - 2.75 - $49.99"
+      ],
+      "match_keywords": [
+        "main",
+        "flightpath",
+        "golf",
+        "tees"
+      ],
+      "score_breakdown": {
+        "relevance": 1,
+        "earnings_per_sale": 0.5,
+        "conversion": 0.5,
+        "cancellation": 0.5,
+        "newness": 0.5,
+        "sales": 0,
+        "recency": 1,
+        "approval": 1,
+        "total": 0.685
+      },
+      "total_score": 0.685,
+      "scoring_reason": "strong keyword relevance, already approved",
+      "use_when": "Use only when the forum question clearly matches MAIN 1.1 - Flightpath Golf Tees 24 Tees - 2.75 - $49.99 or these themes: main, flightpath, golf, tees.",
+      "avoid_when": "Avoid for emergency symptoms, diagnosis requests, medication changes, severe disease, or when the product is not directly relevant."
+    },
+    {
+      "slug": "digistore24-family-ketodiet-keto-air-fryer-cookbook-ds07",
+      "name": "Keto Air Fryer Cookbook (DS07)",
+      "family_name": "Keto Air Fryer Cookbook (DS07)",
+      "affiliate_url": "https://www.checkout-ds24.com/redir/411008/sarah_nutri/sarahnutri_forum",
+      "source": "affiliate_partnership_ui",
+      "digistore24_id": "411008",
+      "vendor_name": "ketodiet",
+      "product_type_name": "",
+      "discovery_state": "approved_live",
+      "variant_count": 1,
+      "variant_names": [
+        "Keto Air Fryer Cookbook (DS07)"
+      ],
+      "match_keywords": [
+        "keto",
+        "fryer",
+        "cookbook",
+        "ds07"
+      ],
+      "score_breakdown": {
+        "relevance": 1,
+        "earnings_per_sale": 0.5,
+        "conversion": 0.5,
+        "cancellation": 0.5,
+        "newness": 0.5,
+        "sales": 0,
+        "recency": 1,
+        "approval": 1,
+        "total": 0.685
+      },
+      "total_score": 0.685,
+      "scoring_reason": "strong keyword relevance, already approved",
+      "use_when": "Use only when the forum question clearly matches Keto Air Fryer Cookbook (DS07) or these themes: keto, fryer, cookbook, ds07.",
+      "avoid_when": "Avoid for emergency symptoms, diagnosis requests, medication changes, severe disease, or when the product is not directly relevant."
+    },
+    {
+      "slug": "digistore24-family-ketodiet-keto-bread-pasta-pizza-collection",
+      "name": "Keto Bread Pasta Pizza Collection",
+      "family_name": "Keto Bread Pasta Pizza Collection",
+      "affiliate_url": "https://www.checkout-ds24.com/redir/403387/sarah_nutri/sarahnutri_forum",
+      "source": "affiliate_partnership_ui",
+      "digistore24_id": "403387",
+      "vendor_name": "ketodiet",
+      "product_type_name": "",
+      "discovery_state": "approved_live",
+      "variant_count": 1,
+      "variant_names": [
+        "Keto Bread Pasta Pizza Collection"
+      ],
+      "match_keywords": [
+        "keto",
+        "bread",
+        "pasta",
+        "pizza",
+        "collection"
+      ],
+      "score_breakdown": {
+        "relevance": 1,
+        "earnings_per_sale": 0.5,
+        "conversion": 0.5,
+        "cancellation": 0.5,
+        "newness": 0.5,
+        "sales": 0,
+        "recency": 1,
+        "approval": 1,
+        "total": 0.685
+      },
+      "total_score": 0.685,
+      "scoring_reason": "strong keyword relevance, already approved",
+      "use_when": "Use only when the forum question clearly matches Keto Bread Pasta Pizza Collection or these themes: keto, bread, pasta, pizza, collection.",
+      "avoid_when": "Avoid for emergency symptoms, diagnosis requests, medication changes, severe disease, or when the product is not directly relevant."
+    },
+    {
+      "slug": "digistore24-family-keyslim-keyslim-drops-3-digital-bonuses",
+      "name": "Keyslim Drops - + 3 Digital Bonuses",
+      "family_name": "Keyslim Drops - + 3 Digital Bonuses",
+      "affiliate_url": "https://www.checkout-ds24.com/redir/527379/sarah_nutri/sarahnutri_forum",
+      "source": "affiliate_partnership_ui",
+      "digistore24_id": "527379",
+      "vendor_name": "keyslim",
+      "product_type_name": "",
+      "discovery_state": "approved_live",
+      "variant_count": 2,
+      "variant_names": [
+        "Keyslim Drops - 3 Bottles + 3 Digital Bonuses",
+        "Keyslim Drops - 6 Bottles + 3 Digital Bonuses"
+      ],
+      "match_keywords": [
+        "keyslim",
+        "drops",
+        "digital",
+        "bonuses"
+      ],
+      "score_breakdown": {
+        "relevance": 1,
+        "earnings_per_sale": 0.5,
+        "conversion": 0.5,
+        "cancellation": 0.5,
+        "newness": 0.5,
+        "sales": 0,
+        "recency": 1,
+        "approval": 1,
+        "total": 0.685
+      },
+      "total_score": 0.685,
+      "scoring_reason": "strong keyword relevance, already approved",
+      "use_when": "Use only when the forum question clearly matches Keyslim Drops - + 3 Digital Bonuses or these themes: keyslim, drops, digital, bonuses.",
+      "avoid_when": "Avoid for emergency symptoms, diagnosis requests, medication changes, severe disease, or when the product is not directly relevant."
+    },
+    {
+      "slug": "digistore24-family-lostrec-the-lost-superfoods-physical-and-digital-us",
+      "name": "The Lost Superfoods Physical And Digital US",
+      "family_name": "The Lost Superfoods Physical And Digital US",
+      "affiliate_url": "https://www.checkout-ds24.com/redir/377301/sarah_nutri/sarahnutri_forum",
+      "source": "affiliate_partnership_ui",
+      "digistore24_id": "377301",
+      "vendor_name": "lostrec",
+      "product_type_name": "",
+      "discovery_state": "approved_live",
+      "variant_count": 1,
+      "variant_names": [
+        "The Lost Superfoods Physical and Digital US"
+      ],
+      "match_keywords": [
+        "lost",
+        "superfoods",
+        "physical",
+        "digital"
+      ],
+      "score_breakdown": {
+        "relevance": 1,
+        "earnings_per_sale": 0.5,
+        "conversion": 0.5,
+        "cancellation": 0.5,
+        "newness": 0.5,
+        "sales": 0,
+        "recency": 1,
+        "approval": 1,
+        "total": 0.685
+      },
+      "total_score": 0.685,
+      "scoring_reason": "strong keyword relevance, already approved",
+      "use_when": "Use only when the forum question clearly matches The Lost Superfoods Physical And Digital US or these themes: lost, superfoods, physical, digital.",
+      "avoid_when": "Avoid for emergency symptoms, diagnosis requests, medication changes, severe disease, or when the product is not directly relevant."
+    },
+    {
+      "slug": "digistore24-family-mayadunna-stress-annihilator-video-guide",
+      "name": "Stress Annihilator Video Guide",
+      "family_name": "Stress Annihilator Video Guide",
+      "affiliate_url": "https://www.checkout-ds24.com/redir/547122/sarah_nutri/sarahnutri_forum",
+      "source": "affiliate_partnership_ui",
+      "digistore24_id": "547122",
+      "vendor_name": "mayadunna",
+      "product_type_name": "",
+      "discovery_state": "approved_live",
+      "variant_count": 1,
+      "variant_names": [
+        "Stress Annihilator Video Guide"
+      ],
+      "match_keywords": [
+        "stress",
+        "annihilator",
+        "video",
+        "guide"
+      ],
+      "score_breakdown": {
+        "relevance": 1,
+        "earnings_per_sale": 0.5,
+        "conversion": 0.5,
+        "cancellation": 0.5,
+        "newness": 0.5,
+        "sales": 0,
+        "recency": 1,
+        "approval": 1,
+        "total": 0.685
+      },
+      "total_score": 0.685,
+      "scoring_reason": "strong keyword relevance, already approved",
+      "use_when": "Use only when the forum question clearly matches Stress Annihilator Video Guide or these themes: stress, annihilator, video, guide.",
+      "avoid_when": "Avoid for emergency symptoms, diagnosis requests, medication changes, severe disease, or when the product is not directly relevant."
+    },
+    {
+      "slug": "digistore24-family-nutraville-add1-members-portal-access-30-day-free",
+      "name": "ADD1 Members Portal Access 30 Day FREE",
+      "family_name": "ADD1 Members Portal Access 30 Day FREE",
+      "affiliate_url": "https://www.checkout-ds24.com/redir/519020/sarah_nutri/sarahnutri_forum",
+      "source": "affiliate_partnership_ui",
+      "digistore24_id": "519020",
+      "vendor_name": "Nutraville",
+      "product_type_name": "",
+      "discovery_state": "approved_live",
+      "variant_count": 1,
+      "variant_names": [
+        "ADD1 Members Portal Access 30 day FREE"
+      ],
+      "match_keywords": [
+        "add1",
+        "members",
+        "portal",
+        "access"
+      ],
+      "score_breakdown": {
+        "relevance": 1,
+        "earnings_per_sale": 0.5,
+        "conversion": 0.5,
+        "cancellation": 0.5,
+        "newness": 0.5,
+        "sales": 0,
+        "recency": 1,
+        "approval": 1,
+        "total": 0.685
+      },
+      "total_score": 0.685,
+      "scoring_reason": "strong keyword relevance, already approved",
+      "use_when": "Use only when the forum question clearly matches ADD1 Members Portal Access 30 Day FREE or these themes: add1, members, portal, access.",
+      "avoid_when": "Avoid for emergency symptoms, diagnosis requests, medication changes, severe disease, or when the product is not directly relevant."
+    },
+    {
+      "slug": "digistore24-family-phytage-up2-1-ring-halt",
+      "name": "UP2.1 - Ring Halt -",
+      "family_name": "UP2.1 - Ring Halt -",
+      "affiliate_url": "https://www.checkout-ds24.com/redir/447812/sarah_nutri/sarahnutri_forum",
+      "source": "affiliate_partnership_ui",
+      "digistore24_id": "447812",
+      "vendor_name": "Phytage",
+      "product_type_name": "",
+      "discovery_state": "approved_live",
+      "variant_count": 1,
+      "variant_names": [
+        "UP2.1  - Ring Halt - 1 bottle"
+      ],
+      "match_keywords": [
+        "ring",
+        "halt",
+        "tinnitus",
+        "ringing ears",
+        "ear ringing",
+        "hearing",
+        "ear comfort",
+        "night ringing"
+      ],
+      "score_breakdown": {
+        "relevance": 1,
+        "earnings_per_sale": 0.5,
+        "conversion": 0.5,
+        "cancellation": 0.5,
+        "newness": 0.5,
+        "sales": 0,
+        "recency": 1,
+        "approval": 1,
+        "total": 0.685
+      },
+      "total_score": 0.685,
+      "scoring_reason": "strong keyword relevance, already approved",
+      "use_when": "Use only when the forum question clearly matches UP2.1 - Ring Halt - or these themes: ring, halt, tinnitus, ringing ears, ear ringing, hearing, ear comfort, night ringing.",
+      "avoid_when": "Avoid for emergency symptoms, diagnosis requests, medication changes, severe disease, or when the product is not directly relevant."
+    },
+    {
+      "slug": "digistore24-family-phytage-up2-2-ring-halt",
+      "name": "UP2.2 - Ring Halt -",
+      "family_name": "UP2.2 - Ring Halt -",
+      "affiliate_url": "https://www.checkout-ds24.com/redir/447813/sarah_nutri/sarahnutri_forum",
+      "source": "affiliate_partnership_ui",
+      "digistore24_id": "447813",
+      "vendor_name": "Phytage",
+      "product_type_name": "",
+      "discovery_state": "approved_live",
+      "variant_count": 1,
+      "variant_names": [
+        "UP2.2  - Ring Halt - 3 bottles"
+      ],
+      "match_keywords": [
+        "ring",
+        "halt",
+        "tinnitus",
+        "ringing ears",
+        "ear ringing",
+        "hearing",
+        "ear comfort",
+        "night ringing"
+      ],
+      "score_breakdown": {
+        "relevance": 1,
+        "earnings_per_sale": 0.5,
+        "conversion": 0.5,
+        "cancellation": 0.5,
+        "newness": 0.5,
+        "sales": 0,
+        "recency": 1,
+        "approval": 1,
+        "total": 0.685
+      },
+      "total_score": 0.685,
+      "scoring_reason": "strong keyword relevance, already approved",
+      "use_when": "Use only when the forum question clearly matches UP2.2 - Ring Halt - or these themes: ring, halt, tinnitus, ringing ears, ear ringing, hearing, ear comfort, night ringing.",
+      "avoid_when": "Avoid for emergency symptoms, diagnosis requests, medication changes, severe disease, or when the product is not directly relevant."
+    },
+    {
+      "slug": "digistore24-family-phytage-up2-3-ring-halt",
+      "name": "UP2.3 - Ring Halt -",
+      "family_name": "UP2.3 - Ring Halt -",
+      "affiliate_url": "https://www.checkout-ds24.com/redir/447814/sarah_nutri/sarahnutri_forum",
+      "source": "affiliate_partnership_ui",
+      "digistore24_id": "447814",
+      "vendor_name": "Phytage",
+      "product_type_name": "",
+      "discovery_state": "approved_live",
+      "variant_count": 1,
+      "variant_names": [
+        "UP2.3  - Ring Halt - 6 bottles"
+      ],
+      "match_keywords": [
+        "ring",
+        "halt",
+        "tinnitus",
+        "ringing ears",
+        "ear ringing",
+        "hearing",
+        "ear comfort",
+        "night ringing"
+      ],
+      "score_breakdown": {
+        "relevance": 1,
+        "earnings_per_sale": 0.5,
+        "conversion": 0.5,
+        "cancellation": 0.5,
+        "newness": 0.5,
+        "sales": 0,
+        "recency": 1,
+        "approval": 1,
+        "total": 0.685
+      },
+      "total_score": 0.685,
+      "scoring_reason": "strong keyword relevance, already approved",
+      "use_when": "Use only when the forum question clearly matches UP2.3 - Ring Halt - or these themes: ring, halt, tinnitus, ringing ears, ear ringing, hearing, ear comfort, night ringing.",
+      "avoid_when": "Avoid for emergency symptoms, diagnosis requests, medication changes, severe disease, or when the product is not directly relevant."
+    },
+    {
+      "slug": "digistore24-family-phytage-up4-1-nerve-control-911",
+      "name": "UP4.1 - Nerve Control 911 -",
+      "family_name": "UP4.1 - Nerve Control 911 -",
+      "affiliate_url": "https://www.checkout-ds24.com/redir/447820/sarah_nutri/sarahnutri_forum",
+      "source": "affiliate_partnership_ui",
+      "digistore24_id": "447820",
+      "vendor_name": "Phytage",
+      "product_type_name": "",
+      "discovery_state": "approved_live",
+      "variant_count": 1,
+      "variant_names": [
+        "UP4.1  - Nerve Control 911 - 1 bottle"
+      ],
+      "match_keywords": [
+        "nerve",
+        "control",
+        "neuropathy",
+        "tingling",
+        "nerve discomfort"
+      ],
+      "score_breakdown": {
+        "relevance": 1,
+        "earnings_per_sale": 0.5,
+        "conversion": 0.5,
+        "cancellation": 0.5,
+        "newness": 0.5,
+        "sales": 0,
+        "recency": 1,
+        "approval": 1,
+        "total": 0.685
+      },
+      "total_score": 0.685,
+      "scoring_reason": "strong keyword relevance, already approved",
+      "use_when": "Use only when the forum question clearly matches UP4.1 - Nerve Control 911 - or these themes: nerve, control, neuropathy, tingling, nerve discomfort.",
+      "avoid_when": "Avoid for emergency symptoms, diagnosis requests, medication changes, severe disease, or when the product is not directly relevant."
+    },
+    {
+      "slug": "digistore24-family-phytage-up4-2-nerve-control-911",
+      "name": "UP4.2 - Nerve Control 911 -",
+      "family_name": "UP4.2 - Nerve Control 911 -",
+      "affiliate_url": "https://www.checkout-ds24.com/redir/447821/sarah_nutri/sarahnutri_forum",
+      "source": "affiliate_partnership_ui",
+      "digistore24_id": "447821",
+      "vendor_name": "Phytage",
+      "product_type_name": "",
+      "discovery_state": "approved_live",
+      "variant_count": 1,
+      "variant_names": [
+        "UP4.2  - Nerve Control 911 - 3 bottles"
+      ],
+      "match_keywords": [
+        "nerve",
+        "control",
+        "neuropathy",
+        "tingling",
+        "nerve discomfort"
+      ],
+      "score_breakdown": {
+        "relevance": 1,
+        "earnings_per_sale": 0.5,
+        "conversion": 0.5,
+        "cancellation": 0.5,
+        "newness": 0.5,
+        "sales": 0,
+        "recency": 1,
+        "approval": 1,
+        "total": 0.685
+      },
+      "total_score": 0.685,
+      "scoring_reason": "strong keyword relevance, already approved",
+      "use_when": "Use only when the forum question clearly matches UP4.2 - Nerve Control 911 - or these themes: nerve, control, neuropathy, tingling, nerve discomfort.",
+      "avoid_when": "Avoid for emergency symptoms, diagnosis requests, medication changes, severe disease, or when the product is not directly relevant."
+    },
+    {
+      "slug": "digistore24-family-phytage-up4-3-nerve-control-911",
+      "name": "UP4.3 - Nerve Control 911 -",
+      "family_name": "UP4.3 - Nerve Control 911 -",
+      "affiliate_url": "https://www.checkout-ds24.com/redir/447822/sarah_nutri/sarahnutri_forum",
+      "source": "affiliate_partnership_ui",
+      "digistore24_id": "447822",
+      "vendor_name": "Phytage",
+      "product_type_name": "",
+      "discovery_state": "approved_live",
+      "variant_count": 1,
+      "variant_names": [
+        "UP4.3  - Nerve Control 911 - 6 bottles"
+      ],
+      "match_keywords": [
+        "nerve",
+        "control",
+        "neuropathy",
+        "tingling",
+        "nerve discomfort"
+      ],
+      "score_breakdown": {
+        "relevance": 1,
+        "earnings_per_sale": 0.5,
+        "conversion": 0.5,
+        "cancellation": 0.5,
+        "newness": 0.5,
+        "sales": 0,
+        "recency": 1,
+        "approval": 1,
+        "total": 0.685
+      },
+      "total_score": 0.685,
+      "scoring_reason": "strong keyword relevance, already approved",
+      "use_when": "Use only when the forum question clearly matches UP4.3 - Nerve Control 911 - or these themes: nerve, control, neuropathy, tingling, nerve discomfort.",
+      "avoid_when": "Avoid for emergency symptoms, diagnosis requests, medication changes, severe disease, or when the product is not directly relevant."
+    },
+    {
+      "slug": "digistore24-family-rm7866-main1-tsl-echoxen",
+      "name": "Main1 [TSL] - EchoXen",
+      "family_name": "Main1 [TSL] - EchoXen",
+      "affiliate_url": "https://www.checkout-ds24.com/redir/578369/sarah_nutri/sarahnutri_forum",
+      "source": "affiliate_partnership_ui",
+      "digistore24_id": "578369",
+      "vendor_name": "RM7866",
+      "product_type_name": "",
+      "discovery_state": "approved_live",
+      "variant_count": 1,
+      "variant_names": [
+        "Main1 [TSL] - EchoXen (1 Bottle)"
+      ],
+      "match_keywords": [
+        "main1",
+        "echoxen",
+        "tinnitus",
+        "ringing ears",
+        "ear ringing",
+        "hearing",
+        "ear comfort",
+        "night ringing"
+      ],
+      "score_breakdown": {
+        "relevance": 1,
+        "earnings_per_sale": 0.5,
+        "conversion": 0.5,
+        "cancellation": 0.5,
+        "newness": 0.5,
+        "sales": 0,
+        "recency": 1,
+        "approval": 1,
+        "total": 0.685
+      },
+      "total_score": 0.685,
+      "scoring_reason": "strong keyword relevance, already approved",
+      "use_when": "Use only when the forum question clearly matches Main1 [TSL] - EchoXen or these themes: main1, echoxen, tinnitus, ringing ears, ear ringing, hearing, ear comfort, night ringing.",
+      "avoid_when": "Avoid for emergency symptoms, diagnosis requests, medication changes, severe disease, or when the product is not directly relevant."
+    },
+    {
+      "slug": "digistore24-family-rm7866-main2-navy-seal-vsl-echoxen",
+      "name": "Main2 [Navy Seal VSL] - EchoXen",
+      "family_name": "Main2 [Navy Seal VSL] - EchoXen",
+      "affiliate_url": "https://www.checkout-ds24.com/redir/578370/sarah_nutri/sarahnutri_forum",
+      "source": "affiliate_partnership_ui",
+      "digistore24_id": "578370",
+      "vendor_name": "RM7866",
+      "product_type_name": "",
+      "discovery_state": "approved_live",
+      "variant_count": 1,
+      "variant_names": [
+        "Main2 [Navy Seal VSL] - EchoXen (3 Bottles)"
+      ],
+      "match_keywords": [
+        "main2",
+        "navy",
+        "seal",
+        "echoxen",
+        "tinnitus",
+        "ringing ears",
+        "ear ringing",
+        "hearing",
+        "ear comfort",
+        "night ringing"
+      ],
+      "score_breakdown": {
+        "relevance": 1,
+        "earnings_per_sale": 0.5,
+        "conversion": 0.5,
+        "cancellation": 0.5,
+        "newness": 0.5,
+        "sales": 0,
+        "recency": 1,
+        "approval": 1,
+        "total": 0.685
+      },
+      "total_score": 0.685,
+      "scoring_reason": "strong keyword relevance, already approved",
+      "use_when": "Use only when the forum question clearly matches Main2 [Navy Seal VSL] - EchoXen or these themes: main2, navy, seal, echoxen, tinnitus, ringing ears, ear ringing, hearing, ear comfort, night ringing.",
+      "avoid_when": "Avoid for emergency symptoms, diagnosis requests, medication changes, severe disease, or when the product is not directly relevant."
+    },
+    {
+      "slug": "digistore24-family-rm7866-main2sub-echoxen",
+      "name": "Main2SUB - EchoXen",
+      "family_name": "Main2SUB - EchoXen",
+      "affiliate_url": "https://www.checkout-ds24.com/redir/611664/sarah_nutri/sarahnutri_forum",
+      "source": "affiliate_partnership_ui",
+      "digistore24_id": "611664",
+      "vendor_name": "RM7866",
+      "product_type_name": "",
+      "discovery_state": "approved_live",
+      "variant_count": 1,
+      "variant_names": [
+        "Main2SUB - EchoXen (3 Bottles)"
+      ],
+      "match_keywords": [
+        "main2sub",
+        "echoxen",
+        "tinnitus",
+        "ringing ears",
+        "ear ringing",
+        "hearing",
+        "ear comfort",
+        "night ringing"
+      ],
+      "score_breakdown": {
+        "relevance": 1,
+        "earnings_per_sale": 0.5,
+        "conversion": 0.5,
+        "cancellation": 0.5,
+        "newness": 0.5,
+        "sales": 0,
+        "recency": 1,
+        "approval": 1,
+        "total": 0.685
+      },
+      "total_score": 0.685,
+      "scoring_reason": "strong keyword relevance, already approved",
+      "use_when": "Use only when the forum question clearly matches Main2SUB - EchoXen or these themes: main2sub, echoxen, tinnitus, ringing ears, ear ringing, hearing, ear comfort, night ringing.",
       "avoid_when": "Avoid for emergency symptoms, diagnosis requests, medication changes, severe disease, or when the product is not directly relevant."
     },
     {
@@ -77,11 +917,11 @@
         "cancellation": 0.5,
         "newness": 0.5,
         "sales": 0.1905,
-        "recency": 0.6031,
+        "recency": 0.1028,
         "approval": 1,
-        "total": 0.709
+        "total": 0.684
       },
-      "total_score": 0.709,
+      "total_score": 0.684,
       "scoring_reason": "strong keyword relevance, already approved",
       "use_when": "Use only when the forum question clearly matches EchoXen or these themes: echoxen, tinnitus, ringing ears, ear ringing, hearing, ear comfort, night ringing.",
       "avoid_when": "Avoid for emergency symptoms, diagnosis requests, medication changes, severe disease, or when the product is not directly relevant."
@@ -118,13 +958,713 @@
         "cancellation": 0.5,
         "newness": 0.5,
         "sales": 0.0952,
-        "recency": 0.3692,
+        "recency": 0.0629,
         "approval": 1,
-        "total": 0.6429
+        "total": 0.6276
       },
-      "total_score": 0.6429,
+      "total_score": 0.6276,
       "scoring_reason": "strong keyword relevance, already approved",
       "use_when": "Use only when the forum question clearly matches Ring Quiet Plus or these themes: ring, quiet, plus, tinnitus, ringing ears, ear ringing, hearing, ear comfort, night ringing.",
+      "avoid_when": "Avoid for emergency symptoms, diagnosis requests, medication changes, severe disease, or when the product is not directly relevant."
+    },
+    {
+      "slug": "digistore24-family-aizenpower-main-1-aizen-power",
+      "name": "Main 1 Aizen Power",
+      "family_name": "Main 1 Aizen Power",
+      "affiliate_url": "https://www.checkout-ds24.com/redir/413700/sarah_nutri/sarahnutri_forum",
+      "source": "affiliate_partnership_ui",
+      "digistore24_id": "413700",
+      "vendor_name": "aizenpower",
+      "product_type_name": "",
+      "discovery_state": "approved_live",
+      "variant_count": 1,
+      "variant_names": [
+        "Main 1 Aizen Power 1 bottle"
+      ],
+      "match_keywords": [
+        "main",
+        "aizen",
+        "power"
+      ],
+      "score_breakdown": {
+        "relevance": 0.75,
+        "earnings_per_sale": 0.5,
+        "conversion": 0.5,
+        "cancellation": 0.5,
+        "newness": 0.5,
+        "sales": 0,
+        "recency": 1,
+        "approval": 1,
+        "total": 0.5975
+      },
+      "total_score": 0.5975,
+      "scoring_reason": "strong keyword relevance, already approved",
+      "use_when": "Use only when the forum question clearly matches Main 1 Aizen Power or these themes: main, aizen, power.",
+      "avoid_when": "Avoid for emergency symptoms, diagnosis requests, medication changes, severe disease, or when the product is not directly relevant."
+    },
+    {
+      "slug": "digistore24-family-aizenpower-main-3-aizen-power",
+      "name": "Main 3 Aizen Power",
+      "family_name": "Main 3 Aizen Power",
+      "affiliate_url": "https://www.checkout-ds24.com/redir/413702/sarah_nutri/sarahnutri_forum",
+      "source": "affiliate_partnership_ui",
+      "digistore24_id": "413702",
+      "vendor_name": "aizenpower",
+      "product_type_name": "",
+      "discovery_state": "approved_live",
+      "variant_count": 1,
+      "variant_names": [
+        "Main 3 Aizen Power 6 bottles"
+      ],
+      "match_keywords": [
+        "main",
+        "aizen",
+        "power"
+      ],
+      "score_breakdown": {
+        "relevance": 0.75,
+        "earnings_per_sale": 0.5,
+        "conversion": 0.5,
+        "cancellation": 0.5,
+        "newness": 0.5,
+        "sales": 0,
+        "recency": 1,
+        "approval": 1,
+        "total": 0.5975
+      },
+      "total_score": 0.5975,
+      "scoring_reason": "strong keyword relevance, already approved",
+      "use_when": "Use only when the forum question clearly matches Main 3 Aizen Power or these themes: main, aizen, power.",
+      "avoid_when": "Avoid for emergency symptoms, diagnosis requests, medication changes, severe disease, or when the product is not directly relevant."
+    },
+    {
+      "slug": "digistore24-family-freedomhealthllc-main-1-glucofreeze-30-day-supply",
+      "name": "MAIN 1 Glucofreeze - 30 Day Supply",
+      "family_name": "MAIN 1 Glucofreeze - 30 Day Supply",
+      "affiliate_url": "https://www.checkout-ds24.com/redir/437388/sarah_nutri/sarahnutri_forum",
+      "source": "affiliate_partnership_ui",
+      "digistore24_id": "437388",
+      "vendor_name": "freedomhealthllc",
+      "product_type_name": "",
+      "discovery_state": "approved_live",
+      "variant_count": 1,
+      "variant_names": [
+        "MAIN 1 Glucofreeze - 1 BOTTLE 30 Day Supply"
+      ],
+      "match_keywords": [
+        "main",
+        "glucofreeze",
+        "supply"
+      ],
+      "score_breakdown": {
+        "relevance": 0.75,
+        "earnings_per_sale": 0.5,
+        "conversion": 0.5,
+        "cancellation": 0.5,
+        "newness": 0.5,
+        "sales": 0,
+        "recency": 1,
+        "approval": 1,
+        "total": 0.5975
+      },
+      "total_score": 0.5975,
+      "scoring_reason": "strong keyword relevance, already approved",
+      "use_when": "Use only when the forum question clearly matches MAIN 1 Glucofreeze - 30 Day Supply or these themes: main, glucofreeze, supply.",
+      "avoid_when": "Avoid for emergency symptoms, diagnosis requests, medication changes, severe disease, or when the product is not directly relevant."
+    },
+    {
+      "slug": "digistore24-family-freedomhealthllc-main-2-glucofreeze-60-day-supply",
+      "name": "MAIN 2 Glucofreeze - 60 Day Supply",
+      "family_name": "MAIN 2 Glucofreeze - 60 Day Supply",
+      "affiliate_url": "https://www.checkout-ds24.com/redir/437999/sarah_nutri/sarahnutri_forum",
+      "source": "affiliate_partnership_ui",
+      "digistore24_id": "437999",
+      "vendor_name": "freedomhealthllc",
+      "product_type_name": "",
+      "discovery_state": "approved_live",
+      "variant_count": 1,
+      "variant_names": [
+        "MAIN 2 Glucofreeze - 3 BOTTLES 60 Day Supply"
+      ],
+      "match_keywords": [
+        "main",
+        "glucofreeze",
+        "supply"
+      ],
+      "score_breakdown": {
+        "relevance": 0.75,
+        "earnings_per_sale": 0.5,
+        "conversion": 0.5,
+        "cancellation": 0.5,
+        "newness": 0.5,
+        "sales": 0,
+        "recency": 1,
+        "approval": 1,
+        "total": 0.5975
+      },
+      "total_score": 0.5975,
+      "scoring_reason": "strong keyword relevance, already approved",
+      "use_when": "Use only when the forum question clearly matches MAIN 2 Glucofreeze - 60 Day Supply or these themes: main, glucofreeze, supply.",
+      "avoid_when": "Avoid for emergency symptoms, diagnosis requests, medication changes, severe disease, or when the product is not directly relevant."
+    },
+    {
+      "slug": "digistore24-family-freedomhealthllc-main-3-glucofreeze-90-day-supply",
+      "name": "MAIN 3 Glucofreeze - 90 Day Supply",
+      "family_name": "MAIN 3 Glucofreeze - 90 Day Supply",
+      "affiliate_url": "https://www.checkout-ds24.com/redir/438000/sarah_nutri/sarahnutri_forum",
+      "source": "affiliate_partnership_ui",
+      "digistore24_id": "438000",
+      "vendor_name": "freedomhealthllc",
+      "product_type_name": "",
+      "discovery_state": "approved_live",
+      "variant_count": 1,
+      "variant_names": [
+        "MAIN 3 Glucofreeze - 6 BOTTLES 90 Day Supply"
+      ],
+      "match_keywords": [
+        "main",
+        "glucofreeze",
+        "supply"
+      ],
+      "score_breakdown": {
+        "relevance": 0.75,
+        "earnings_per_sale": 0.5,
+        "conversion": 0.5,
+        "cancellation": 0.5,
+        "newness": 0.5,
+        "sales": 0,
+        "recency": 1,
+        "approval": 1,
+        "total": 0.5975
+      },
+      "total_score": 0.5975,
+      "scoring_reason": "strong keyword relevance, already approved",
+      "use_when": "Use only when the forum question clearly matches MAIN 3 Glucofreeze - 90 Day Supply or these themes: main, glucofreeze, supply.",
+      "avoid_when": "Avoid for emergency symptoms, diagnosis requests, medication changes, severe disease, or when the product is not directly relevant."
+    },
+    {
+      "slug": "digistore24-family-funguselixir-main-1-fungus-elixir-69",
+      "name": "MAIN 1 - Fungus Elixir - $69",
+      "family_name": "MAIN 1 - Fungus Elixir - $69",
+      "affiliate_url": "https://www.checkout-ds24.com/redir/488841/sarah_nutri/sarahnutri_forum",
+      "source": "affiliate_partnership_ui",
+      "digistore24_id": "488841",
+      "vendor_name": "funguselixir",
+      "product_type_name": "",
+      "discovery_state": "approved_live",
+      "variant_count": 1,
+      "variant_names": [
+        "MAIN 1 - Fungus Elixir - 1 bottle $69"
+      ],
+      "match_keywords": [
+        "main",
+        "fungus",
+        "elixir"
+      ],
+      "score_breakdown": {
+        "relevance": 0.75,
+        "earnings_per_sale": 0.5,
+        "conversion": 0.5,
+        "cancellation": 0.5,
+        "newness": 0.5,
+        "sales": 0,
+        "recency": 1,
+        "approval": 1,
+        "total": 0.5975
+      },
+      "total_score": 0.5975,
+      "scoring_reason": "strong keyword relevance, already approved",
+      "use_when": "Use only when the forum question clearly matches MAIN 1 - Fungus Elixir - $69 or these themes: main, fungus, elixir.",
+      "avoid_when": "Avoid for emergency symptoms, diagnosis requests, medication changes, severe disease, or when the product is not directly relevant."
+    },
+    {
+      "slug": "digistore24-family-funguselixir-main-2-fungus-elixir-177",
+      "name": "MAIN 2 - Fungus Elixir - $177",
+      "family_name": "MAIN 2 - Fungus Elixir - $177",
+      "affiliate_url": "https://www.checkout-ds24.com/redir/488854/sarah_nutri/sarahnutri_forum",
+      "source": "affiliate_partnership_ui",
+      "digistore24_id": "488854",
+      "vendor_name": "funguselixir",
+      "product_type_name": "",
+      "discovery_state": "approved_live",
+      "variant_count": 1,
+      "variant_names": [
+        "MAIN 2 - Fungus Elixir - 3 bottles $177"
+      ],
+      "match_keywords": [
+        "main",
+        "fungus",
+        "elixir"
+      ],
+      "score_breakdown": {
+        "relevance": 0.75,
+        "earnings_per_sale": 0.5,
+        "conversion": 0.5,
+        "cancellation": 0.5,
+        "newness": 0.5,
+        "sales": 0,
+        "recency": 1,
+        "approval": 1,
+        "total": 0.5975
+      },
+      "total_score": 0.5975,
+      "scoring_reason": "strong keyword relevance, already approved",
+      "use_when": "Use only when the forum question clearly matches MAIN 2 - Fungus Elixir - $177 or these themes: main, fungus, elixir.",
+      "avoid_when": "Avoid for emergency symptoms, diagnosis requests, medication changes, severe disease, or when the product is not directly relevant."
+    },
+    {
+      "slug": "digistore24-family-funguselixir-main-3-fungus-elixir-294",
+      "name": "MAIN 3 - Fungus Elixir - $294",
+      "family_name": "MAIN 3 - Fungus Elixir - $294",
+      "affiliate_url": "https://www.checkout-ds24.com/redir/488855/sarah_nutri/sarahnutri_forum",
+      "source": "affiliate_partnership_ui",
+      "digistore24_id": "488855",
+      "vendor_name": "funguselixir",
+      "product_type_name": "",
+      "discovery_state": "approved_live",
+      "variant_count": 1,
+      "variant_names": [
+        "MAIN 3 - Fungus Elixir - 6 bottles $294"
+      ],
+      "match_keywords": [
+        "main",
+        "fungus",
+        "elixir"
+      ],
+      "score_breakdown": {
+        "relevance": 0.75,
+        "earnings_per_sale": 0.5,
+        "conversion": 0.5,
+        "cancellation": 0.5,
+        "newness": 0.5,
+        "sales": 0,
+        "recency": 1,
+        "approval": 1,
+        "total": 0.5975
+      },
+      "total_score": 0.5975,
+      "scoring_reason": "strong keyword relevance, already approved",
+      "use_when": "Use only when the forum question clearly matches MAIN 3 - Fungus Elixir - $294 or these themes: main, fungus, elixir.",
+      "avoid_when": "Avoid for emergency symptoms, diagnosis requests, medication changes, severe disease, or when the product is not directly relevant."
+    },
+    {
+      "slug": "digistore24-family-funguselixir-up-2-the-delicious-candida-diet-47",
+      "name": "UP 2 - The Delicious Candida Diet - $47",
+      "family_name": "UP 2 - The Delicious Candida Diet - $47",
+      "affiliate_url": "https://www.checkout-ds24.com/redir/488844/sarah_nutri/sarahnutri_forum",
+      "source": "affiliate_partnership_ui",
+      "digistore24_id": "488844",
+      "vendor_name": "funguselixir",
+      "product_type_name": "",
+      "discovery_state": "approved_live",
+      "variant_count": 1,
+      "variant_names": [
+        "UP 2 - The Delicious Candida Diet - $47"
+      ],
+      "match_keywords": [
+        "delicious",
+        "candida",
+        "diet"
+      ],
+      "score_breakdown": {
+        "relevance": 0.75,
+        "earnings_per_sale": 0.5,
+        "conversion": 0.5,
+        "cancellation": 0.5,
+        "newness": 0.5,
+        "sales": 0,
+        "recency": 1,
+        "approval": 1,
+        "total": 0.5975
+      },
+      "total_score": 0.5975,
+      "scoring_reason": "strong keyword relevance, already approved",
+      "use_when": "Use only when the forum question clearly matches UP 2 - The Delicious Candida Diet - $47 or these themes: delicious, candida, diet.",
+      "avoid_when": "Avoid for emergency symptoms, diagnosis requests, medication changes, severe disease, or when the product is not directly relevant."
+    },
+    {
+      "slug": "digistore24-family-gazenutra-ad1-spinevivo-1-month-supply",
+      "name": "AD1 SpineVivo™ 1 Month Supply",
+      "family_name": "AD1 SpineVivo™ 1 Month Supply",
+      "affiliate_url": "https://www.checkout-ds24.com/redir/573072/sarah_nutri/sarahnutri_forum",
+      "source": "affiliate_partnership_ui",
+      "digistore24_id": "573072",
+      "vendor_name": "gazenutra",
+      "product_type_name": "",
+      "discovery_state": "approved_live",
+      "variant_count": 1,
+      "variant_names": [
+        "AD1 SpineVivo™ 1 Month Supply"
+      ],
+      "match_keywords": [
+        "spinevivo",
+        "month",
+        "supply"
+      ],
+      "score_breakdown": {
+        "relevance": 0.75,
+        "earnings_per_sale": 0.5,
+        "conversion": 0.5,
+        "cancellation": 0.5,
+        "newness": 0.5,
+        "sales": 0,
+        "recency": 1,
+        "approval": 1,
+        "total": 0.5975
+      },
+      "total_score": 0.5975,
+      "scoring_reason": "strong keyword relevance, already approved",
+      "use_when": "Use only when the forum question clearly matches AD1 SpineVivo™ 1 Month Supply or these themes: spinevivo, month, supply.",
+      "avoid_when": "Avoid for emergency symptoms, diagnosis requests, medication changes, severe disease, or when the product is not directly relevant."
+    },
+    {
+      "slug": "digistore24-family-ketodiet-keto-snacks-cookbook-f-s",
+      "name": "Keto Snacks Cookbook (F+S)",
+      "family_name": "Keto Snacks Cookbook (F+S)",
+      "affiliate_url": "https://www.checkout-ds24.com/redir/400534/sarah_nutri/sarahnutri_forum",
+      "source": "affiliate_partnership_ui",
+      "digistore24_id": "400534",
+      "vendor_name": "ketodiet",
+      "product_type_name": "",
+      "discovery_state": "approved_live",
+      "variant_count": 1,
+      "variant_names": [
+        "Keto Snacks Cookbook (F+S)"
+      ],
+      "match_keywords": [
+        "keto",
+        "snacks",
+        "cookbook"
+      ],
+      "score_breakdown": {
+        "relevance": 0.75,
+        "earnings_per_sale": 0.5,
+        "conversion": 0.5,
+        "cancellation": 0.5,
+        "newness": 0.5,
+        "sales": 0,
+        "recency": 1,
+        "approval": 1,
+        "total": 0.5975
+      },
+      "total_score": 0.5975,
+      "scoring_reason": "strong keyword relevance, already approved",
+      "use_when": "Use only when the forum question clearly matches Keto Snacks Cookbook (F+S) or these themes: keto, snacks, cookbook.",
+      "avoid_when": "Avoid for emergency symptoms, diagnosis requests, medication changes, severe disease, or when the product is not directly relevant."
+    },
+    {
+      "slug": "digistore24-family-lostrec-the-lost-superfoods-digital",
+      "name": "The Lost Superfoods Digital",
+      "family_name": "The Lost Superfoods Digital",
+      "affiliate_url": "https://www.checkout-ds24.com/redir/377300/sarah_nutri/sarahnutri_forum",
+      "source": "affiliate_partnership_ui",
+      "digistore24_id": "377300",
+      "vendor_name": "lostrec",
+      "product_type_name": "",
+      "discovery_state": "approved_live",
+      "variant_count": 1,
+      "variant_names": [
+        "The Lost Superfoods Digital"
+      ],
+      "match_keywords": [
+        "lost",
+        "superfoods",
+        "digital"
+      ],
+      "score_breakdown": {
+        "relevance": 0.75,
+        "earnings_per_sale": 0.5,
+        "conversion": 0.5,
+        "cancellation": 0.5,
+        "newness": 0.5,
+        "sales": 0,
+        "recency": 1,
+        "approval": 1,
+        "total": 0.5975
+      },
+      "total_score": 0.5975,
+      "scoring_reason": "strong keyword relevance, already approved",
+      "use_when": "Use only when the forum question clearly matches The Lost Superfoods Digital or these themes: lost, superfoods, digital.",
+      "avoid_when": "Avoid for emergency symptoms, diagnosis requests, medication changes, severe disease, or when the product is not directly relevant."
+    },
+    {
+      "slug": "digistore24-family-mattpar-tube-mastery-and-monetization",
+      "name": "Tube Mastery And Monetization",
+      "family_name": "Tube Mastery And Monetization",
+      "affiliate_url": "https://www.checkout-ds24.com/redir/299134/sarah_nutri/sarahnutri_forum",
+      "source": "affiliate_partnership_ui",
+      "digistore24_id": "299134",
+      "vendor_name": "mattpar",
+      "product_type_name": "",
+      "discovery_state": "approved_live",
+      "variant_count": 1,
+      "variant_names": [
+        "Tube Mastery and Monetization"
+      ],
+      "match_keywords": [
+        "tube",
+        "mastery",
+        "monetization"
+      ],
+      "score_breakdown": {
+        "relevance": 0.75,
+        "earnings_per_sale": 0.5,
+        "conversion": 0.5,
+        "cancellation": 0.5,
+        "newness": 0.5,
+        "sales": 0,
+        "recency": 1,
+        "approval": 1,
+        "total": 0.5975
+      },
+      "total_score": 0.5975,
+      "scoring_reason": "strong keyword relevance, already approved",
+      "use_when": "Use only when the forum question clearly matches Tube Mastery And Monetization or these themes: tube, mastery, monetization.",
+      "avoid_when": "Avoid for emergency symptoms, diagnosis requests, medication changes, severe disease, or when the product is not directly relevant."
+    },
+    {
+      "slug": "digistore24-family-nutraville-ds4a-camp-boost",
+      "name": "DS4a CAMP Boost",
+      "family_name": "DS4a CAMP Boost",
+      "affiliate_url": "https://www.checkout-ds24.com/redir/519007/sarah_nutri/sarahnutri_forum",
+      "source": "affiliate_partnership_ui",
+      "digistore24_id": "519007",
+      "vendor_name": "Nutraville",
+      "product_type_name": "",
+      "discovery_state": "approved_live",
+      "variant_count": 1,
+      "variant_names": [
+        "DS4a cAMP Boost 3 Bottles"
+      ],
+      "match_keywords": [
+        "ds4a",
+        "camp",
+        "boost"
+      ],
+      "score_breakdown": {
+        "relevance": 0.75,
+        "earnings_per_sale": 0.5,
+        "conversion": 0.5,
+        "cancellation": 0.5,
+        "newness": 0.5,
+        "sales": 0,
+        "recency": 1,
+        "approval": 1,
+        "total": 0.5975
+      },
+      "total_score": 0.5975,
+      "scoring_reason": "strong keyword relevance, already approved",
+      "use_when": "Use only when the forum question clearly matches DS4a CAMP Boost or these themes: ds4a, camp, boost.",
+      "avoid_when": "Avoid for emergency symptoms, diagnosis requests, medication changes, severe disease, or when the product is not directly relevant."
+    },
+    {
+      "slug": "digistore24-family-nutraville-ds4b-camp-boost",
+      "name": "DS4b CAMP Boost",
+      "family_name": "DS4b CAMP Boost",
+      "affiliate_url": "https://www.checkout-ds24.com/redir/519009/sarah_nutri/sarahnutri_forum",
+      "source": "affiliate_partnership_ui",
+      "digistore24_id": "519009",
+      "vendor_name": "Nutraville",
+      "product_type_name": "",
+      "discovery_state": "approved_live",
+      "variant_count": 1,
+      "variant_names": [
+        "DS4b cAMP Boost 6 Bottles"
+      ],
+      "match_keywords": [
+        "ds4b",
+        "camp",
+        "boost"
+      ],
+      "score_breakdown": {
+        "relevance": 0.75,
+        "earnings_per_sale": 0.5,
+        "conversion": 0.5,
+        "cancellation": 0.5,
+        "newness": 0.5,
+        "sales": 0,
+        "recency": 1,
+        "approval": 1,
+        "total": 0.5975
+      },
+      "total_score": 0.5975,
+      "scoring_reason": "strong keyword relevance, already approved",
+      "use_when": "Use only when the forum question clearly matches DS4b CAMP Boost or these themes: ds4b, camp, boost.",
+      "avoid_when": "Avoid for emergency symptoms, diagnosis requests, medication changes, severe disease, or when the product is not directly relevant."
+    },
+    {
+      "slug": "digistore24-family-nutraville-ds6a-gluta-raise",
+      "name": "DS6a Gluta Raise",
+      "family_name": "DS6a Gluta Raise",
+      "affiliate_url": "https://www.checkout-ds24.com/redir/519011/sarah_nutri/sarahnutri_forum",
+      "source": "affiliate_partnership_ui",
+      "digistore24_id": "519011",
+      "vendor_name": "Nutraville",
+      "product_type_name": "",
+      "discovery_state": "approved_live",
+      "variant_count": 1,
+      "variant_names": [
+        "DS6a Gluta Raise 3 Bottles"
+      ],
+      "match_keywords": [
+        "ds6a",
+        "gluta",
+        "raise"
+      ],
+      "score_breakdown": {
+        "relevance": 0.75,
+        "earnings_per_sale": 0.5,
+        "conversion": 0.5,
+        "cancellation": 0.5,
+        "newness": 0.5,
+        "sales": 0,
+        "recency": 1,
+        "approval": 1,
+        "total": 0.5975
+      },
+      "total_score": 0.5975,
+      "scoring_reason": "strong keyword relevance, already approved",
+      "use_when": "Use only when the forum question clearly matches DS6a Gluta Raise or these themes: ds6a, gluta, raise.",
+      "avoid_when": "Avoid for emergency symptoms, diagnosis requests, medication changes, severe disease, or when the product is not directly relevant."
+    },
+    {
+      "slug": "digistore24-family-nutraville-ds6b-gluta-raise",
+      "name": "DS6b Gluta Raise",
+      "family_name": "DS6b Gluta Raise",
+      "affiliate_url": "https://www.checkout-ds24.com/redir/519012/sarah_nutri/sarahnutri_forum",
+      "source": "affiliate_partnership_ui",
+      "digistore24_id": "519012",
+      "vendor_name": "Nutraville",
+      "product_type_name": "",
+      "discovery_state": "approved_live",
+      "variant_count": 1,
+      "variant_names": [
+        "DS6b Gluta Raise 6 Bottles"
+      ],
+      "match_keywords": [
+        "ds6b",
+        "gluta",
+        "raise"
+      ],
+      "score_breakdown": {
+        "relevance": 0.75,
+        "earnings_per_sale": 0.5,
+        "conversion": 0.5,
+        "cancellation": 0.5,
+        "newness": 0.5,
+        "sales": 0,
+        "recency": 1,
+        "approval": 1,
+        "total": 0.5975
+      },
+      "total_score": 0.5975,
+      "scoring_reason": "strong keyword relevance, already approved",
+      "use_when": "Use only when the forum question clearly matches DS6b Gluta Raise or these themes: ds6b, gluta, raise.",
+      "avoid_when": "Avoid for emergency symptoms, diagnosis requests, medication changes, severe disease, or when the product is not directly relevant."
+    },
+    {
+      "slug": "digistore24-family-nutraville-up4a-camp-boost",
+      "name": "UP4a CAMP Boost",
+      "family_name": "UP4a CAMP Boost",
+      "affiliate_url": "https://www.checkout-ds24.com/redir/519016/sarah_nutri/sarahnutri_forum",
+      "source": "affiliate_partnership_ui",
+      "digistore24_id": "519016",
+      "vendor_name": "Nutraville",
+      "product_type_name": "",
+      "discovery_state": "approved_live",
+      "variant_count": 1,
+      "variant_names": [
+        "UP4a cAMP Boost 3 Bottles"
+      ],
+      "match_keywords": [
+        "up4a",
+        "camp",
+        "boost"
+      ],
+      "score_breakdown": {
+        "relevance": 0.75,
+        "earnings_per_sale": 0.5,
+        "conversion": 0.5,
+        "cancellation": 0.5,
+        "newness": 0.5,
+        "sales": 0,
+        "recency": 1,
+        "approval": 1,
+        "total": 0.5975
+      },
+      "total_score": 0.5975,
+      "scoring_reason": "strong keyword relevance, already approved",
+      "use_when": "Use only when the forum question clearly matches UP4a CAMP Boost or these themes: up4a, camp, boost.",
+      "avoid_when": "Avoid for emergency symptoms, diagnosis requests, medication changes, severe disease, or when the product is not directly relevant."
+    },
+    {
+      "slug": "digistore24-family-nutraville-up4b-camp-boost",
+      "name": "UP4b CAMP Boost",
+      "family_name": "UP4b CAMP Boost",
+      "affiliate_url": "https://www.checkout-ds24.com/redir/519017/sarah_nutri/sarahnutri_forum",
+      "source": "affiliate_partnership_ui",
+      "digistore24_id": "519017",
+      "vendor_name": "Nutraville",
+      "product_type_name": "",
+      "discovery_state": "approved_live",
+      "variant_count": 1,
+      "variant_names": [
+        "UP4b cAMP Boost 6 Bottles"
+      ],
+      "match_keywords": [
+        "up4b",
+        "camp",
+        "boost"
+      ],
+      "score_breakdown": {
+        "relevance": 0.75,
+        "earnings_per_sale": 0.5,
+        "conversion": 0.5,
+        "cancellation": 0.5,
+        "newness": 0.5,
+        "sales": 0,
+        "recency": 1,
+        "approval": 1,
+        "total": 0.5975
+      },
+      "total_score": 0.5975,
+      "scoring_reason": "strong keyword relevance, already approved",
+      "use_when": "Use only when the forum question clearly matches UP4b CAMP Boost or these themes: up4b, camp, boost.",
+      "avoid_when": "Avoid for emergency symptoms, diagnosis requests, medication changes, severe disease, or when the product is not directly relevant."
+    },
+    {
+      "slug": "digistore24-family-raposo1-keto-after-50-desserts",
+      "name": "Keto After 50 Desserts",
+      "family_name": "Keto After 50 Desserts",
+      "affiliate_url": "https://www.checkout-ds24.com/redir/292043/sarah_nutri/sarahnutri_forum",
+      "source": "affiliate_partnership_ui",
+      "digistore24_id": "292043",
+      "vendor_name": "raposo1",
+      "product_type_name": "",
+      "discovery_state": "approved_live",
+      "variant_count": 1,
+      "variant_names": [
+        "Keto After 50 Desserts"
+      ],
+      "match_keywords": [
+        "keto",
+        "after",
+        "desserts"
+      ],
+      "score_breakdown": {
+        "relevance": 0.75,
+        "earnings_per_sale": 0.5,
+        "conversion": 0.5,
+        "cancellation": 0.5,
+        "newness": 0.5,
+        "sales": 0,
+        "recency": 1,
+        "approval": 1,
+        "total": 0.5975
+      },
+      "total_score": 0.5975,
+      "scoring_reason": "strong keyword relevance, already approved",
+      "use_when": "Use only when the forum question clearly matches Keto After 50 Desserts or these themes: keto, after, desserts.",
       "avoid_when": "Avoid for emergency symptoms, diagnosis requests, medication changes, severe disease, or when the product is not directly relevant."
     },
     {
@@ -155,13 +1695,1869 @@
         "cancellation": 0.5,
         "newness": 0.5,
         "sales": 0.1429,
-        "recency": 0.2878,
+        "recency": 0.049,
         "approval": 1,
-        "total": 0.5708
+        "total": 0.5589
       },
-      "total_score": 0.5708,
+      "total_score": 0.5589,
       "scoring_reason": "strong keyword relevance, already approved",
       "use_when": "Use only when the forum question clearly matches Nervix or these themes: nervix, nerve, neuropathy, tingling, nerve discomfort.",
+      "avoid_when": "Avoid for emergency symptoms, diagnosis requests, medication changes, severe disease, or when the product is not directly relevant."
+    },
+    {
+      "slug": "digistore24-family-freedomhealthllc-down-1-glucofreeze",
+      "name": "DOWN 1 - Glucofreeze -",
+      "family_name": "DOWN 1 - Glucofreeze -",
+      "affiliate_url": "https://www.checkout-ds24.com/redir/438015/sarah_nutri/sarahnutri_forum",
+      "source": "affiliate_partnership_ui",
+      "digistore24_id": "438015",
+      "vendor_name": "freedomhealthllc",
+      "product_type_name": "",
+      "discovery_state": "approved_live",
+      "variant_count": 1,
+      "variant_names": [
+        "DOWN 1 - Glucofreeze - 3 more bottles"
+      ],
+      "match_keywords": [
+        "down",
+        "glucofreeze"
+      ],
+      "score_breakdown": {
+        "relevance": 0.5,
+        "earnings_per_sale": 0.5,
+        "conversion": 0.5,
+        "cancellation": 0.5,
+        "newness": 0.5,
+        "sales": 0,
+        "recency": 1,
+        "approval": 1,
+        "total": 0.51
+      },
+      "total_score": 0.51,
+      "scoring_reason": "already approved",
+      "use_when": "Use only when the forum question clearly matches DOWN 1 - Glucofreeze - or these themes: down, glucofreeze.",
+      "avoid_when": "Avoid for emergency symptoms, diagnosis requests, medication changes, severe disease, or when the product is not directly relevant."
+    },
+    {
+      "slug": "digistore24-family-freedomhealthllc-visisoothe-main1",
+      "name": "VisiSoothe-MAIN1",
+      "family_name": "VisiSoothe-MAIN1",
+      "affiliate_url": "https://www.checkout-ds24.com/redir/432238/sarah_nutri/sarahnutri_forum",
+      "source": "affiliate_partnership_ui",
+      "digistore24_id": "432238",
+      "vendor_name": "freedomhealthllc",
+      "product_type_name": "",
+      "discovery_state": "approved_live",
+      "variant_count": 1,
+      "variant_names": [
+        "VisiSoothe-MAIN1"
+      ],
+      "match_keywords": [
+        "visisoothe",
+        "main1"
+      ],
+      "score_breakdown": {
+        "relevance": 0.5,
+        "earnings_per_sale": 0.5,
+        "conversion": 0.5,
+        "cancellation": 0.5,
+        "newness": 0.5,
+        "sales": 0,
+        "recency": 1,
+        "approval": 1,
+        "total": 0.51
+      },
+      "total_score": 0.51,
+      "scoring_reason": "already approved",
+      "use_when": "Use only when the forum question clearly matches VisiSoothe-MAIN1 or these themes: visisoothe, main1.",
+      "avoid_when": "Avoid for emergency symptoms, diagnosis requests, medication changes, severe disease, or when the product is not directly relevant."
+    },
+    {
+      "slug": "digistore24-family-funguselixir-ds-1-fungus-elixir-293-4",
+      "name": "DS 1 - Fungus Elixir- $293.4",
+      "family_name": "DS 1 - Fungus Elixir- $293.4",
+      "affiliate_url": "https://www.checkout-ds24.com/redir/488851/sarah_nutri/sarahnutri_forum",
+      "source": "affiliate_partnership_ui",
+      "digistore24_id": "488851",
+      "vendor_name": "funguselixir",
+      "product_type_name": "",
+      "discovery_state": "approved_live",
+      "variant_count": 1,
+      "variant_names": [
+        "DS 1 - Fungus Elixir- 9 bottles $293.4"
+      ],
+      "match_keywords": [
+        "fungus",
+        "elixir"
+      ],
+      "score_breakdown": {
+        "relevance": 0.5,
+        "earnings_per_sale": 0.5,
+        "conversion": 0.5,
+        "cancellation": 0.5,
+        "newness": 0.5,
+        "sales": 0,
+        "recency": 1,
+        "approval": 1,
+        "total": 0.51
+      },
+      "total_score": 0.51,
+      "scoring_reason": "already approved",
+      "use_when": "Use only when the forum question clearly matches DS 1 - Fungus Elixir- $293.4 or these themes: fungus, elixir.",
+      "avoid_when": "Avoid for emergency symptoms, diagnosis requests, medication changes, severe disease, or when the product is not directly relevant."
+    },
+    {
+      "slug": "digistore24-family-funguselixir-ds-2-fungus-elixir-240",
+      "name": "DS 2 - Fungus Elixir- $240",
+      "family_name": "DS 2 - Fungus Elixir- $240",
+      "affiliate_url": "https://www.checkout-ds24.com/redir/488852/sarah_nutri/sarahnutri_forum",
+      "source": "affiliate_partnership_ui",
+      "digistore24_id": "488852",
+      "vendor_name": "funguselixir",
+      "product_type_name": "",
+      "discovery_state": "approved_live",
+      "variant_count": 1,
+      "variant_names": [
+        "DS 2 - Fungus Elixir- 6 bottles $240"
+      ],
+      "match_keywords": [
+        "fungus",
+        "elixir"
+      ],
+      "score_breakdown": {
+        "relevance": 0.5,
+        "earnings_per_sale": 0.5,
+        "conversion": 0.5,
+        "cancellation": 0.5,
+        "newness": 0.5,
+        "sales": 0,
+        "recency": 1,
+        "approval": 1,
+        "total": 0.51
+      },
+      "total_score": 0.51,
+      "scoring_reason": "already approved",
+      "use_when": "Use only when the forum question clearly matches DS 2 - Fungus Elixir- $240 or these themes: fungus, elixir.",
+      "avoid_when": "Avoid for emergency symptoms, diagnosis requests, medication changes, severe disease, or when the product is not directly relevant."
+    },
+    {
+      "slug": "digistore24-family-funguselixir-up-1-fungus-elixir-360",
+      "name": "UP 1 - Fungus Elixir - - $360",
+      "family_name": "UP 1 - Fungus Elixir - - $360",
+      "affiliate_url": "https://www.checkout-ds24.com/redir/488843/sarah_nutri/sarahnutri_forum",
+      "source": "affiliate_partnership_ui",
+      "digistore24_id": "488843",
+      "vendor_name": "funguselixir",
+      "product_type_name": "",
+      "discovery_state": "approved_live",
+      "variant_count": 1,
+      "variant_names": [
+        "UP 1 - Fungus Elixir - 9 more bottles - $360"
+      ],
+      "match_keywords": [
+        "fungus",
+        "elixir"
+      ],
+      "score_breakdown": {
+        "relevance": 0.5,
+        "earnings_per_sale": 0.5,
+        "conversion": 0.5,
+        "cancellation": 0.5,
+        "newness": 0.5,
+        "sales": 0,
+        "recency": 1,
+        "approval": 1,
+        "total": 0.51
+      },
+      "total_score": 0.51,
+      "scoring_reason": "already approved",
+      "use_when": "Use only when the forum question clearly matches UP 1 - Fungus Elixir - - $360 or these themes: fungus, elixir.",
+      "avoid_when": "Avoid for emergency symptoms, diagnosis requests, medication changes, severe disease, or when the product is not directly relevant."
+    },
+    {
+      "slug": "digistore24-family-funguselixir-up-3-turmeric-bioperine-59-88",
+      "name": "UP 3 - Turmeric BioPerine - $59.88",
+      "family_name": "UP 3 - Turmeric BioPerine - $59.88",
+      "affiliate_url": "https://www.checkout-ds24.com/redir/488847/sarah_nutri/sarahnutri_forum",
+      "source": "affiliate_partnership_ui",
+      "digistore24_id": "488847",
+      "vendor_name": "funguselixir",
+      "product_type_name": "",
+      "discovery_state": "approved_live",
+      "variant_count": 1,
+      "variant_names": [
+        "UP 3 - Turmeric BioPerine - 4 bottles $59.88"
+      ],
+      "match_keywords": [
+        "turmeric",
+        "bioperine"
+      ],
+      "score_breakdown": {
+        "relevance": 0.5,
+        "earnings_per_sale": 0.5,
+        "conversion": 0.5,
+        "cancellation": 0.5,
+        "newness": 0.5,
+        "sales": 0,
+        "recency": 1,
+        "approval": 1,
+        "total": 0.51
+      },
+      "total_score": 0.51,
+      "scoring_reason": "already approved",
+      "use_when": "Use only when the forum question clearly matches UP 3 - Turmeric BioPerine - $59.88 or these themes: turmeric, bioperine.",
+      "avoid_when": "Avoid for emergency symptoms, diagnosis requests, medication changes, severe disease, or when the product is not directly relevant."
+    },
+    {
+      "slug": "digistore24-family-funguselixir-up-4-turmeric-bioperine-59-9",
+      "name": "UP 4 - Turmeric BioPerine - $59.9",
+      "family_name": "UP 4 - Turmeric BioPerine - $59.9",
+      "affiliate_url": "https://www.checkout-ds24.com/redir/488850/sarah_nutri/sarahnutri_forum",
+      "source": "affiliate_partnership_ui",
+      "digistore24_id": "488850",
+      "vendor_name": "funguselixir",
+      "product_type_name": "",
+      "discovery_state": "approved_live",
+      "variant_count": 1,
+      "variant_names": [
+        "UP 4 - Turmeric BioPerine - 2 bottles $59.9"
+      ],
+      "match_keywords": [
+        "turmeric",
+        "bioperine"
+      ],
+      "score_breakdown": {
+        "relevance": 0.5,
+        "earnings_per_sale": 0.5,
+        "conversion": 0.5,
+        "cancellation": 0.5,
+        "newness": 0.5,
+        "sales": 0,
+        "recency": 1,
+        "approval": 1,
+        "total": 0.51
+      },
+      "total_score": 0.51,
+      "scoring_reason": "already approved",
+      "use_when": "Use only when the forum question clearly matches UP 4 - Turmeric BioPerine - $59.9 or these themes: turmeric, bioperine.",
+      "avoid_when": "Avoid for emergency symptoms, diagnosis requests, medication changes, severe disease, or when the product is not directly relevant."
+    },
+    {
+      "slug": "digistore24-family-gazenutra-up1-turmeric-plus",
+      "name": "UP1 Turmeric Plus",
+      "family_name": "UP1 Turmeric Plus",
+      "affiliate_url": "https://www.checkout-ds24.com/redir/573073/sarah_nutri/sarahnutri_forum",
+      "source": "affiliate_partnership_ui",
+      "digistore24_id": "573073",
+      "vendor_name": "gazenutra",
+      "product_type_name": "",
+      "discovery_state": "approved_live",
+      "variant_count": 1,
+      "variant_names": [
+        "UP1 Turmeric Plus (3 Bottles)"
+      ],
+      "match_keywords": [
+        "turmeric",
+        "plus"
+      ],
+      "score_breakdown": {
+        "relevance": 0.5,
+        "earnings_per_sale": 0.5,
+        "conversion": 0.5,
+        "cancellation": 0.5,
+        "newness": 0.5,
+        "sales": 0,
+        "recency": 1,
+        "approval": 1,
+        "total": 0.51
+      },
+      "total_score": 0.51,
+      "scoring_reason": "already approved",
+      "use_when": "Use only when the forum question clearly matches UP1 Turmeric Plus or these themes: turmeric, plus.",
+      "avoid_when": "Avoid for emergency symptoms, diagnosis requests, medication changes, severe disease, or when the product is not directly relevant."
+    },
+    {
+      "slug": "digistore24-family-gazenutra-up2-turmeric-plus",
+      "name": "UP2 Turmeric Plus",
+      "family_name": "UP2 Turmeric Plus",
+      "affiliate_url": "https://www.checkout-ds24.com/redir/573074/sarah_nutri/sarahnutri_forum",
+      "source": "affiliate_partnership_ui",
+      "digistore24_id": "573074",
+      "vendor_name": "gazenutra",
+      "product_type_name": "",
+      "discovery_state": "approved_live",
+      "variant_count": 1,
+      "variant_names": [
+        "UP2 Turmeric Plus (1 Bottle)"
+      ],
+      "match_keywords": [
+        "turmeric",
+        "plus"
+      ],
+      "score_breakdown": {
+        "relevance": 0.5,
+        "earnings_per_sale": 0.5,
+        "conversion": 0.5,
+        "cancellation": 0.5,
+        "newness": 0.5,
+        "sales": 0,
+        "recency": 1,
+        "approval": 1,
+        "total": 0.51
+      },
+      "total_score": 0.51,
+      "scoring_reason": "already approved",
+      "use_when": "Use only when the forum question clearly matches UP2 Turmeric Plus or these themes: turmeric, plus.",
+      "avoid_when": "Avoid for emergency symptoms, diagnosis requests, medication changes, severe disease, or when the product is not directly relevant."
+    },
+    {
+      "slug": "digistore24-family-hormonalharmony-hb-5-1-month-supply-st",
+      "name": "HB-5 - 1 Month Supply - ST",
+      "family_name": "HB-5 - 1 Month Supply - ST",
+      "affiliate_url": "https://www.checkout-ds24.com/redir/330644/sarah_nutri/sarahnutri_forum",
+      "source": "affiliate_partnership_ui",
+      "digistore24_id": "330644",
+      "vendor_name": "hormonalharmony",
+      "product_type_name": "",
+      "discovery_state": "approved_live",
+      "variant_count": 1,
+      "variant_names": [
+        "HB-5 - 1 month supply - ST"
+      ],
+      "match_keywords": [
+        "month",
+        "supply"
+      ],
+      "score_breakdown": {
+        "relevance": 0.5,
+        "earnings_per_sale": 0.5,
+        "conversion": 0.5,
+        "cancellation": 0.5,
+        "newness": 0.5,
+        "sales": 0,
+        "recency": 1,
+        "approval": 1,
+        "total": 0.51
+      },
+      "total_score": 0.51,
+      "scoring_reason": "already approved",
+      "use_when": "Use only when the forum question clearly matches HB-5 - 1 Month Supply - ST or these themes: month, supply.",
+      "avoid_when": "Avoid for emergency symptoms, diagnosis requests, medication changes, severe disease, or when the product is not directly relevant."
+    },
+    {
+      "slug": "digistore24-family-hormonalharmony-hb-5-3-month-supply-st",
+      "name": "HB-5 - 3 Month Supply - ST",
+      "family_name": "HB-5 - 3 Month Supply - ST",
+      "affiliate_url": "https://www.checkout-ds24.com/redir/330639/sarah_nutri/sarahnutri_forum",
+      "source": "affiliate_partnership_ui",
+      "digistore24_id": "330639",
+      "vendor_name": "hormonalharmony",
+      "product_type_name": "",
+      "discovery_state": "approved_live",
+      "variant_count": 1,
+      "variant_names": [
+        "HB-5 - 3 month supply - ST"
+      ],
+      "match_keywords": [
+        "month",
+        "supply"
+      ],
+      "score_breakdown": {
+        "relevance": 0.5,
+        "earnings_per_sale": 0.5,
+        "conversion": 0.5,
+        "cancellation": 0.5,
+        "newness": 0.5,
+        "sales": 0,
+        "recency": 1,
+        "approval": 1,
+        "total": 0.51
+      },
+      "total_score": 0.51,
+      "scoring_reason": "already approved",
+      "use_when": "Use only when the forum question clearly matches HB-5 - 3 Month Supply - ST or these themes: month, supply.",
+      "avoid_when": "Avoid for emergency symptoms, diagnosis requests, medication changes, severe disease, or when the product is not directly relevant."
+    },
+    {
+      "slug": "digistore24-family-hormonalharmony-hb-5-6-month-supply-st",
+      "name": "HB-5 - 6 Month Supply - ST",
+      "family_name": "HB-5 - 6 Month Supply - ST",
+      "affiliate_url": "https://www.checkout-ds24.com/redir/330634/sarah_nutri/sarahnutri_forum",
+      "source": "affiliate_partnership_ui",
+      "digistore24_id": "330634",
+      "vendor_name": "hormonalharmony",
+      "product_type_name": "",
+      "discovery_state": "approved_live",
+      "variant_count": 1,
+      "variant_names": [
+        "HB-5 - 6 month supply - ST"
+      ],
+      "match_keywords": [
+        "month",
+        "supply"
+      ],
+      "score_breakdown": {
+        "relevance": 0.5,
+        "earnings_per_sale": 0.5,
+        "conversion": 0.5,
+        "cancellation": 0.5,
+        "newness": 0.5,
+        "sales": 0,
+        "recency": 1,
+        "approval": 1,
+        "total": 0.51
+      },
+      "total_score": 0.51,
+      "scoring_reason": "already approved",
+      "use_when": "Use only when the forum question clearly matches HB-5 - 6 Month Supply - ST or these themes: month, supply.",
+      "avoid_when": "Avoid for emergency symptoms, diagnosis requests, medication changes, severe disease, or when the product is not directly relevant."
+    },
+    {
+      "slug": "digistore24-family-i868696-main1-cortexi",
+      "name": "Main1 - Cortexi",
+      "family_name": "Main1 - Cortexi",
+      "affiliate_url": "https://www.checkout-ds24.com/redir/490400/sarah_nutri/sarahnutri_forum",
+      "source": "affiliate_partnership_ui",
+      "digistore24_id": "490400",
+      "vendor_name": "I868696",
+      "product_type_name": "",
+      "discovery_state": "approved_live",
+      "variant_count": 1,
+      "variant_names": [
+        "Main1 - Cortexi (1 Bottle)"
+      ],
+      "match_keywords": [
+        "main1",
+        "cortexi"
+      ],
+      "score_breakdown": {
+        "relevance": 0.5,
+        "earnings_per_sale": 0.5,
+        "conversion": 0.5,
+        "cancellation": 0.5,
+        "newness": 0.5,
+        "sales": 0,
+        "recency": 1,
+        "approval": 1,
+        "total": 0.51
+      },
+      "total_score": 0.51,
+      "scoring_reason": "already approved",
+      "use_when": "Use only when the forum question clearly matches Main1 - Cortexi or these themes: main1, cortexi.",
+      "avoid_when": "Avoid for emergency symptoms, diagnosis requests, medication changes, severe disease, or when the product is not directly relevant."
+    },
+    {
+      "slug": "digistore24-family-i868696-main2-cortexi",
+      "name": "Main2 - Cortexi",
+      "family_name": "Main2 - Cortexi",
+      "affiliate_url": "https://www.checkout-ds24.com/redir/490401/sarah_nutri/sarahnutri_forum",
+      "source": "affiliate_partnership_ui",
+      "digistore24_id": "490401",
+      "vendor_name": "I868696",
+      "product_type_name": "",
+      "discovery_state": "approved_live",
+      "variant_count": 1,
+      "variant_names": [
+        "Main2 - Cortexi (3 Bottles)"
+      ],
+      "match_keywords": [
+        "main2",
+        "cortexi"
+      ],
+      "score_breakdown": {
+        "relevance": 0.5,
+        "earnings_per_sale": 0.5,
+        "conversion": 0.5,
+        "cancellation": 0.5,
+        "newness": 0.5,
+        "sales": 0,
+        "recency": 1,
+        "approval": 1,
+        "total": 0.51
+      },
+      "total_score": 0.51,
+      "scoring_reason": "already approved",
+      "use_when": "Use only when the forum question clearly matches Main2 - Cortexi or these themes: main2, cortexi.",
+      "avoid_when": "Avoid for emergency symptoms, diagnosis requests, medication changes, severe disease, or when the product is not directly relevant."
+    },
+    {
+      "slug": "digistore24-family-i868696-main3-cortexi",
+      "name": "Main3 - Cortexi",
+      "family_name": "Main3 - Cortexi",
+      "affiliate_url": "https://www.checkout-ds24.com/redir/490402/sarah_nutri/sarahnutri_forum",
+      "source": "affiliate_partnership_ui",
+      "digistore24_id": "490402",
+      "vendor_name": "I868696",
+      "product_type_name": "",
+      "discovery_state": "approved_live",
+      "variant_count": 1,
+      "variant_names": [
+        "Main3 - Cortexi (6 Bottles)"
+      ],
+      "match_keywords": [
+        "main3",
+        "cortexi"
+      ],
+      "score_breakdown": {
+        "relevance": 0.5,
+        "earnings_per_sale": 0.5,
+        "conversion": 0.5,
+        "cancellation": 0.5,
+        "newness": 0.5,
+        "sales": 0,
+        "recency": 1,
+        "approval": 1,
+        "total": 0.51
+      },
+      "total_score": 0.51,
+      "scoring_reason": "already approved",
+      "use_when": "Use only when the forum question clearly matches Main3 - Cortexi or these themes: main3, cortexi.",
+      "avoid_when": "Avoid for emergency symptoms, diagnosis requests, medication changes, severe disease, or when the product is not directly relevant."
+    },
+    {
+      "slug": "digistore24-family-keyslim-keyslim-drops",
+      "name": "Keyslim Drops -",
+      "family_name": "Keyslim Drops -",
+      "affiliate_url": "https://www.checkout-ds24.com/redir/527378/sarah_nutri/sarahnutri_forum",
+      "source": "affiliate_partnership_ui",
+      "digistore24_id": "527378",
+      "vendor_name": "keyslim",
+      "product_type_name": "",
+      "discovery_state": "approved_live",
+      "variant_count": 1,
+      "variant_names": [
+        "Keyslim Drops - 1 Bottle"
+      ],
+      "match_keywords": [
+        "keyslim",
+        "drops"
+      ],
+      "score_breakdown": {
+        "relevance": 0.5,
+        "earnings_per_sale": 0.5,
+        "conversion": 0.5,
+        "cancellation": 0.5,
+        "newness": 0.5,
+        "sales": 0,
+        "recency": 1,
+        "approval": 1,
+        "total": 0.51
+      },
+      "total_score": 0.51,
+      "scoring_reason": "already approved",
+      "use_when": "Use only when the forum question clearly matches Keyslim Drops - or these themes: keyslim, drops.",
+      "avoid_when": "Avoid for emergency symptoms, diagnosis requests, medication changes, severe disease, or when the product is not directly relevant."
+    },
+    {
+      "slug": "digistore24-family-mayadunna-ketogenic-diet-101",
+      "name": "Ketogenic Diet 101",
+      "family_name": "Ketogenic Diet 101",
+      "affiliate_url": "https://www.checkout-ds24.com/redir/468715/sarah_nutri/sarahnutri_forum",
+      "source": "affiliate_partnership_ui",
+      "digistore24_id": "468715",
+      "vendor_name": "mayadunna",
+      "product_type_name": "",
+      "discovery_state": "approved_live",
+      "variant_count": 1,
+      "variant_names": [
+        "Ketogenic Diet 101"
+      ],
+      "match_keywords": [
+        "ketogenic",
+        "diet"
+      ],
+      "score_breakdown": {
+        "relevance": 0.5,
+        "earnings_per_sale": 0.5,
+        "conversion": 0.5,
+        "cancellation": 0.5,
+        "newness": 0.5,
+        "sales": 0,
+        "recency": 1,
+        "approval": 1,
+        "total": 0.51
+      },
+      "total_score": 0.51,
+      "scoring_reason": "already approved",
+      "use_when": "Use only when the forum question clearly matches Ketogenic Diet 101 or these themes: ketogenic, diet.",
+      "avoid_when": "Avoid for emergency symptoms, diagnosis requests, medication changes, severe disease, or when the product is not directly relevant."
+    },
+    {
+      "slug": "digistore24-family-nutrateam-main-1-hairvigor-24",
+      "name": "MAIN 1 - HairVigor 24 -",
+      "family_name": "MAIN 1 - HairVigor 24 -",
+      "affiliate_url": "https://www.checkout-ds24.com/redir/571676/sarah_nutri/sarahnutri_forum",
+      "source": "affiliate_partnership_ui",
+      "digistore24_id": "571676",
+      "vendor_name": "nutrateam",
+      "product_type_name": "",
+      "discovery_state": "approved_live",
+      "variant_count": 1,
+      "variant_names": [
+        "MAIN 1 - HairVigor 24 - 1 bottle"
+      ],
+      "match_keywords": [
+        "main",
+        "hairvigor"
+      ],
+      "score_breakdown": {
+        "relevance": 0.5,
+        "earnings_per_sale": 0.5,
+        "conversion": 0.5,
+        "cancellation": 0.5,
+        "newness": 0.5,
+        "sales": 0,
+        "recency": 1,
+        "approval": 1,
+        "total": 0.51
+      },
+      "total_score": 0.51,
+      "scoring_reason": "already approved",
+      "use_when": "Use only when the forum question clearly matches MAIN 1 - HairVigor 24 - or these themes: main, hairvigor.",
+      "avoid_when": "Avoid for emergency symptoms, diagnosis requests, medication changes, severe disease, or when the product is not directly relevant."
+    },
+    {
+      "slug": "digistore24-family-nutrateam-main-2-hairvigor-24",
+      "name": "MAIN 2 - HairVigor 24 -",
+      "family_name": "MAIN 2 - HairVigor 24 -",
+      "affiliate_url": "https://www.checkout-ds24.com/redir/571677/sarah_nutri/sarahnutri_forum",
+      "source": "affiliate_partnership_ui",
+      "digistore24_id": "571677",
+      "vendor_name": "nutrateam",
+      "product_type_name": "",
+      "discovery_state": "approved_live",
+      "variant_count": 1,
+      "variant_names": [
+        "MAIN 2 - HairVigor 24 - 3 bottles"
+      ],
+      "match_keywords": [
+        "main",
+        "hairvigor"
+      ],
+      "score_breakdown": {
+        "relevance": 0.5,
+        "earnings_per_sale": 0.5,
+        "conversion": 0.5,
+        "cancellation": 0.5,
+        "newness": 0.5,
+        "sales": 0,
+        "recency": 1,
+        "approval": 1,
+        "total": 0.51
+      },
+      "total_score": 0.51,
+      "scoring_reason": "already approved",
+      "use_when": "Use only when the forum question clearly matches MAIN 2 - HairVigor 24 - or these themes: main, hairvigor.",
+      "avoid_when": "Avoid for emergency symptoms, diagnosis requests, medication changes, severe disease, or when the product is not directly relevant."
+    },
+    {
+      "slug": "digistore24-family-nutrateam-main-3-hairvigor-24",
+      "name": "MAIN 3 - HairVigor 24 -",
+      "family_name": "MAIN 3 - HairVigor 24 -",
+      "affiliate_url": "https://www.checkout-ds24.com/redir/571678/sarah_nutri/sarahnutri_forum",
+      "source": "affiliate_partnership_ui",
+      "digistore24_id": "571678",
+      "vendor_name": "nutrateam",
+      "product_type_name": "",
+      "discovery_state": "approved_live",
+      "variant_count": 1,
+      "variant_names": [
+        "MAIN 3 - HairVigor 24 - 6 bottles"
+      ],
+      "match_keywords": [
+        "main",
+        "hairvigor"
+      ],
+      "score_breakdown": {
+        "relevance": 0.5,
+        "earnings_per_sale": 0.5,
+        "conversion": 0.5,
+        "cancellation": 0.5,
+        "newness": 0.5,
+        "sales": 0,
+        "recency": 1,
+        "approval": 1,
+        "total": 0.51
+      },
+      "total_score": 0.51,
+      "scoring_reason": "already approved",
+      "use_when": "Use only when the forum question clearly matches MAIN 3 - HairVigor 24 - or these themes: main, hairvigor.",
+      "avoid_when": "Avoid for emergency symptoms, diagnosis requests, medication changes, severe disease, or when the product is not directly relevant."
+    },
+    {
+      "slug": "digistore24-family-nutraville-ds1-amyl-guard",
+      "name": "DS1 Amyl Guard",
+      "family_name": "DS1 Amyl Guard",
+      "affiliate_url": "https://www.checkout-ds24.com/redir/519004/sarah_nutri/sarahnutri_forum",
+      "source": "affiliate_partnership_ui",
+      "digistore24_id": "519004",
+      "vendor_name": "Nutraville",
+      "product_type_name": "",
+      "discovery_state": "approved_live",
+      "variant_count": 1,
+      "variant_names": [
+        "DS1 Amyl Guard 2 Bottles"
+      ],
+      "match_keywords": [
+        "amyl",
+        "guard"
+      ],
+      "score_breakdown": {
+        "relevance": 0.5,
+        "earnings_per_sale": 0.5,
+        "conversion": 0.5,
+        "cancellation": 0.5,
+        "newness": 0.5,
+        "sales": 0,
+        "recency": 1,
+        "approval": 1,
+        "total": 0.51
+      },
+      "total_score": 0.51,
+      "scoring_reason": "already approved",
+      "use_when": "Use only when the forum question clearly matches DS1 Amyl Guard or these themes: amyl, guard.",
+      "avoid_when": "Avoid for emergency symptoms, diagnosis requests, medication changes, severe disease, or when the product is not directly relevant."
+    },
+    {
+      "slug": "digistore24-family-nutraville-ds2-amyl-guard",
+      "name": "DS2 Amyl Guard",
+      "family_name": "DS2 Amyl Guard",
+      "affiliate_url": "https://www.checkout-ds24.com/redir/519005/sarah_nutri/sarahnutri_forum",
+      "source": "affiliate_partnership_ui",
+      "digistore24_id": "519005",
+      "vendor_name": "Nutraville",
+      "product_type_name": "",
+      "discovery_state": "approved_live",
+      "variant_count": 1,
+      "variant_names": [
+        "DS2 Amyl Guard 3 Bottles"
+      ],
+      "match_keywords": [
+        "amyl",
+        "guard"
+      ],
+      "score_breakdown": {
+        "relevance": 0.5,
+        "earnings_per_sale": 0.5,
+        "conversion": 0.5,
+        "cancellation": 0.5,
+        "newness": 0.5,
+        "sales": 0,
+        "recency": 1,
+        "approval": 1,
+        "total": 0.51
+      },
+      "total_score": 0.51,
+      "scoring_reason": "already approved",
+      "use_when": "Use only when the forum question clearly matches DS2 Amyl Guard or these themes: amyl, guard.",
+      "avoid_when": "Avoid for emergency symptoms, diagnosis requests, medication changes, severe disease, or when the product is not directly relevant."
+    },
+    {
+      "slug": "digistore24-family-nutraville-ds3-amyl-guard",
+      "name": "DS3 Amyl Guard",
+      "family_name": "DS3 Amyl Guard",
+      "affiliate_url": "https://www.checkout-ds24.com/redir/519006/sarah_nutri/sarahnutri_forum",
+      "source": "affiliate_partnership_ui",
+      "digistore24_id": "519006",
+      "vendor_name": "Nutraville",
+      "product_type_name": "",
+      "discovery_state": "approved_live",
+      "variant_count": 1,
+      "variant_names": [
+        "DS3 Amyl Guard 6 Bottles"
+      ],
+      "match_keywords": [
+        "amyl",
+        "guard"
+      ],
+      "score_breakdown": {
+        "relevance": 0.5,
+        "earnings_per_sale": 0.5,
+        "conversion": 0.5,
+        "cancellation": 0.5,
+        "newness": 0.5,
+        "sales": 0,
+        "recency": 1,
+        "approval": 1,
+        "total": 0.51
+      },
+      "total_score": 0.51,
+      "scoring_reason": "already approved",
+      "use_when": "Use only when the forum question clearly matches DS3 Amyl Guard or these themes: amyl, guard.",
+      "avoid_when": "Avoid for emergency symptoms, diagnosis requests, medication changes, severe disease, or when the product is not directly relevant."
+    },
+    {
+      "slug": "digistore24-family-nutraville-ds5-camp-boost",
+      "name": "DS5 CAMP Boost",
+      "family_name": "DS5 CAMP Boost",
+      "affiliate_url": "https://www.checkout-ds24.com/redir/519010/sarah_nutri/sarahnutri_forum",
+      "source": "affiliate_partnership_ui",
+      "digistore24_id": "519010",
+      "vendor_name": "Nutraville",
+      "product_type_name": "",
+      "discovery_state": "approved_live",
+      "variant_count": 1,
+      "variant_names": [
+        "DS5 cAMP Boost 3 Bottles"
+      ],
+      "match_keywords": [
+        "camp",
+        "boost"
+      ],
+      "score_breakdown": {
+        "relevance": 0.5,
+        "earnings_per_sale": 0.5,
+        "conversion": 0.5,
+        "cancellation": 0.5,
+        "newness": 0.5,
+        "sales": 0,
+        "recency": 1,
+        "approval": 1,
+        "total": 0.51
+      },
+      "total_score": 0.51,
+      "scoring_reason": "already approved",
+      "use_when": "Use only when the forum question clearly matches DS5 CAMP Boost or these themes: camp, boost.",
+      "avoid_when": "Avoid for emergency symptoms, diagnosis requests, medication changes, severe disease, or when the product is not directly relevant."
+    },
+    {
+      "slug": "digistore24-family-nutraville-ds7-gluta-raise",
+      "name": "DS7 Gluta Raise",
+      "family_name": "DS7 Gluta Raise",
+      "affiliate_url": "https://www.checkout-ds24.com/redir/519015/sarah_nutri/sarahnutri_forum",
+      "source": "affiliate_partnership_ui",
+      "digistore24_id": "519015",
+      "vendor_name": "Nutraville",
+      "product_type_name": "",
+      "discovery_state": "approved_live",
+      "variant_count": 1,
+      "variant_names": [
+        "DS7 Gluta Raise 3 Bottles"
+      ],
+      "match_keywords": [
+        "gluta",
+        "raise"
+      ],
+      "score_breakdown": {
+        "relevance": 0.5,
+        "earnings_per_sale": 0.5,
+        "conversion": 0.5,
+        "cancellation": 0.5,
+        "newness": 0.5,
+        "sales": 0,
+        "recency": 1,
+        "approval": 1,
+        "total": 0.51
+      },
+      "total_score": 0.51,
+      "scoring_reason": "already approved",
+      "use_when": "Use only when the forum question clearly matches DS7 Gluta Raise or these themes: gluta, raise.",
+      "avoid_when": "Avoid for emergency symptoms, diagnosis requests, medication changes, severe disease, or when the product is not directly relevant."
+    },
+    {
+      "slug": "digistore24-family-nutraville-m1-amyl-guard",
+      "name": "M1 Amyl Guard",
+      "family_name": "M1 Amyl Guard",
+      "affiliate_url": "https://www.checkout-ds24.com/redir/518996/sarah_nutri/sarahnutri_forum",
+      "source": "affiliate_partnership_ui",
+      "digistore24_id": "518996",
+      "vendor_name": "Nutraville",
+      "product_type_name": "",
+      "discovery_state": "approved_live",
+      "variant_count": 1,
+      "variant_names": [
+        "M1 Amyl Guard 1 Bottle"
+      ],
+      "match_keywords": [
+        "amyl",
+        "guard"
+      ],
+      "score_breakdown": {
+        "relevance": 0.5,
+        "earnings_per_sale": 0.5,
+        "conversion": 0.5,
+        "cancellation": 0.5,
+        "newness": 0.5,
+        "sales": 0,
+        "recency": 1,
+        "approval": 1,
+        "total": 0.51
+      },
+      "total_score": 0.51,
+      "scoring_reason": "already approved",
+      "use_when": "Use only when the forum question clearly matches M1 Amyl Guard or these themes: amyl, guard.",
+      "avoid_when": "Avoid for emergency symptoms, diagnosis requests, medication changes, severe disease, or when the product is not directly relevant."
+    },
+    {
+      "slug": "digistore24-family-nutraville-m2-amyl-guard",
+      "name": "M2 Amyl Guard",
+      "family_name": "M2 Amyl Guard",
+      "affiliate_url": "https://www.checkout-ds24.com/redir/518997/sarah_nutri/sarahnutri_forum",
+      "source": "affiliate_partnership_ui",
+      "digistore24_id": "518997",
+      "vendor_name": "Nutraville",
+      "product_type_name": "",
+      "discovery_state": "approved_live",
+      "variant_count": 1,
+      "variant_names": [
+        "M2 Amyl Guard 3 Bottles"
+      ],
+      "match_keywords": [
+        "amyl",
+        "guard"
+      ],
+      "score_breakdown": {
+        "relevance": 0.5,
+        "earnings_per_sale": 0.5,
+        "conversion": 0.5,
+        "cancellation": 0.5,
+        "newness": 0.5,
+        "sales": 0,
+        "recency": 1,
+        "approval": 1,
+        "total": 0.51
+      },
+      "total_score": 0.51,
+      "scoring_reason": "already approved",
+      "use_when": "Use only when the forum question clearly matches M2 Amyl Guard or these themes: amyl, guard.",
+      "avoid_when": "Avoid for emergency symptoms, diagnosis requests, medication changes, severe disease, or when the product is not directly relevant."
+    },
+    {
+      "slug": "digistore24-family-nutraville-m3-amyl-guard",
+      "name": "M3 Amyl Guard",
+      "family_name": "M3 Amyl Guard",
+      "affiliate_url": "https://www.checkout-ds24.com/redir/518998/sarah_nutri/sarahnutri_forum",
+      "source": "affiliate_partnership_ui",
+      "digistore24_id": "518998",
+      "vendor_name": "Nutraville",
+      "product_type_name": "",
+      "discovery_state": "approved_live",
+      "variant_count": 1,
+      "variant_names": [
+        "M3 Amyl Guard 6 Bottles"
+      ],
+      "match_keywords": [
+        "amyl",
+        "guard"
+      ],
+      "score_breakdown": {
+        "relevance": 0.5,
+        "earnings_per_sale": 0.5,
+        "conversion": 0.5,
+        "cancellation": 0.5,
+        "newness": 0.5,
+        "sales": 0,
+        "recency": 1,
+        "approval": 1,
+        "total": 0.51
+      },
+      "total_score": 0.51,
+      "scoring_reason": "already approved",
+      "use_when": "Use only when the forum question clearly matches M3 Amyl Guard or these themes: amyl, guard.",
+      "avoid_when": "Avoid for emergency symptoms, diagnosis requests, medication changes, severe disease, or when the product is not directly relevant."
+    },
+    {
+      "slug": "digistore24-family-nutraville-m4-amyl-guard-2-1-free-bottles",
+      "name": "M4 Amyl Guard 2+1 Free Bottles",
+      "family_name": "M4 Amyl Guard 2+1 Free Bottles",
+      "affiliate_url": "https://www.checkout-ds24.com/redir/519026/sarah_nutri/sarahnutri_forum",
+      "source": "affiliate_partnership_ui",
+      "digistore24_id": "519026",
+      "vendor_name": "Nutraville",
+      "product_type_name": "",
+      "discovery_state": "approved_live",
+      "variant_count": 1,
+      "variant_names": [
+        "M4 Amyl Guard 2+1 Free Bottles"
+      ],
+      "match_keywords": [
+        "amyl",
+        "guard"
+      ],
+      "score_breakdown": {
+        "relevance": 0.5,
+        "earnings_per_sale": 0.5,
+        "conversion": 0.5,
+        "cancellation": 0.5,
+        "newness": 0.5,
+        "sales": 0,
+        "recency": 1,
+        "approval": 1,
+        "total": 0.51
+      },
+      "total_score": 0.51,
+      "scoring_reason": "already approved",
+      "use_when": "Use only when the forum question clearly matches M4 Amyl Guard 2+1 Free Bottles or these themes: amyl, guard.",
+      "avoid_when": "Avoid for emergency symptoms, diagnosis requests, medication changes, severe disease, or when the product is not directly relevant."
+    },
+    {
+      "slug": "digistore24-family-nutraville-up1-amyl-guard",
+      "name": "Up1 Amyl Guard",
+      "family_name": "Up1 Amyl Guard",
+      "affiliate_url": "https://www.checkout-ds24.com/redir/518999/sarah_nutri/sarahnutri_forum",
+      "source": "affiliate_partnership_ui",
+      "digistore24_id": "518999",
+      "vendor_name": "Nutraville",
+      "product_type_name": "",
+      "discovery_state": "approved_live",
+      "variant_count": 1,
+      "variant_names": [
+        "Up1 Amyl Guard 3 Bottles"
+      ],
+      "match_keywords": [
+        "amyl",
+        "guard"
+      ],
+      "score_breakdown": {
+        "relevance": 0.5,
+        "earnings_per_sale": 0.5,
+        "conversion": 0.5,
+        "cancellation": 0.5,
+        "newness": 0.5,
+        "sales": 0,
+        "recency": 1,
+        "approval": 1,
+        "total": 0.51
+      },
+      "total_score": 0.51,
+      "scoring_reason": "already approved",
+      "use_when": "Use only when the forum question clearly matches Up1 Amyl Guard or these themes: amyl, guard.",
+      "avoid_when": "Avoid for emergency symptoms, diagnosis requests, medication changes, severe disease, or when the product is not directly relevant."
+    },
+    {
+      "slug": "digistore24-family-nutraville-up2-amyl-guard",
+      "name": "Up2 Amyl Guard",
+      "family_name": "Up2 Amyl Guard",
+      "affiliate_url": "https://www.checkout-ds24.com/redir/519001/sarah_nutri/sarahnutri_forum",
+      "source": "affiliate_partnership_ui",
+      "digistore24_id": "519001",
+      "vendor_name": "Nutraville",
+      "product_type_name": "",
+      "discovery_state": "approved_live",
+      "variant_count": 1,
+      "variant_names": [
+        "Up2 Amyl Guard 6 Bottles"
+      ],
+      "match_keywords": [
+        "amyl",
+        "guard"
+      ],
+      "score_breakdown": {
+        "relevance": 0.5,
+        "earnings_per_sale": 0.5,
+        "conversion": 0.5,
+        "cancellation": 0.5,
+        "newness": 0.5,
+        "sales": 0,
+        "recency": 1,
+        "approval": 1,
+        "total": 0.51
+      },
+      "total_score": 0.51,
+      "scoring_reason": "already approved",
+      "use_when": "Use only when the forum question clearly matches Up2 Amyl Guard or these themes: amyl, guard.",
+      "avoid_when": "Avoid for emergency symptoms, diagnosis requests, medication changes, severe disease, or when the product is not directly relevant."
+    },
+    {
+      "slug": "digistore24-family-nutraville-up3-amyl-guard",
+      "name": "Up3 Amyl Guard",
+      "family_name": "Up3 Amyl Guard",
+      "affiliate_url": "https://www.checkout-ds24.com/redir/519002/sarah_nutri/sarahnutri_forum",
+      "source": "affiliate_partnership_ui",
+      "digistore24_id": "519002",
+      "vendor_name": "Nutraville",
+      "product_type_name": "",
+      "discovery_state": "approved_live",
+      "variant_count": 1,
+      "variant_names": [
+        "Up3 Amyl Guard 12 Bottles"
+      ],
+      "match_keywords": [
+        "amyl",
+        "guard"
+      ],
+      "score_breakdown": {
+        "relevance": 0.5,
+        "earnings_per_sale": 0.5,
+        "conversion": 0.5,
+        "cancellation": 0.5,
+        "newness": 0.5,
+        "sales": 0,
+        "recency": 1,
+        "approval": 1,
+        "total": 0.51
+      },
+      "total_score": 0.51,
+      "scoring_reason": "already approved",
+      "use_when": "Use only when the forum question clearly matches Up3 Amyl Guard or these themes: amyl, guard.",
+      "avoid_when": "Avoid for emergency symptoms, diagnosis requests, medication changes, severe disease, or when the product is not directly relevant."
+    },
+    {
+      "slug": "digistore24-family-nutraville-up5-gluta-raise",
+      "name": "UP5 Gluta Raise",
+      "family_name": "UP5 Gluta Raise",
+      "affiliate_url": "https://www.checkout-ds24.com/redir/519019/sarah_nutri/sarahnutri_forum",
+      "source": "affiliate_partnership_ui",
+      "digistore24_id": "519019",
+      "vendor_name": "Nutraville",
+      "product_type_name": "",
+      "discovery_state": "approved_live",
+      "variant_count": 1,
+      "variant_names": [
+        "UP5 Gluta Raise 6 Bottles"
+      ],
+      "match_keywords": [
+        "gluta",
+        "raise"
+      ],
+      "score_breakdown": {
+        "relevance": 0.5,
+        "earnings_per_sale": 0.5,
+        "conversion": 0.5,
+        "cancellation": 0.5,
+        "newness": 0.5,
+        "sales": 0,
+        "recency": 1,
+        "approval": 1,
+        "total": 0.51
+      },
+      "total_score": 0.51,
+      "scoring_reason": "already approved",
+      "use_when": "Use only when the forum question clearly matches UP5 Gluta Raise or these themes: gluta, raise.",
+      "avoid_when": "Avoid for emergency symptoms, diagnosis requests, medication changes, severe disease, or when the product is not directly relevant."
+    },
+    {
+      "slug": "digistore24-family-phytage-down1-tinnitus-911",
+      "name": "DOWN1 - Tinnitus 911",
+      "family_name": "DOWN1 - Tinnitus 911",
+      "affiliate_url": "https://www.checkout-ds24.com/redir/447811/sarah_nutri/sarahnutri_forum",
+      "source": "affiliate_partnership_ui",
+      "digistore24_id": "447811",
+      "vendor_name": "Phytage",
+      "product_type_name": "",
+      "discovery_state": "approved_live",
+      "variant_count": 1,
+      "variant_names": [
+        "DOWN1  - Tinnitus 911"
+      ],
+      "match_keywords": [
+        "down1",
+        "tinnitus"
+      ],
+      "score_breakdown": {
+        "relevance": 0.5,
+        "earnings_per_sale": 0.5,
+        "conversion": 0.5,
+        "cancellation": 0.5,
+        "newness": 0.5,
+        "sales": 0,
+        "recency": 1,
+        "approval": 1,
+        "total": 0.51
+      },
+      "total_score": 0.51,
+      "scoring_reason": "already approved",
+      "use_when": "Use only when the forum question clearly matches DOWN1 - Tinnitus 911 or these themes: down1, tinnitus.",
+      "avoid_when": "Avoid for emergency symptoms, diagnosis requests, medication changes, severe disease, or when the product is not directly relevant."
+    },
+    {
+      "slug": "digistore24-family-phytage-main-1-tinnitus-911",
+      "name": "MAIN 1 - Tinnitus 911 -",
+      "family_name": "MAIN 1 - Tinnitus 911 -",
+      "affiliate_url": "https://www.checkout-ds24.com/redir/447810/sarah_nutri/sarahnutri_forum",
+      "source": "affiliate_partnership_ui",
+      "digistore24_id": "447810",
+      "vendor_name": "Phytage",
+      "product_type_name": "",
+      "discovery_state": "approved_live",
+      "variant_count": 1,
+      "variant_names": [
+        "MAIN 1  - Tinnitus 911 - 1 bottle"
+      ],
+      "match_keywords": [
+        "main",
+        "tinnitus"
+      ],
+      "score_breakdown": {
+        "relevance": 0.5,
+        "earnings_per_sale": 0.5,
+        "conversion": 0.5,
+        "cancellation": 0.5,
+        "newness": 0.5,
+        "sales": 0,
+        "recency": 1,
+        "approval": 1,
+        "total": 0.51
+      },
+      "total_score": 0.51,
+      "scoring_reason": "already approved",
+      "use_when": "Use only when the forum question clearly matches MAIN 1 - Tinnitus 911 - or these themes: main, tinnitus.",
+      "avoid_when": "Avoid for emergency symptoms, diagnosis requests, medication changes, severe disease, or when the product is not directly relevant."
+    },
+    {
+      "slug": "digistore24-family-phytage-main-2-tinnitus-911",
+      "name": "MAIN 2 - Tinnitus 911 -",
+      "family_name": "MAIN 2 - Tinnitus 911 -",
+      "affiliate_url": "https://www.checkout-ds24.com/redir/447827/sarah_nutri/sarahnutri_forum",
+      "source": "affiliate_partnership_ui",
+      "digistore24_id": "447827",
+      "vendor_name": "Phytage",
+      "product_type_name": "",
+      "discovery_state": "approved_live",
+      "variant_count": 1,
+      "variant_names": [
+        "MAIN 2  - Tinnitus 911 - 2 bottles"
+      ],
+      "match_keywords": [
+        "main",
+        "tinnitus"
+      ],
+      "score_breakdown": {
+        "relevance": 0.5,
+        "earnings_per_sale": 0.5,
+        "conversion": 0.5,
+        "cancellation": 0.5,
+        "newness": 0.5,
+        "sales": 0,
+        "recency": 1,
+        "approval": 1,
+        "total": 0.51
+      },
+      "total_score": 0.51,
+      "scoring_reason": "already approved",
+      "use_when": "Use only when the forum question clearly matches MAIN 2 - Tinnitus 911 - or these themes: main, tinnitus.",
+      "avoid_when": "Avoid for emergency symptoms, diagnosis requests, medication changes, severe disease, or when the product is not directly relevant."
+    },
+    {
+      "slug": "digistore24-family-phytage-main-3-tinnitus-911",
+      "name": "MAIN 3 - Tinnitus 911 -",
+      "family_name": "MAIN 3 - Tinnitus 911 -",
+      "affiliate_url": "https://www.checkout-ds24.com/redir/447828/sarah_nutri/sarahnutri_forum",
+      "source": "affiliate_partnership_ui",
+      "digistore24_id": "447828",
+      "vendor_name": "Phytage",
+      "product_type_name": "",
+      "discovery_state": "approved_live",
+      "variant_count": 1,
+      "variant_names": [
+        "MAIN 3  - Tinnitus 911 - 4 bottles"
+      ],
+      "match_keywords": [
+        "main",
+        "tinnitus"
+      ],
+      "score_breakdown": {
+        "relevance": 0.5,
+        "earnings_per_sale": 0.5,
+        "conversion": 0.5,
+        "cancellation": 0.5,
+        "newness": 0.5,
+        "sales": 0,
+        "recency": 1,
+        "approval": 1,
+        "total": 0.51
+      },
+      "total_score": 0.51,
+      "scoring_reason": "already approved",
+      "use_when": "Use only when the forum question clearly matches MAIN 3 - Tinnitus 911 - or these themes: main, tinnitus.",
+      "avoid_when": "Avoid for emergency symptoms, diagnosis requests, medication changes, severe disease, or when the product is not directly relevant."
+    },
+    {
+      "slug": "digistore24-family-phytage-up3-1-memory-rescue-911",
+      "name": "UP3.1 - Memory Rescue 911 -",
+      "family_name": "UP3.1 - Memory Rescue 911 -",
+      "affiliate_url": "https://www.checkout-ds24.com/redir/447815/sarah_nutri/sarahnutri_forum",
+      "source": "affiliate_partnership_ui",
+      "digistore24_id": "447815",
+      "vendor_name": "Phytage",
+      "product_type_name": "",
+      "discovery_state": "approved_live",
+      "variant_count": 1,
+      "variant_names": [
+        "UP3.1  - Memory Rescue 911 - 1 bottle"
+      ],
+      "match_keywords": [
+        "memory",
+        "rescue"
+      ],
+      "score_breakdown": {
+        "relevance": 0.5,
+        "earnings_per_sale": 0.5,
+        "conversion": 0.5,
+        "cancellation": 0.5,
+        "newness": 0.5,
+        "sales": 0,
+        "recency": 1,
+        "approval": 1,
+        "total": 0.51
+      },
+      "total_score": 0.51,
+      "scoring_reason": "already approved",
+      "use_when": "Use only when the forum question clearly matches UP3.1 - Memory Rescue 911 - or these themes: memory, rescue.",
+      "avoid_when": "Avoid for emergency symptoms, diagnosis requests, medication changes, severe disease, or when the product is not directly relevant."
+    },
+    {
+      "slug": "digistore24-family-phytage-up3-2-memory-rescue-911",
+      "name": "UP3.2 - Memory Rescue 911 -",
+      "family_name": "UP3.2 - Memory Rescue 911 -",
+      "affiliate_url": "https://www.checkout-ds24.com/redir/447816/sarah_nutri/sarahnutri_forum",
+      "source": "affiliate_partnership_ui",
+      "digistore24_id": "447816",
+      "vendor_name": "Phytage",
+      "product_type_name": "",
+      "discovery_state": "approved_live",
+      "variant_count": 1,
+      "variant_names": [
+        "UP3.2  - Memory Rescue 911 - 3 bottles"
+      ],
+      "match_keywords": [
+        "memory",
+        "rescue"
+      ],
+      "score_breakdown": {
+        "relevance": 0.5,
+        "earnings_per_sale": 0.5,
+        "conversion": 0.5,
+        "cancellation": 0.5,
+        "newness": 0.5,
+        "sales": 0,
+        "recency": 1,
+        "approval": 1,
+        "total": 0.51
+      },
+      "total_score": 0.51,
+      "scoring_reason": "already approved",
+      "use_when": "Use only when the forum question clearly matches UP3.2 - Memory Rescue 911 - or these themes: memory, rescue.",
+      "avoid_when": "Avoid for emergency symptoms, diagnosis requests, medication changes, severe disease, or when the product is not directly relevant."
+    },
+    {
+      "slug": "digistore24-family-phytage-up3-3-memory-rescue-911",
+      "name": "UP3.3 - Memory Rescue 911 -",
+      "family_name": "UP3.3 - Memory Rescue 911 -",
+      "affiliate_url": "https://www.checkout-ds24.com/redir/447818/sarah_nutri/sarahnutri_forum",
+      "source": "affiliate_partnership_ui",
+      "digistore24_id": "447818",
+      "vendor_name": "Phytage",
+      "product_type_name": "",
+      "discovery_state": "approved_live",
+      "variant_count": 1,
+      "variant_names": [
+        "UP3.3  - Memory Rescue 911 - 6 bottles"
+      ],
+      "match_keywords": [
+        "memory",
+        "rescue"
+      ],
+      "score_breakdown": {
+        "relevance": 0.5,
+        "earnings_per_sale": 0.5,
+        "conversion": 0.5,
+        "cancellation": 0.5,
+        "newness": 0.5,
+        "sales": 0,
+        "recency": 1,
+        "approval": 1,
+        "total": 0.51
+      },
+      "total_score": 0.51,
+      "scoring_reason": "already approved",
+      "use_when": "Use only when the forum question clearly matches UP3.3 - Memory Rescue 911 - or these themes: memory, rescue.",
+      "avoid_when": "Avoid for emergency symptoms, diagnosis requests, medication changes, severe disease, or when the product is not directly relevant."
+    },
+    {
+      "slug": "digistore24-family-phytage-up5-1-clear-sound-911",
+      "name": "UP5.1 - Clear Sound 911 -",
+      "family_name": "UP5.1 - Clear Sound 911 -",
+      "affiliate_url": "https://www.checkout-ds24.com/redir/447824/sarah_nutri/sarahnutri_forum",
+      "source": "affiliate_partnership_ui",
+      "digistore24_id": "447824",
+      "vendor_name": "Phytage",
+      "product_type_name": "",
+      "discovery_state": "approved_live",
+      "variant_count": 1,
+      "variant_names": [
+        "UP5.1  - Clear Sound 911 - 1 bottle"
+      ],
+      "match_keywords": [
+        "clear",
+        "sound"
+      ],
+      "score_breakdown": {
+        "relevance": 0.5,
+        "earnings_per_sale": 0.5,
+        "conversion": 0.5,
+        "cancellation": 0.5,
+        "newness": 0.5,
+        "sales": 0,
+        "recency": 1,
+        "approval": 1,
+        "total": 0.51
+      },
+      "total_score": 0.51,
+      "scoring_reason": "already approved",
+      "use_when": "Use only when the forum question clearly matches UP5.1 - Clear Sound 911 - or these themes: clear, sound.",
+      "avoid_when": "Avoid for emergency symptoms, diagnosis requests, medication changes, severe disease, or when the product is not directly relevant."
+    },
+    {
+      "slug": "digistore24-family-phytage-up5-2-clear-sound-911",
+      "name": "UP5.2 - Clear Sound 911 -",
+      "family_name": "UP5.2 - Clear Sound 911 -",
+      "affiliate_url": "https://www.checkout-ds24.com/redir/447825/sarah_nutri/sarahnutri_forum",
+      "source": "affiliate_partnership_ui",
+      "digistore24_id": "447825",
+      "vendor_name": "Phytage",
+      "product_type_name": "",
+      "discovery_state": "approved_live",
+      "variant_count": 1,
+      "variant_names": [
+        "UP5.2  - Clear Sound 911 - 3 bottles"
+      ],
+      "match_keywords": [
+        "clear",
+        "sound"
+      ],
+      "score_breakdown": {
+        "relevance": 0.5,
+        "earnings_per_sale": 0.5,
+        "conversion": 0.5,
+        "cancellation": 0.5,
+        "newness": 0.5,
+        "sales": 0,
+        "recency": 1,
+        "approval": 1,
+        "total": 0.51
+      },
+      "total_score": 0.51,
+      "scoring_reason": "already approved",
+      "use_when": "Use only when the forum question clearly matches UP5.2 - Clear Sound 911 - or these themes: clear, sound.",
+      "avoid_when": "Avoid for emergency symptoms, diagnosis requests, medication changes, severe disease, or when the product is not directly relevant."
+    },
+    {
+      "slug": "digistore24-family-phytage-up5-3-clear-sound-911",
+      "name": "UP5.3 - Clear Sound 911 -",
+      "family_name": "UP5.3 - Clear Sound 911 -",
+      "affiliate_url": "https://www.checkout-ds24.com/redir/447826/sarah_nutri/sarahnutri_forum",
+      "source": "affiliate_partnership_ui",
+      "digistore24_id": "447826",
+      "vendor_name": "Phytage",
+      "product_type_name": "",
+      "discovery_state": "approved_live",
+      "variant_count": 1,
+      "variant_names": [
+        "UP5.3  - Clear Sound 911 - 6 bottles"
+      ],
+      "match_keywords": [
+        "clear",
+        "sound"
+      ],
+      "score_breakdown": {
+        "relevance": 0.5,
+        "earnings_per_sale": 0.5,
+        "conversion": 0.5,
+        "cancellation": 0.5,
+        "newness": 0.5,
+        "sales": 0,
+        "recency": 1,
+        "approval": 1,
+        "total": 0.51
+      },
+      "total_score": 0.51,
+      "scoring_reason": "already approved",
+      "use_when": "Use only when the forum question clearly matches UP5.3 - Clear Sound 911 - or these themes: clear, sound.",
+      "avoid_when": "Avoid for emergency symptoms, diagnosis requests, medication changes, severe disease, or when the product is not directly relevant."
+    },
+    {
+      "slug": "digistore24-family-prostadine-prostadine-2-free-ebooks",
+      "name": "Prostadine - + 2 Free Ebooks",
+      "family_name": "Prostadine - + 2 Free Ebooks",
+      "affiliate_url": "https://www.checkout-ds24.com/redir/500418/sarah_nutri/sarahnutri_forum",
+      "source": "affiliate_partnership_ui",
+      "digistore24_id": "500418",
+      "vendor_name": "Prostadine",
+      "product_type_name": "",
+      "discovery_state": "approved_live",
+      "variant_count": 2,
+      "variant_names": [
+        "Prostadine - 3 Bottles + 2 Free Ebooks",
+        "Prostadine - 6 Bottles + 2 Free Ebooks"
+      ],
+      "match_keywords": [
+        "prostadine",
+        "ebooks"
+      ],
+      "score_breakdown": {
+        "relevance": 0.5,
+        "earnings_per_sale": 0.5,
+        "conversion": 0.5,
+        "cancellation": 0.5,
+        "newness": 0.5,
+        "sales": 0,
+        "recency": 1,
+        "approval": 1,
+        "total": 0.51
+      },
+      "total_score": 0.51,
+      "scoring_reason": "already approved",
+      "use_when": "Use only when the forum question clearly matches Prostadine - + 2 Free Ebooks or these themes: prostadine, ebooks.",
+      "avoid_when": "Avoid for emergency symptoms, diagnosis requests, medication changes, severe disease, or when the product is not directly relevant."
+    },
+    {
+      "slug": "digistore24-family-etpecomm-sonavel",
+      "name": "Sonavel -",
+      "family_name": "Sonavel -",
+      "affiliate_url": "https://www.checkout-ds24.com/redir/367547/sarah_nutri/sarahnutri_forum",
+      "source": "affiliate_partnership_ui",
+      "digistore24_id": "367547",
+      "vendor_name": "etpecomm",
+      "product_type_name": "",
+      "discovery_state": "approved_live",
+      "variant_count": 1,
+      "variant_names": [
+        "Sonavel - 6 bottle"
+      ],
+      "match_keywords": [
+        "sonavel"
+      ],
+      "score_breakdown": {
+        "relevance": 0.25,
+        "earnings_per_sale": 0.5,
+        "conversion": 0.5,
+        "cancellation": 0.5,
+        "newness": 0.5,
+        "sales": 0,
+        "recency": 1,
+        "approval": 1,
+        "total": 0.4225
+      },
+      "total_score": 0.4225,
+      "scoring_reason": "already approved",
+      "use_when": "Use only when the forum question clearly matches Sonavel - or these themes: sonavel.",
+      "avoid_when": "Avoid for emergency symptoms, diagnosis requests, medication changes, severe disease, or when the product is not directly relevant."
+    },
+    {
+      "slug": "digistore24-family-freedomhealthllc-up-1-glucofreeze",
+      "name": "UP 1 - Glucofreeze -",
+      "family_name": "UP 1 - Glucofreeze -",
+      "affiliate_url": "https://www.checkout-ds24.com/redir/438014/sarah_nutri/sarahnutri_forum",
+      "source": "affiliate_partnership_ui",
+      "digistore24_id": "438014",
+      "vendor_name": "freedomhealthllc",
+      "product_type_name": "",
+      "discovery_state": "approved_live",
+      "variant_count": 1,
+      "variant_names": [
+        "UP 1 - Glucofreeze - 6 more bottles"
+      ],
+      "match_keywords": [
+        "glucofreeze"
+      ],
+      "score_breakdown": {
+        "relevance": 0.25,
+        "earnings_per_sale": 0.5,
+        "conversion": 0.5,
+        "cancellation": 0.5,
+        "newness": 0.5,
+        "sales": 0,
+        "recency": 1,
+        "approval": 1,
+        "total": 0.4225
+      },
+      "total_score": 0.4225,
+      "scoring_reason": "already approved",
+      "use_when": "Use only when the forum question clearly matches UP 1 - Glucofreeze - or these themes: glucofreeze.",
+      "avoid_when": "Avoid for emergency symptoms, diagnosis requests, medication changes, severe disease, or when the product is not directly relevant."
+    },
+    {
+      "slug": "digistore24-family-gazenutra-m1-spinevivo-buy-3-get-2-free",
+      "name": "M1 SpineVivo™ BUY 3 GET 2 FREE!",
+      "family_name": "M1 SpineVivo™ BUY 3 GET 2 FREE!",
+      "affiliate_url": "https://www.checkout-ds24.com/redir/574067/sarah_nutri/sarahnutri_forum",
+      "source": "affiliate_partnership_ui",
+      "digistore24_id": "574067",
+      "vendor_name": "gazenutra",
+      "product_type_name": "",
+      "discovery_state": "approved_live",
+      "variant_count": 1,
+      "variant_names": [
+        "M1 SpineVivo™ BUY 3 GET 2 FREE!"
+      ],
+      "match_keywords": [
+        "spinevivo"
+      ],
+      "score_breakdown": {
+        "relevance": 0.25,
+        "earnings_per_sale": 0.5,
+        "conversion": 0.5,
+        "cancellation": 0.5,
+        "newness": 0.5,
+        "sales": 0,
+        "recency": 1,
+        "approval": 1,
+        "total": 0.4225
+      },
+      "total_score": 0.4225,
+      "scoring_reason": "already approved",
+      "use_when": "Use only when the forum question clearly matches M1 SpineVivo™ BUY 3 GET 2 FREE! or these themes: spinevivo.",
+      "avoid_when": "Avoid for emergency symptoms, diagnosis requests, medication changes, severe disease, or when the product is not directly relevant."
+    },
+    {
+      "slug": "digistore24-family-gazenutra-m2-spinevivo-buy-2-get-1-free",
+      "name": "M2 SpineVivo™ BUY 2 GET 1 FREE!",
+      "family_name": "M2 SpineVivo™ BUY 2 GET 1 FREE!",
+      "affiliate_url": "https://www.checkout-ds24.com/redir/574068/sarah_nutri/sarahnutri_forum",
+      "source": "affiliate_partnership_ui",
+      "digistore24_id": "574068",
+      "vendor_name": "gazenutra",
+      "product_type_name": "",
+      "discovery_state": "approved_live",
+      "variant_count": 1,
+      "variant_names": [
+        "M2 SpineVivo™ BUY 2 GET 1 FREE!"
+      ],
+      "match_keywords": [
+        "spinevivo"
+      ],
+      "score_breakdown": {
+        "relevance": 0.25,
+        "earnings_per_sale": 0.5,
+        "conversion": 0.5,
+        "cancellation": 0.5,
+        "newness": 0.5,
+        "sales": 0,
+        "recency": 1,
+        "approval": 1,
+        "total": 0.4225
+      },
+      "total_score": 0.4225,
+      "scoring_reason": "already approved",
+      "use_when": "Use only when the forum question clearly matches M2 SpineVivo™ BUY 2 GET 1 FREE! or these themes: spinevivo.",
+      "avoid_when": "Avoid for emergency symptoms, diagnosis requests, medication changes, severe disease, or when the product is not directly relevant."
+    },
+    {
+      "slug": "digistore24-family-gazenutra-m3-spinevivo-buy-1-get-1-free",
+      "name": "M3 SpineVivo™ BUY 1 GET 1 FREE!",
+      "family_name": "M3 SpineVivo™ BUY 1 GET 1 FREE!",
+      "affiliate_url": "https://www.checkout-ds24.com/redir/574069/sarah_nutri/sarahnutri_forum",
+      "source": "affiliate_partnership_ui",
+      "digistore24_id": "574069",
+      "vendor_name": "gazenutra",
+      "product_type_name": "",
+      "discovery_state": "approved_live",
+      "variant_count": 1,
+      "variant_names": [
+        "M3 SpineVivo™ BUY 1 GET 1 FREE!"
+      ],
+      "match_keywords": [
+        "spinevivo"
+      ],
+      "score_breakdown": {
+        "relevance": 0.25,
+        "earnings_per_sale": 0.5,
+        "conversion": 0.5,
+        "cancellation": 0.5,
+        "newness": 0.5,
+        "sales": 0,
+        "recency": 1,
+        "approval": 1,
+        "total": 0.4225
+      },
+      "total_score": 0.4225,
+      "scoring_reason": "already approved",
+      "use_when": "Use only when the forum question clearly matches M3 SpineVivo™ BUY 1 GET 1 FREE! or these themes: spinevivo.",
+      "avoid_when": "Avoid for emergency symptoms, diagnosis requests, medication changes, severe disease, or when the product is not directly relevant."
+    },
+    {
+      "slug": "digistore24-family-keravitapro-keravita-pro",
+      "name": "Keravita Pro -",
+      "family_name": "Keravita Pro -",
+      "affiliate_url": "https://www.checkout-ds24.com/redir/554211/sarah_nutri/sarahnutri_forum",
+      "source": "affiliate_partnership_ui",
+      "digistore24_id": "554211",
+      "vendor_name": "KeravitaPro",
+      "product_type_name": "",
+      "discovery_state": "approved_live",
+      "variant_count": 1,
+      "variant_names": [
+        "Keravita Pro - 1 Bottle"
+      ],
+      "match_keywords": [
+        "keravita"
+      ],
+      "score_breakdown": {
+        "relevance": 0.25,
+        "earnings_per_sale": 0.5,
+        "conversion": 0.5,
+        "cancellation": 0.5,
+        "newness": 0.5,
+        "sales": 0,
+        "recency": 1,
+        "approval": 1,
+        "total": 0.4225
+      },
+      "total_score": 0.4225,
+      "scoring_reason": "already approved",
+      "use_when": "Use only when the forum question clearly matches Keravita Pro - or these themes: keravita.",
+      "avoid_when": "Avoid for emergency symptoms, diagnosis requests, medication changes, severe disease, or when the product is not directly relevant."
+    },
+    {
+      "slug": "digistore24-family-nutraville-m3-pineal-xt",
+      "name": "M3 Pineal XT",
+      "family_name": "M3 Pineal XT",
+      "affiliate_url": "https://www.checkout-ds24.com/redir/520213/sarah_nutri/sarahnutri_forum",
+      "source": "affiliate_partnership_ui",
+      "digistore24_id": "520213",
+      "vendor_name": "Nutraville",
+      "product_type_name": "",
+      "discovery_state": "approved_live",
+      "variant_count": 1,
+      "variant_names": [
+        "M3 Pineal XT 6 bottles"
+      ],
+      "match_keywords": [
+        "pineal"
+      ],
+      "score_breakdown": {
+        "relevance": 0.25,
+        "earnings_per_sale": 0.5,
+        "conversion": 0.5,
+        "cancellation": 0.5,
+        "newness": 0.5,
+        "sales": 0,
+        "recency": 1,
+        "approval": 1,
+        "total": 0.4225
+      },
+      "total_score": 0.4225,
+      "scoring_reason": "already approved",
+      "use_when": "Use only when the forum question clearly matches M3 Pineal XT or these themes: pineal.",
+      "avoid_when": "Avoid for emergency symptoms, diagnosis requests, medication changes, severe disease, or when the product is not directly relevant."
+    },
+    {
+      "slug": "digistore24-family-phytage-up1-tinnitus-911",
+      "name": "UP1 - Tinnitus 911 -",
+      "family_name": "UP1 - Tinnitus 911 -",
+      "affiliate_url": "https://www.checkout-ds24.com/redir/447823/sarah_nutri/sarahnutri_forum",
+      "source": "affiliate_partnership_ui",
+      "digistore24_id": "447823",
+      "vendor_name": "Phytage",
+      "product_type_name": "",
+      "discovery_state": "approved_live",
+      "variant_count": 1,
+      "variant_names": [
+        "UP1  - Tinnitus 911 - 6 bottles"
+      ],
+      "match_keywords": [
+        "tinnitus"
+      ],
+      "score_breakdown": {
+        "relevance": 0.25,
+        "earnings_per_sale": 0.5,
+        "conversion": 0.5,
+        "cancellation": 0.5,
+        "newness": 0.5,
+        "sales": 0,
+        "recency": 1,
+        "approval": 1,
+        "total": 0.4225
+      },
+      "total_score": 0.4225,
+      "scoring_reason": "already approved",
+      "use_when": "Use only when the forum question clearly matches UP1 - Tinnitus 911 - or these themes: tinnitus.",
+      "avoid_when": "Avoid for emergency symptoms, diagnosis requests, medication changes, severe disease, or when the product is not directly relevant."
+    },
+    {
+      "slug": "digistore24-family-prostadine-prostadine",
+      "name": "Prostadine -",
+      "family_name": "Prostadine -",
+      "affiliate_url": "https://www.checkout-ds24.com/redir/500416/sarah_nutri/sarahnutri_forum",
+      "source": "affiliate_partnership_ui",
+      "digistore24_id": "500416",
+      "vendor_name": "Prostadine",
+      "product_type_name": "",
+      "discovery_state": "approved_live",
+      "variant_count": 1,
+      "variant_names": [
+        "Prostadine - 1 Bottle"
+      ],
+      "match_keywords": [
+        "prostadine"
+      ],
+      "score_breakdown": {
+        "relevance": 0.25,
+        "earnings_per_sale": 0.5,
+        "conversion": 0.5,
+        "cancellation": 0.5,
+        "newness": 0.5,
+        "sales": 0,
+        "recency": 1,
+        "approval": 1,
+        "total": 0.4225
+      },
+      "total_score": 0.4225,
+      "scoring_reason": "already approved",
+      "use_when": "Use only when the forum question clearly matches Prostadine - or these themes: prostadine.",
+      "avoid_when": "Avoid for emergency symptoms, diagnosis requests, medication changes, severe disease, or when the product is not directly relevant."
+    },
+    {
+      "slug": "digistore24-family-biotox20-bio-1",
+      "name": "Bio-1",
+      "family_name": "Bio-1",
+      "affiliate_url": "https://www.checkout-ds24.com/redir/351615/sarah_nutri/sarahnutri_forum",
+      "source": "affiliate_partnership_ui",
+      "digistore24_id": "351615",
+      "vendor_name": "Biotox20",
+      "product_type_name": "",
+      "discovery_state": "approved_live",
+      "variant_count": 1,
+      "variant_names": [
+        "bio-1"
+      ],
+      "match_keywords": [],
+      "score_breakdown": {
+        "relevance": 0,
+        "earnings_per_sale": 0.5,
+        "conversion": 0.5,
+        "cancellation": 0.5,
+        "newness": 0.5,
+        "sales": 0,
+        "recency": 1,
+        "approval": 1,
+        "total": 0.335
+      },
+      "total_score": 0.335,
+      "scoring_reason": "already approved",
+      "use_when": "Use only when the forum question clearly matches Bio-1 or these themes: .",
+      "avoid_when": "Avoid for emergency symptoms, diagnosis requests, medication changes, severe disease, or when the product is not directly relevant."
+    },
+    {
+      "slug": "digistore24-family-biotox20-bio-6",
+      "name": "Bio-6",
+      "family_name": "Bio-6",
+      "affiliate_url": "https://www.checkout-ds24.com/redir/351616/sarah_nutri/sarahnutri_forum",
+      "source": "affiliate_partnership_ui",
+      "digistore24_id": "351616",
+      "vendor_name": "Biotox20",
+      "product_type_name": "",
+      "discovery_state": "approved_live",
+      "variant_count": 1,
+      "variant_names": [
+        "bio-6"
+      ],
+      "match_keywords": [],
+      "score_breakdown": {
+        "relevance": 0,
+        "earnings_per_sale": 0.5,
+        "conversion": 0.5,
+        "cancellation": 0.5,
+        "newness": 0.5,
+        "sales": 0,
+        "recency": 1,
+        "approval": 1,
+        "total": 0.335
+      },
+      "total_score": 0.335,
+      "scoring_reason": "already approved",
+      "use_when": "Use only when the forum question clearly matches Bio-6 or these themes: .",
       "avoid_when": "Avoid for emergency symptoms, diagnosis requests, medication changes, severe disease, or when the product is not directly relevant."
     }
   ]
