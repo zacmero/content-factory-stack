@@ -33,6 +33,8 @@ services:
       - DIGISTORE24_AFFILIATE_ID=${DIGISTORE24_AFFILIATE_ID:-}
       - DIGISTORE24_MARKETPLACE_KEYWORDS=${DIGISTORE24_MARKETPLACE_KEYWORDS:-senior,elderly,caregiver,nutrition,mobility,sleep,joint,arthritis,memory,digestion,blood_pressure,back_pain,bone_health,weight_loss,appetite,protein,brain_health,hearing,vision,falls,balance,walking,home_care}
       - DIGISTORE24_MAX_PRODUCTS=${DIGISTORE24_MAX_PRODUCTS:-40}
+      - TELEGRAM_BOT_TOKEN=${TELEGRAM_BOT_TOKEN:-}
+      - TELEGRAM_CHAT_ID=${TELEGRAM_CHAT_ID:-}
     volumes:
       - ./n8n_data:/home/node/.n8n
       - ./content_factory:/files

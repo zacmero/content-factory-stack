@@ -64,6 +64,8 @@
 - Dub API keys can be permission-scoped. A read-only or restricted key can return `403 Forbidden` on `POST /links`.
 - The current Dub key authenticated read-style requests, but `POST /links` returned `403 Forbidden` and later `429 Too Many Requests` after repeated retries, so the live short-link creation step is currently blocked until the key permissions or rate-limit state are fixed.
 - The new Dub sync script writes `raw_affiliate_url` alongside `tracked_affiliate_url`/`dub_short_url` so the forum workflow can fall back to the raw affiliate URL when tracking is unavailable.
+- The forum queue now has a Telegram-ready review branch, but it only emits when `TELEGRAM_BOT_TOKEN` and `TELEGRAM_CHAT_ID` are present in the n8n environment.
+- The Sarah Nutri reply prompts were tightened to favor brief, warm, human-sounding drafts instead of long AI-style blocks.
 
 ## Technical Decisions
 | Decision | Rationale |
@@ -92,6 +94,8 @@
 | Prefer Digistore's authenticated affiliate product-options API over UI scraping | It exposes the full affiliated-product pool, including unsold products, with less DOM fragility |
 | Run Bonsai as an enabled user `systemd` service | Makes the OpenAI-compatible endpoint survive reboots and keeps the bind reachable from Docker |
 | Use Dub short links once per product family and cache them by stable `externalId` | Reuse avoids burning the 25-link/month free-plan cap |
+| Keep Discord review packets under 2000 characters | The forum queue needed shorter clips before Discord would accept the manual review packet |
+| Treat normal tinnitus/ringing-ears questions as non-emergencies unless a real blocklisted symptom appears | The model can over-escalate chronic symptoms and needs a guardrail |
 
 ## Issues Encountered
 | Issue | Resolution |

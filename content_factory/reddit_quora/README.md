@@ -19,7 +19,8 @@ This package is isolated from the existing Instagram, Facebook, Postiz, and vide
 ## Operating Rules
 
 - Human approval is required before posting.
-- The current fast path is manual posting: n8n drafts, Discord delivers, the user posts.
+- The current fast path is manual posting: n8n drafts, Discord delivers, and Telegram can be enabled for review delivery when `TELEGRAM_BOT_TOKEN` and `TELEGRAM_CHAT_ID` are set.
+- Draft tone should stay brief, personal, warm, and human. No AI-slab paragraph dumps.
 - Max approved Reddit replies per day: 5.
 - Product links are gated by relevance and must include disclosure.
 - Quora remains draft/manual-review only until a separate posting flow is explicitly approved.
@@ -54,10 +55,12 @@ Payload shape:
 }
 ```
 
-The workflow sends two Discord messages in one run:
+The workflow sends two review packets in one run:
 
 - Reddit copy/paste reply.
 - Quora copy/paste answer.
+
+If Telegram credentials are set, the same review packet is also sent to Telegram with the post URL and tracked affiliate link.
 
 No Reddit or Quora posting API is used.
 

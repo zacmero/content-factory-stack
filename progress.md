@@ -301,3 +301,30 @@
 |-----------|-------|---------|------------|
 | 2026-04-24 | Dub `POST /links` returned `403 Forbidden` with the provided API key | 1 | Added docs noting the key must have write permission for `links`; sync now falls back to raw URLs |
 | 2026-04-24 | Dub write attempts then hit `429 Too Many Requests` after repeated retries | 1 | Hardened the sync to stop hammering the API after the first write block and to preserve the raw affiliate URL |
+
+### Phase 10: Persona Tightening + Telegram Handoff
+- **Status:** in_progress
+- Actions taken:
+  - Tightened the Reddit and Quora prompt files so Sarah Nutri sounds briefer, warmer, and more personal.
+  - Added an optional Telegram review branch to the forum queue workflow.
+  - Added `TELEGRAM_BOT_TOKEN` and `TELEGRAM_CHAT_ID` env plumbing to the n8n compose and env template.
+  - Regenerated the forum queue workflow export with the new packet format.
+  - Updated the live n8n workflow row in SQLite so the new Telegram branch is active in the running instance.
+  - Updated the forum README with Telegram delivery notes and the concise-tone rule.
+- Files created/modified:
+  - `content_factory/reddit_quora/prompts/reddit_reply_system.md`
+  - `content_factory/reddit_quora/prompts/quora_reply_system.md`
+  - `scripts/build_forum_manual_queue.mjs`
+  - `workflow_sarah_nutri_forum_manual_queue.json`
+  - `docker-compose.yml`
+  - `.env.template`
+  - `content_factory/reddit_quora/README.md`
+  - `findings.md`
+  - `progress.md`
+- Test results:
+  - `node --check scripts/build_forum_manual_queue.mjs` passed
+  - `workflow_sarah_nutri_forum_manual_queue.json` regenerated successfully
+  - SQLite live workflow row updated successfully for `Rz60m7Gr2YYSoDS1`
+  - Final end-to-end forum test succeeded on execution `194`; Reddit packet included a tracked Dub link and the review packet fit within Discord's 2000-character limit
+- Error log:
+  - Telegram delivery cannot be fully validated yet because the bot token and chat ID are still missing from the n8n environment.

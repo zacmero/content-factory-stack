@@ -4,7 +4,7 @@
       "slug": "digistore24-family-skyhighperformers-neuroquiet",
       "name": "NeuroQuiet",
       "family_name": "NeuroQuiet",
-      "affiliate_url": "https://www.checkout-ds24.com/redir/576858/sarah_nutri/sarahnutri_forum",
+      "affiliate_url": "https://sarah-nutri.dub.link/cf-digistore24-family-skyhighperformers-neuroquiet",
       "source": "affiliate_sales_history",
       "digistore24_id": "576858",
       "vendor_name": "skyhighperformers",
@@ -44,7 +44,15 @@
       "scoring_reason": "strong keyword relevance, high earnings per sale, already approved",
       "use_when": "Use only when the forum question clearly matches NeuroQuiet or these themes: neuroquiet, tinnitus, ringing ears, ear ringing, hearing, ear comfort, night ringing.",
       "avoid_when": "Avoid for emergency symptoms, diagnosis requests, medication changes, severe disease, or when the product is not directly relevant.",
-      "raw_affiliate_url": "https://www.checkout-ds24.com/redir/576858/sarah_nutri/sarahnutri_forum"
+      "raw_affiliate_url": "https://www.checkout-ds24.com/redir/576858/sarah_nutri/sarahnutri_forum",
+      "dub_link_id": "link_1KPYSSH5TSNP7Y69E0Z89JGTH",
+      "dub_external_id": "content-factory:digistore24:digistore24-family-skyhighperformers-neuroquiet",
+      "dub_domain": "sarah-nutri.dub.link",
+      "dub_key": "cf-digistore24-family-skyhighperformers-neuroquiet",
+      "dub_track_conversion": false,
+      "dub_created_at": "2026-04-24T03:51:01.051Z",
+      "dub_updated_at": "2026-04-24T03:51:01.051Z",
+      "tracking_source": "dub"
     },
     {
       "slug": "digistore24-family-asperdigital-m1-neurofortis-pro-1-btl-69",

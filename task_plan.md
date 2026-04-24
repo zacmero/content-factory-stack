@@ -4,7 +4,7 @@
 Wire Bonsai as the default text model for the content-factory pipeline, keep Gemini for image generation and future video work, repair Temporal so Postiz boots cleanly again, and document the root cause and current milestones.
 
 ## Current Phase
-Phase 9
+Phase 10
 
 ## Phases
 
@@ -89,6 +89,12 @@ Phase 9
 - [x] Document the 25-link/month free-plan guardrail and reuse policy
 - **Status:** in_progress
 
+### Phase 10: Persona Tightening + Telegram Handoff
+- [x] Make Reddit/Quora drafts brief, personal, and caring
+- [ ] Add a Telegram delivery path for the manual review packet
+- [x] Run a full end-to-end test with a tracked affiliate link and a post URL
+- **Status:** in_progress
+
 ## Key Questions
 1. Which files currently control text interpretation vs image/video generation?
 2. Is Bonsai already reachable from containers, or do we need to add env/proxy plumbing?
@@ -112,6 +118,8 @@ Phase 9
 | Collapse Digistore24 variants into family-level products | Matches the real sales-page decision unit and avoids bottle-count noise in prompts |
 | Treat Digistore24 MCP marketplace actions as the same capability boundary as the HTTP API unless proven otherwise | MCP docs link directly to the same API references for marketplace tools |
 | Use Dub short links once per product family and cache them by stable external ID | Reuse avoids burning the 25-link/month free-plan cap |
+| Keep the Sarah Nutri voice brief, personal, and caring | Cuts AI slop and makes the drafts feel human |
+| Add Telegram delivery once bot credentials are available | User wants the final review packet in Telegram |
 
 ## Errors Encountered
 | Error | Attempt | Resolution |
@@ -119,6 +127,7 @@ Phase 9
 | Docker socket blocked on `docker stop` | 1 | Retried with elevated permission and paused n8n safely |
 | `sqlite3` spawn blocked inside Node child_process | 1 | Split work into shell SQL steps and file-only Node transforms |
 | Dub `POST /links` returned `403 Forbidden` | 1 | Documented that the API key needs write permission for `links`; integration now falls back to raw affiliate URLs until a writable key or reset is available |
+| Telegram delivery path not yet wired | 1 | Need a bot token and chat ID before sending review packets to Telegram |
 
 ## Notes
 - Update phase status as work progresses.

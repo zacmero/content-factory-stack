@@ -2,6 +2,26 @@
   "workspace": "content-factory",
   "month_key": "2026-04",
   "max_new_links": 25,
-  "created_this_month": 0,
-  "links": []
+  "created_this_month": 1,
+  "links": [
+    {
+      "externalId": "content-factory:digistore24:digistore24-family-skyhighperformers-neuroquiet",
+      "id": "link_1KPYSSH5TSNP7Y69E0Z89JGTH",
+      "shortLink": "https://sarah-nutri.dub.link/cf-digistore24-family-skyhighperformers-neuroquiet",
+      "url": "https://www.checkout-ds24.com/redir/576858/sarah_nutri/sarahnutri_forum",
+      "domain": "sarah-nutri.dub.link",
+      "key": "cf-digistore24-family-skyhighperformers-neuroquiet",
+      "createdAt": "2026-04-24T03:51:01.051Z",
+      "updatedAt": "2026-04-24T03:51:01.051Z",
+      "title": "NeuroQuiet",
+      "description": "",
+      "comments": "",
+      "raw_affiliate_url": "https://www.checkout-ds24.com/redir/576858/sarah_nutri/sarahnutri_forum",
+      "product_slug": "digistore24-family-skyhighperformers-neuroquiet",
+      "family_name": "NeuroQuiet",
+      "digistore24_id": "576858",
+      "source": "affiliate_sales_history",
+      "month_key": "2026-04"
+    }
+  ]
 }

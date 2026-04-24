@@ -154,26 +154,9 @@ async function createDubLink(product, externalId) {
     url: rawUrl,
     externalId,
     key: getKey(product),
-    title: String(product.name || product.family_name || '').slice(0, 255),
-    description: String(product.scoring_reason || product.use_when || '').slice(0, 500),
-    comments: [
-      'content-factory',
-      `product=${product.slug || ''}`,
-      `family=${product.family_name || ''}`,
-      `digistore24_id=${product.digistore24_id || ''}`,
-      `source=${product.source || ''}`,
-      `raw_url=${rawUrl}`
-    ]
-      .filter(Boolean)
-      .join(' | '),
-    trackConversion: true,
-    proxy: false,
-    rewrite: false,
-    doIndex: false
   };
 
   if (dubDomain) body.domain = dubDomain;
-  if (dubTagNames.length) body.tagNames = dubTagNames;
 
   return callDub('/links', { method: 'POST', body });
 }
@@ -182,26 +165,9 @@ async function updateDubLink(linkIdOrExternalId, product, existingLink) {
   const rawUrl = getRawUrl(product);
   const body = {
     url: rawUrl,
-    title: String(product.name || product.family_name || existingLink?.title || '').slice(0, 255),
-    description: String(product.scoring_reason || product.use_when || existingLink?.description || '').slice(0, 500),
-    comments: [
-      'content-factory',
-      `product=${product.slug || ''}`,
-      `family=${product.family_name || ''}`,
-      `digistore24_id=${product.digistore24_id || ''}`,
-      `source=${product.source || ''}`,
-      `raw_url=${rawUrl}`
-    ]
-      .filter(Boolean)
-      .join(' | '),
-    trackConversion: true,
-    proxy: false,
-    rewrite: false,
-    doIndex: false
   };
 
   if (dubDomain) body.domain = dubDomain;
-  if (dubTagNames.length) body.tagNames = dubTagNames;
 
   return callDub(`/links/${encodeURIComponent(linkIdOrExternalId)}`, { method: 'PATCH', body });
 }
