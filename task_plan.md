@@ -4,7 +4,7 @@
 Wire Bonsai as the default text model for the content-factory pipeline, keep Gemini for image generation and future video work, repair Temporal so Postiz boots cleanly again, and document the root cause and current milestones.
 
 ## Current Phase
-Phase 10
+Phase 12
 
 ## Phases
 
@@ -95,6 +95,17 @@ Phase 10
 - [x] Run a full end-to-end test with a tracked affiliate link and a post URL
 - **Status:** complete
 
+### Phase 11: Dub Cleanup + Packet Fallback
+- [x] Rename existing Dub links to shorter product-style slugs
+- [x] Keep stable `externalId` reuse while allowing slug renames
+- [x] Add a packet-level fallback so Reddit/Quora cards still surface a tracked product when the parser is conservative
+- [x] Re-run the live smoke test and confirm a postable Reddit packet and a postable Quora packet
+- **Status:** complete
+
+### Phase 12: Next Session Backlog
+- [ ] Harden Bonsai service startup and wrapper behavior for the next session
+- [ ] Add Reddit archived-post detection so `New comments cannot be posted and votes cannot be cast.` posts are skipped before drafting
+- **Status:** pending
 ## Key Questions
 1. Which files currently control text interpretation vs image/video generation?
 2. Is Bonsai already reachable from containers, or do we need to add env/proxy plumbing?
@@ -120,6 +131,8 @@ Phase 10
 | Use Dub short links once per product family and cache them by stable external ID | Reuse avoids burning the 25-link/month free-plan cap |
 | Keep the Sarah Nutri voice brief, personal, and caring | Cuts AI slop and makes the drafts feel human |
 | Add Telegram delivery once bot credentials are available | User wants the final review packet in Telegram |
+| Harden Bonsai service behavior in a follow-up session | Current service works, but needs one more polish pass for robustness |
+| Add Reddit archived-post detection in a follow-up session | Archived posts cannot be commented on, so they should be skipped before drafting |
 
 ## Errors Encountered
 | Error | Attempt | Resolution |

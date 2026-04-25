@@ -521,6 +521,19 @@
       "final_url": "https://biotoxnutrition.com/digi/biotox-gold/?digiaff=sarah_nutri&cam=sarahnutri_forum",
       "detected_at": "2026-04-25T01:03:03.971Z",
       "source": "affiliate_url_probe"
+    },
+    {
+      "product_key": "digistore24 family ketodiet keto snacks cookbook f s|400534|keto snacks cookbook f s|keto snacks cookbook f s",
+      "slug": "digistore24-family-ketodiet-keto-snacks-cookbook-f-s",
+      "family_name": "Keto Snacks Cookbook (F+S)",
+      "digistore24_id": "400534",
+      "vendor_name": "ketodiet",
+      "raw_affiliate_url": "https://www.checkout-ds24.com/redir/400534/sarah_nutri/sarahnutri_forum",
+      "reason": "timeout",
+      "status": 0,
+      "final_url": "https://www.checkout-ds24.com/redir/400534/sarah_nutri/sarahnutri_forum",
+      "detected_at": "2026-04-25T02:08:16.290Z",
+      "source": "affiliate_url_probe"
     }
   ]
 }

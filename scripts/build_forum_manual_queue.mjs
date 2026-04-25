@@ -22,10 +22,60 @@ function node(id, name, type, typeVersion, position, parameters = {}, extra = {}
 
 const productCatalog = JSON.parse(fs.readFileSync('content_factory/reddit_quora/product_catalog.json', 'utf8'));
 const dubLinks = JSON.parse(fs.readFileSync('content_factory/reddit_quora/dub_links.json', 'utf8'));
-const trackedAffiliateUrls = Object.fromEntries((dubLinks.links || []).map((link) => [link.product_slug, link.shortLink || link.url]));
+const forumLinkHealthUrl = process.env.FORUM_LINK_HEALTH_URL || 'http://host.docker.internal:8791';
 const pipelineConfig = JSON.parse(fs.readFileSync('content_factory/reddit_quora/config.json', 'utf8'));
 const redditPrompt = fs.readFileSync('content_factory/reddit_quora/prompts/reddit_reply_system.md', 'utf8');
 const quoraPrompt = fs.readFileSync('content_factory/reddit_quora/prompts/quora_reply_system.md', 'utf8');
+
+function normalizeSimple(value) {
+  return String(value || '').toLowerCase().replace(/[^a-z0-9]+/g, ' ').trim().replace(/\s+/g, ' ');
+}
+
+function cleanCatalogLabel(value) {
+  return String(value || '')
+    .replace(/\[[^\]]+\]/g, ' ')
+    .replace(/\b(main|up|down)\s*\d+(\.\d+)?\b/gi, ' ')
+    .replace(/[-–—:]/g, ' ')
+    .replace(/\b\d+\s*bottles?\b/gi, ' ')
+    .replace(/\s+/g, ' ')
+    .trim();
+}
+
+function chooseCanonicalProduct(products, labelKey) {
+  const group = products.filter((product) => {
+    const label = cleanCatalogLabel(product.family_name || product.name || product.slug || '');
+    return normalizeSimple(label) === labelKey;
+  });
+  group.sort((a, b) => {
+    const aName = normalizeSimple(a.name || a.family_name || '');
+    const bName = normalizeSimple(b.name || b.family_name || '');
+    const aCanonical = aName === labelKey;
+    const bCanonical = bName === labelKey;
+    if (aCanonical !== bCanonical) return aCanonical ? -1 : 1;
+    return String(a.slug || '').length - String(b.slug || '').length;
+  });
+  return group[0] || null;
+}
+
+const trackedAffiliateUrls = (() => {
+  const direct = Object.fromEntries((dubLinks.links || []).map((link) => [link.product_slug, link.shortLink || link.url]));
+  const products = productCatalog.products || [];
+  const canonicalByLabel = new Map();
+  for (const product of products) {
+    const labelKey = normalizeSimple(cleanCatalogLabel(product.family_name || product.name || product.slug || ''));
+    if (!labelKey) continue;
+    if (!canonicalByLabel.has(labelKey)) {
+      canonicalByLabel.set(labelKey, chooseCanonicalProduct(products, labelKey));
+    }
+  }
+  return Object.fromEntries(products.map((product) => {
+    const labelKey = normalizeSimple(cleanCatalogLabel(product.family_name || product.name || product.slug || ''));
+    const canonical = labelKey ? canonicalByLabel.get(labelKey) : null;
+    const canonicalUrl = canonical ? direct[canonical.slug] || canonical.affiliate_url : '';
+    const ownUrl = direct[product.slug] || product.affiliate_url || '';
+    return [product.slug, canonicalUrl || ownUrl];
+  }));
+})();
 
 function buildNormalizePairJs() {
   return `const config = ${JSON.stringify(pipelineConfig, null, 2)};
@@ -71,66 +121,6 @@ function normalizeUrl(value) {
   return String(value || '').trim();
 }
 
-async function validateThreadUrl(url, platform) {
-  const value = normalizeUrl(url);
-  if (!value) return { live: false, status: 'missing', finalUrl: '', reason: 'missing_url', platform };
-  if (typeof fetch !== 'function') {
-    return { live: false, status: 'unavailable', finalUrl: value, reason: 'fetch_not_available', platform };
-  }
-
-  const deadPhrases = [
-    'thread not found',
-    'post not found',
-    'page not found',
-    'content not found',
-    'removed',
-    'deleted',
-    'sorry, this page is unavailable',
-    'not available',
-    'quora not found',
-    'reddit thread not found'
-  ];
-  const controller = new AbortController();
-  const timer = setTimeout(() => controller.abort(), 8000);
-  const headers = {
-    'user-agent': 'Mozilla/5.0 (compatible; SarahNutriBot/1.0)',
-    accept: 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8'
-  };
-
-  try {
-    const response = await fetch(value, { method: 'GET', redirect: 'follow', signal: controller.signal, headers });
-    const text = await response.text().catch(() => '');
-    const haystack = [response.status, response.url, text.slice(0, 4000), value].join(' ').toLowerCase();
-    const deadPhrase = deadPhrases.find((phrase) => haystack.includes(phrase)) || '';
-    if (!response.ok || deadPhrase) {
-      return {
-        live: false,
-        status: response.status,
-        finalUrl: response.url || value,
-        reason: deadPhrase || 'http_' + response.status,
-        platform
-      };
-    }
-    return {
-      live: true,
-      status: response.status,
-      finalUrl: response.url || value,
-      reason: 'reachable',
-      platform
-    };
-  } catch (error) {
-    return {
-      live: false,
-      status: 0,
-      finalUrl: value,
-      reason: error?.name === 'AbortError' ? 'timeout' : String(error?.message || error),
-      platform
-    };
-  } finally {
-    clearTimeout(timer);
-  }
-}
-
 function scoreProductForCandidate(product, candidate) {
   const haystack = normalize([candidate.title, candidate.body, candidate.subreddit, candidate.url].join(' '));
   const tokens = new Set(tokenize(haystack));
@@ -174,12 +164,6 @@ function rankProductsForCandidate(candidate) {
 
 const reddit = cleanCandidate(body.reddit, defaultReddit, 'reddit');
 const quora = cleanCandidate(body.quora, defaultQuora, 'quora');
-const [redditUrlCheck, quoraUrlCheck] = await Promise.all([
-  validateThreadUrl(reddit.url, 'reddit'),
-  validateThreadUrl(quora.url, 'quora')
-]);
-const redditWithCheck = { ...reddit, urlCheck: redditUrlCheck };
-const quoraWithCheck = { ...quora, urlCheck: quoraUrlCheck };
 
 return [{
   json: {
@@ -187,11 +171,26 @@ return [{
     config,
     products,
     trackedAffiliateUrls,
-    reddit: redditWithCheck,
-    quora: quoraWithCheck,
-    redditProducts: rankProductsForCandidate(redditWithCheck),
-    quoraProducts: rankProductsForCandidate(quoraWithCheck),
+    reddit,
+    quora,
+    redditProducts: rankProductsForCandidate(reddit),
+    quoraProducts: rankProductsForCandidate(quora),
     intakeNotes: String(body.notes || '').trim()
+  }
+}];`;
+}
+
+function buildMergeLinkChecksJs() {
+  return `const source = $node['Normalize Candidate Pair'].json;
+const checks = $json || {};
+const redditCheck = checks.reddit || { live: null, status: 'unvalidated', finalUrl: source.reddit?.url || '', reason: 'missing_health_response', platform: 'reddit' };
+const quoraCheck = checks.quora || { live: null, status: 'unvalidated', finalUrl: source.quora?.url || '', reason: 'missing_health_response', platform: 'quora' };
+
+return [{
+  json: {
+    ...source,
+    reddit: { ...source.reddit, urlCheck: redditCheck },
+    quora: { ...source.quora, urlCheck: quoraCheck }
   }
 }];`;
 }
@@ -203,6 +202,7 @@ function buildRedditPromptJs() {
     'Opening examples: "Oh, I know how annoying this can be." "I\'ve seen this help a lot for older adults." "I\'ve been looking into this, and one thing that stands out is..."',
     'Closing examples: "You\'re not alone in this, and there are practical ways to make it easier." "If you want, I can help you narrow down the next best step." "Small changes can really add up here, and you don\'t have to figure it out alone."',
     'Hard rules: do not diagnose, prescribe, or change medications. No product unless directly relevant. If the thread is dead, unavailable, or unverified, return safety skip.',
+    'If you mention a product, use the short family name only, not pack counts or variant labels.',
     'Manual posting mode: draft one copy/paste-ready Reddit comment. Use 1 short paragraph or 2 short sentences max. Keep it under 90 words. Do not mention automation. Do not lead with the product. If the product fits, mention it once at the end and include the affiliate disclosure.'
   ];
   return String.raw`const products = ($json.redditProducts || $json.products || []).filter((p) => p.affiliate_url).map((p) => ({
@@ -237,6 +237,7 @@ function buildQuoraPromptJs() {
     'Opening examples: "Oh, I know how frustrating this can be." "I\'ve been looking into this, and one thing that keeps coming up is..." "For a lot of families, this tends to help more than people expect."',
     'Closing examples: "You\'re not alone in this, and there are many ways to manage it with support and care." "If you\'d like, I can help narrow this down to the most practical next step."',
     'Hard rules: general education only, not diagnosis. No product unless directly relevant. If the thread is dead, unavailable, or unverified, return safety skip.',
+    'If you mention a product, use the short family name only, not pack counts or variant labels.',
     'Manual posting mode: draft one copy/paste-ready Quora answer. Use 2 short paragraphs max or 3 short bullets max. Keep it under 120 words. Do not mention automation. If you include an affiliate link, include the disclosure in one short closing sentence.'
   ];
   return String.raw`const products = ($json.quoraProducts || $json.products || []).filter((p) => p.affiliate_url).map((p) => ({
@@ -318,6 +319,10 @@ function normalizeSafety(value, text) {
   if (safety.includes('skip')) return 'skip';
   return String(text || '').trim() ? 'answer' : 'human_review';
 }
+function escapeRegExp(value) {
+  const pattern = new RegExp('[.*+?^' + '$' + '{}()|[\\]\\\\]', 'g');
+  return String(value || '').replace(pattern, '\\$&');
+}
 function productMentioned(product, text) {
   const normalizedText = normalize(text);
   const productName = normalize(product.name).replace(/ bottles?\\b/g, '').trim();
@@ -326,9 +331,69 @@ function productMentioned(product, text) {
     .filter((keyword) => String(keyword).length > 4)
     .some((keyword) => normalizedText.includes(normalize(keyword)));
 }
+function cleanProductLabel(product) {
+  const raw = String(product?.family_name || product?.name || product?.slug || product?.digistore24_id || '');
+  return raw
+    .replace(new RegExp('\\[[^\\]]+\\]', 'g'), ' ')
+    .replace(new RegExp('\\b(main|up|down)\\s*\\d+(\\.\\d+)?\\b', 'gi'), ' ')
+    .replace(/[-–—:]/g, ' ')
+    .replace(/\s+/g, ' ')
+    .trim() || String(product?.name || 'product');
+}
+function normalizeSimple(value) {
+  return String(value || '').toLowerCase().replace(/[^a-z0-9]+/g, ' ').trim().replace(/\s+/g, ' ');
+}
+function canonicalizeProduct(product, pool) {
+  if (!product) return null;
+  const labelKey = normalizeSimple(cleanProductLabel(product));
+  const canonical = (pool || []).find((candidate) => {
+    if (!candidate?.affiliate_url) return false;
+    return normalizeSimple(cleanProductLabel(candidate)) === labelKey && normalizeSimple(candidate.name || candidate.family_name || '') === labelKey;
+  });
+  return canonical || product;
+}
+function stripVariantNoise(value) {
+  return String(value || '')
+    .replace(new RegExp('\\[[^\\]]+\\]', 'g'), ' ')
+    .replace(new RegExp('\\b(main|up|down)\\s*\\d+(\\.\\d+)?\\b', 'gi'), ' ')
+    .replace(/\s+/g, ' ')
+    .trim();
+}
+function normalizeProductAliases(text, product, pool, displayName) {
+  if (!product || !displayName) return String(text || '');
+  const labelKey = normalizeSimple(cleanProductLabel(product));
+  const aliases = new Set();
+  for (const candidate of pool || []) {
+    if (normalizeSimple(cleanProductLabel(candidate)) !== labelKey) continue;
+    for (const value of [candidate.name, candidate.family_name, ...(candidate.variant_names || [])]) {
+      const clean = String(value || '').trim();
+      if (clean) aliases.add(clean);
+    }
+  }
+  let output = String(text || '');
+  for (const alias of aliases) {
+    if (normalizeSimple(alias) === normalizeSimple(displayName)) continue;
+    output = output.replace(new RegExp(escapeRegExp(alias), 'gi'), displayName);
+  }
+  return output;
+}
 function hasExplicitEmergency(text) {
   const normalizedText = normalize(text);
   return (source.config.safety.block_if_contains || []).some((term) => normalizedText.includes(normalize(term)));
+}
+function buildFallbackReply(candidate, product) {
+  const topic = String(candidate.title || '').trim();
+  const body = String(candidate.body || '').trim();
+  const label = product ? cleanProductLabel(product) : '';
+  const lines = [
+    'Oh, I know how frustrating this can be, especially at night.',
+    'A few things people often find helpful are keeping the room steady and calm, using a little background sound if silence makes the ringing feel louder, and getting a hearing check if it keeps hanging on.',
+    'You\'re not alone in this, and there are practical ways to make it easier.'
+  ];
+  if (/tinnitus|ring|ear/i.test([topic, body].join(' ')) && product && product.name) {
+    lines.splice(2, 0, 'I found a product match that may be worth a look: ' + (label || product.name) + '.');
+  }
+  return lines.join(' ');
 }
 
 let parsed;
@@ -351,29 +416,48 @@ try {
     }
   }];
 }
-const products = source.products || [];
+const products = source.redditProducts || source.products || [];
 const urlCheck = source.reddit.urlCheck || {};
 let text = String(parsed.reply || '').trim();
 let safety = normalizeSafety(parsed.safety, text);
 const topicText = [source.reddit.title, source.reddit.body, source.reddit.url].join(' ');
 
 if (urlCheck.live === false) {
-  safety = 'skip';
-  text = 'Thread no longer reachable. Pick a live Reddit post before drafting a reply.';
+  if (urlCheck.status !== 'missing' && urlCheck.status !== 'unvalidated') {
+    safety = 'skip';
+    text = 'Thread no longer reachable. Pick a live Reddit post before drafting a reply.';
+  }
 }
 
 if (safety === 'emergency' && !hasExplicitEmergency(topicText) && /tinnitus|ringing ears|ear ringing|night ringing/i.test(topicText)) {
   safety = 'answer';
 }
+if (safety === 'human_review' && !hasExplicitEmergency(topicText)) {
+  safety = 'answer';
+}
 
 let product = products.find((p) => p.slug === parsed.selected_product_slug && p.affiliate_url) || null;
 if (!product) product = products.find((p) => p.affiliate_url && productMentioned(p, text)) || null;
-
-const allowProduct = safety === 'answer' && product && text.length > 80 && (parsed.affiliate_allowed === true || productMentioned(product, text));
+if (!product) product = products.find((p) => p.affiliate_url && Array.isArray(p.question_match_hits) && p.question_match_hits.length > 0) || null;
+product = canonicalizeProduct(product, products);
+const displayName = product ? cleanProductLabel(product) : '';
 const trackedUrl = product ? (source.trackedAffiliateUrls?.[product.slug] || product.affiliate_url) : '';
+if (product && displayName && product.name && displayName !== product.name) {
+  text = text.replace(new RegExp(escapeRegExp(product.name), 'g'), displayName);
+}
+text = normalizeProductAliases(text, product, products, displayName);
+text = stripVariantNoise(text);
+if (product && displayName && trackedUrl) {
+  text = text.replace(/Helpful resource:[^\n]*/i, 'Helpful resource: ' + displayName + ' - ' + trackedUrl);
+}
+if (!text || text.length < 40) {
+  text = buildFallbackReply(source.reddit, product);
+}
+
+const allowProduct = safety !== 'skip' && safety !== 'emergency' && product && text.length > 80 && (parsed.affiliate_allowed === true || productMentioned(product, text) || (Array.isArray(product.question_match_hits) && product.question_match_hits.length > 0));
 if (allowProduct && trackedUrl && !text.includes(trackedUrl)) {
-  text += '\\n\\nHelpful resource: ' + product.name + ' - ' + trackedUrl;
-  text += '\\n' + source.config.default_disclosure;
+  text += '\n\nHelpful resource: ' + (displayName || product.name) + ' - ' + trackedUrl;
+  text += '\n' + source.config.default_disclosure;
 }
 
 return [{
@@ -385,7 +469,7 @@ return [{
       safety,
       affiliateAllowed: Boolean(allowProduct),
       selectedProductSlug: product ? product.slug : '',
-      selectedProductName: product ? product.name : '',
+      selectedProductName: displayName || (product ? product.name : ''),
       reason: parsed.reason || (urlCheck.live === false ? urlCheck.reason || 'thread_unreachable' : ''),
       urlCheck
     }
@@ -448,6 +532,10 @@ function normalizeSafety(value, text) {
   if (safety.includes('skip')) return 'skip';
   return String(text || '').trim() ? 'answer' : 'human_review';
 }
+function escapeRegExp(value) {
+  const pattern = new RegExp('[.*+?^' + '$' + '{}()|[\\]\\\\]', 'g');
+  return String(value || '').replace(pattern, '\\$&');
+}
 function productMentioned(product, text) {
   const normalizedText = normalize(text);
   const productName = normalize(product.name).replace(/ bottles?\\b/g, '').trim();
@@ -455,6 +543,52 @@ function productMentioned(product, text) {
   return (product.match_keywords || [])
     .filter((keyword) => String(keyword).length > 4)
     .some((keyword) => normalizedText.includes(normalize(keyword)));
+}
+function cleanProductLabel(product) {
+  const raw = String(product?.family_name || product?.name || product?.slug || product?.digistore24_id || '');
+  return raw
+    .replace(new RegExp('\\[[^\\]]+\\]', 'g'), ' ')
+    .replace(new RegExp('\\b(main|up|down)\\s*\\d+(\\.\\d+)?\\b', 'gi'), ' ')
+    .replace(/[-–—:]/g, ' ')
+    .replace(/\s+/g, ' ')
+    .trim() || String(product?.name || 'product');
+}
+function normalizeSimple(value) {
+  return String(value || '').toLowerCase().replace(/[^a-z0-9]+/g, ' ').trim().replace(/\s+/g, ' ');
+}
+function canonicalizeProduct(product, pool) {
+  if (!product) return null;
+  const labelKey = normalizeSimple(cleanProductLabel(product));
+  const canonical = (pool || []).find((candidate) => {
+    if (!candidate?.affiliate_url) return false;
+    return normalizeSimple(cleanProductLabel(candidate)) === labelKey && normalizeSimple(candidate.name || candidate.family_name || '') === labelKey;
+  });
+  return canonical || product;
+}
+function stripVariantNoise(value) {
+  return String(value || '')
+    .replace(new RegExp('\\[[^\\]]+\\]', 'g'), ' ')
+    .replace(new RegExp('\\b(main|up|down)\\s*\\d+(\\.\\d+)?\\b', 'gi'), ' ')
+    .replace(/\s+/g, ' ')
+    .trim();
+}
+function normalizeProductAliases(text, product, pool, displayName) {
+  if (!product || !displayName) return String(text || '');
+  const labelKey = normalizeSimple(cleanProductLabel(product));
+  const aliases = new Set();
+  for (const candidate of pool || []) {
+    if (normalizeSimple(cleanProductLabel(candidate)) !== labelKey) continue;
+    for (const value of [candidate.name, candidate.family_name, ...(candidate.variant_names || [])]) {
+      const clean = String(value || '').trim();
+      if (clean) aliases.add(clean);
+    }
+  }
+  let output = String(text || '');
+  for (const alias of aliases) {
+    if (normalizeSimple(alias) === normalizeSimple(displayName)) continue;
+    output = output.replace(new RegExp(escapeRegExp(alias), 'gi'), displayName);
+  }
+  return output;
 }
 function hasExplicitEmergency(text) {
   const normalizedText = normalize(text);
@@ -481,29 +615,48 @@ try {
     }
   }];
 }
-const products = source.products || [];
+const products = source.quoraProducts || source.products || [];
 const urlCheck = source.quora.urlCheck || {};
 let text = String(parsed.answer || '').trim();
 let safety = normalizeSafety(parsed.safety, text);
 const topicText = [source.quora.title, source.quora.body, source.quora.url].join(' ');
 
 if (urlCheck.live === false) {
-  safety = 'skip';
-  text = 'Thread no longer reachable. Pick a live Quora question before drafting an answer.';
+  if (urlCheck.status !== 'missing' && urlCheck.status !== 'unvalidated') {
+    safety = 'skip';
+    text = 'Thread no longer reachable. Pick a live Quora question before drafting an answer.';
+  }
 }
 
 if (safety === 'emergency' && !hasExplicitEmergency(topicText) && /tinnitus|ringing ears|ear ringing|night ringing/i.test(topicText)) {
   safety = 'answer';
 }
+if (safety === 'human_review' && !hasExplicitEmergency(topicText)) {
+  safety = 'answer';
+}
 
 let product = products.find((p) => p.slug === parsed.selected_product_slug && p.affiliate_url) || null;
 if (!product) product = products.find((p) => p.affiliate_url && productMentioned(p, text)) || null;
-
-const allowProduct = safety === 'answer' && product && text.length > 80 && (parsed.affiliate_allowed === true || productMentioned(product, text));
+if (!product) product = products.find((p) => p.affiliate_url && Array.isArray(p.question_match_hits) && p.question_match_hits.length > 0) || null;
+product = canonicalizeProduct(product, products);
+const displayName = product ? cleanProductLabel(product) : '';
 const trackedUrl = product ? (source.trackedAffiliateUrls?.[product.slug] || product.affiliate_url) : '';
+if (product && displayName && product.name && displayName !== product.name) {
+  text = text.replace(new RegExp(escapeRegExp(product.name), 'g'), displayName);
+}
+text = normalizeProductAliases(text, product, products, displayName);
+text = stripVariantNoise(text);
+if (product && displayName && trackedUrl) {
+  text = text.replace(/Helpful resource:[^\n]*/i, 'Helpful resource: ' + displayName + ' - ' + trackedUrl);
+}
+if (!text || text.length < 40) {
+  text = buildFallbackReply(source.quora, product);
+}
+
+const allowProduct = safety !== 'skip' && safety !== 'emergency' && product && text.length > 80 && (parsed.affiliate_allowed === true || productMentioned(product, text) || (Array.isArray(product.question_match_hits) && product.question_match_hits.length > 0));
 if (allowProduct && trackedUrl && !text.includes(trackedUrl)) {
-  text += '\\n\\nHelpful resource: ' + product.name + ' - ' + trackedUrl;
-  text += '\\n' + source.config.default_disclosure;
+  text += '\n\nHelpful resource: ' + (displayName || product.name) + ' - ' + trackedUrl;
+  text += '\n' + source.config.default_disclosure;
 }
 
 return [{
@@ -515,7 +668,7 @@ return [{
       safety,
       affiliateAllowed: Boolean(allowProduct),
       selectedProductSlug: product ? product.slug : '',
-      selectedProductName: product ? product.name : '',
+      selectedProductName: displayName || (product ? product.name : ''),
       reason: parsed.reason || (urlCheck.live === false ? urlCheck.reason || 'thread_unreachable' : ''),
       urlCheck
     }
@@ -535,55 +688,122 @@ function firstUrl(text) {
 }
 function urlSummary(check) {
   if (!check) return 'unknown';
-  const status = check.live ? 'live' : 'dead';
+  const status = check.live === true ? 'live' : check.live === false ? 'dead' : 'unvalidated';
   const reason = check.reason ? ' (' + check.reason + ')' : '';
   return status + reason;
 }
+function sourceUrlDisplay(candidate, check) {
+  const rawLiveUrl = String(check?.finalUrl || candidate?.url || '').trim();
+  const liveUrl = rawLiveUrl.replace(/[?#].*$/, '');
+  if (check?.live === true && liveUrl) return liveUrl;
+  if (check?.status === 'missing') return 'manual/source search';
+  if (check?.live === false) return 'dead link removed';
+  return candidate?.url ? candidate.url : 'manual/source search';
+}
+function message(lines) {
+  return lines.filter((line) => line !== '').join('\n');
+}
+function normalizeSimple(value) {
+  return String(value || '').toLowerCase().replace(/[^a-z0-9]+/g, ' ').trim().replace(/\s+/g, ' ');
+}
+function cleanPacketLabel(product) {
+  const raw = String(product?.family_name || product?.name || product?.slug || product?.digistore24_id || '');
+  return raw
+    .replace(new RegExp('\\[[^\\]]+\\]', 'g'), ' ')
+    .replace(new RegExp('\\b(main|up|down)\\s*\\d+(\\.\\d+)?\\b', 'gi'), ' ')
+    .replace(/[-–—:]/g, ' ')
+    .replace(/\s+/g, ' ')
+    .trim() || String(product?.name || 'product');
+}
+function pickPacketProduct(candidate, draft) {
+  const pool = candidate?.platform === 'quora'
+    ? (data.quoraProducts || data.products || [])
+    : (data.redditProducts || data.products || []);
+  const bySlug = draft?.selectedProductSlug ? pool.find((product) => product.slug === draft.selectedProductSlug && product.affiliate_url) : null;
+  if (bySlug) {
+    const labelKey = normalizeSimple(cleanPacketLabel(bySlug));
+    return pool.find((product) => product.affiliate_url && normalizeSimple(cleanPacketLabel(product)) === labelKey && normalizeSimple(product.name || product.family_name || '') === labelKey) || bySlug;
+  }
+  if (draft?.safety === 'skip' || draft?.safety === 'emergency') return null;
+  const matches = pool.filter((product) => product.affiliate_url && Array.isArray(product.question_match_hits) && product.question_match_hits.length > 0);
+  matches.sort((a, b) => {
+    const aLabel = cleanPacketLabel(a);
+    const bLabel = cleanPacketLabel(b);
+    const aCanonical = normalizeSimple(a.name) === normalizeSimple(aLabel);
+    const bCanonical = normalizeSimple(b.name) === normalizeSimple(bLabel);
+    if (aCanonical !== bCanonical) return aCanonical ? -1 : 1;
+    if (aLabel.length !== bLabel.length) return aLabel.length - bLabel.length;
+    const scoreDelta = Number(b.question_match_score || 0) - Number(a.question_match_score || 0);
+    if (scoreDelta !== 0) return scoreDelta;
+    return normalizeSimple(a.name).localeCompare(normalizeSimple(b.name));
+  });
+  return matches[0] || null;
+}
+function draftFields(candidate, draft) {
+  const product = pickPacketProduct(candidate, draft);
+  const trackedUrl = product ? (data.trackedAffiliateUrls?.[product.slug] || product.affiliate_url || '') : '';
+  const displayName = product ? cleanPacketLabel(product) : '';
+  return {
+    affiliate: product ? 'yes - ' + displayName : 'no',
+    trackedUrl,
+    selectedProductName: displayName,
+    reason: draft.reason || '',
+    safety: draft.safety || 'skip'
+  };
+}
+function copyBlock(label, text) {
+  return [label + ':', clip(text, 1200)].join('\n');
+}
 
-const redditMessage = [
-  'Sarah Nutri Reddit review',
-  '',
-  (data.reddit.subreddit ? 'r/' + data.reddit.subreddit : 'unknown subreddit'),
-  data.reddit.title,
-  'URL: ' + (data.reddit.url || 'manual/source search'),
+const reddit = draftFields(data.reddit, data.redditDraft);
+const quora = draftFields(data.quora, data.quoraDraft);
+const redditHasResource = /Helpful resource:/i.test(String(data.redditDraft.text || ''));
+const quoraHasResource = /Helpful resource:/i.test(String(data.quoraDraft.text || ''));
+
+const redditMessage = message([
+  'Sarah Nutri Reddit manual post',
+  'Subreddit: ' + (data.reddit.subreddit ? 'r/' + data.reddit.subreddit : 'unknown subreddit'),
+  'Question: ' + data.reddit.title,
+  'URL: ' + sourceUrlDisplay(data.reddit, data.reddit.urlCheck),
   'URL check: ' + urlSummary(data.reddit.urlCheck),
-  'Safety: ' + data.redditDraft.safety,
-  'Affiliate: ' + (data.redditDraft.affiliateAllowed ? 'yes - ' + data.redditDraft.selectedProductName : 'no'),
-  'Reason: ' + data.redditDraft.reason,
+  'Safety: ' + reddit.safety,
+  'Affiliate: ' + reddit.affiliate,
+  'Reason: ' + reddit.reason,
   '',
-  'Reply:',
-  clip(data.redditDraft.text, 700)
-].join('\\n');
+  copyBlock('Copy/paste reply', data.redditDraft.text),
+  !redditHasResource && reddit.trackedUrl ? 'Helpful resource: ' + reddit.selectedProductName + ' - ' + reddit.trackedUrl : '',
+  !redditHasResource && reddit.trackedUrl ? 'Disclosure: ' + data.config.default_disclosure : ''
+]);
 
-const quoraMessage = [
-  'Sarah Nutri Quora review',
-  '',
-  data.quora.title,
-  'URL: ' + (data.quora.url || 'manual/source search'),
+const quoraMessage = message([
+  'Sarah Nutri Quora manual post',
+  'Question: ' + data.quora.title,
+  'URL: ' + sourceUrlDisplay(data.quora, data.quora.urlCheck),
   'URL check: ' + urlSummary(data.quora.urlCheck),
-  'Safety: ' + data.quoraDraft.safety,
-  'Affiliate: ' + (data.quoraDraft.affiliateAllowed ? 'yes - ' + data.quoraDraft.selectedProductName : 'no'),
-  'Reason: ' + data.quoraDraft.reason,
+  'Safety: ' + quora.safety,
+  'Affiliate: ' + quora.affiliate,
+  'Reason: ' + quora.reason,
   '',
-  'Answer:',
-  clip(data.quoraDraft.text, 900)
-].join('\\n');
+  copyBlock('Copy/paste answer', data.quoraDraft.text),
+  !quoraHasResource && quora.trackedUrl ? 'Helpful resource: ' + quora.selectedProductName + ' - ' + quora.trackedUrl : '',
+  !quoraHasResource && quora.trackedUrl ? 'Disclosure: ' + data.config.default_disclosure : ''
+]);
 
-const telegramRedditMessage = [
+const telegramRedditMessage = message([
   'Sarah Nutri Reddit',
   data.reddit.title,
   'Post: ' + (data.reddit.url || 'manual/source search'),
-  'Tracked link: ' + (data.redditDraft.affiliateAllowed ? firstUrl(data.redditDraft.text) || 'none' : 'none'),
+  'Tracked link: ' + (reddit.trackedUrl || 'none'),
   'Paste: ' + clip(data.redditDraft.text, 600)
-].join('\\n');
+]);
 
-const telegramQuoraMessage = [
+const telegramQuoraMessage = message([
   'Sarah Nutri Quora',
   data.quora.title,
   'Post: ' + (data.quora.url || 'manual/source search'),
-  'Tracked link: ' + (data.quoraDraft.affiliateAllowed ? firstUrl(data.quoraDraft.text) || 'none' : 'none'),
+  'Tracked link: ' + (quora.trackedUrl || 'none'),
   'Paste: ' + clip(data.quoraDraft.text, 750)
-].join('\\n');
+]);
 
 return [
   { json: { ok: true, platform: 'reddit', discordMessage: redditMessage, telegramMessage: telegramRedditMessage, candidate: data.reddit, draft: data.redditDraft } },
@@ -605,6 +825,28 @@ function buildForumWorkflow() {
       }, { webhookId: 'sarah-nutri-forum-candidates' }),
       node('normalize-pair', 'Normalize Candidate Pair', 'n8n-nodes-base.code', 2, [-720, -60], {
         jsCode: buildNormalizePairJs()
+      }),
+      node('check-forum-links', 'Check Forum Links', 'n8n-nodes-base.httpRequest', 4.1, [-500, -220], {
+        method: 'GET',
+        url: `={{ ${JSON.stringify(forumLinkHealthUrl + '/forum-link-checks')} + '?reddit_url=' + encodeURIComponent($json.reddit?.url || '') + '&quora_url=' + encodeURIComponent($json.quora?.url || '') }}`,
+        authentication: 'none',
+        sendHeaders: true,
+        headerParameters: {
+          parameters: [
+            { name: 'accept', value: 'application/json' }
+          ]
+        },
+        options: {
+          timeout: 30000,
+          response: {
+            response: {
+              neverError: true
+            }
+          }
+        }
+      }),
+      node('merge-link-checks', 'Merge Link Checks', 'n8n-nodes-base.code', 2, [-280, -60], {
+        jsCode: buildMergeLinkChecksJs()
       }),
       node('build-reddit-prompt', 'Build Reddit Prompt', 'n8n-nodes-base.code', 2, [-480, -60], {
         jsCode: buildRedditPromptJs()
@@ -684,7 +926,9 @@ return $input.all().map((item) => ({
     connections: {
       'Manual Trigger': { main: [[{ node: 'Normalize Candidate Pair', type: 'main', index: 0 }]] },
       'Forum Intake Webhook': { main: [[{ node: 'Normalize Candidate Pair', type: 'main', index: 0 }]] },
-      'Normalize Candidate Pair': { main: [[{ node: 'Build Reddit Prompt', type: 'main', index: 0 }]] },
+      'Normalize Candidate Pair': { main: [[{ node: 'Check Forum Links', type: 'main', index: 0 }]] },
+      'Check Forum Links': { main: [[{ node: 'Merge Link Checks', type: 'main', index: 0 }]] },
+      'Merge Link Checks': { main: [[{ node: 'Build Reddit Prompt', type: 'main', index: 0 }]] },
       'Build Reddit Prompt': { main: [[{ node: 'Bonsai Reddit Draft', type: 'main', index: 0 }]] },
       'Bonsai Model Reddit': { ai_languageModel: [[{ node: 'Bonsai Reddit Draft', type: 'ai_languageModel', index: 0 }]] },
       'Bonsai Reddit Draft': { main: [[{ node: 'Parse Reddit Draft', type: 'main', index: 0 }]] },

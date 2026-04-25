@@ -90,8 +90,35 @@ function getExternalId(product) {
   return `content-factory:digistore24:${slugify(product.slug || product.family_key || product.digistore24_id || product.name)}`;
 }
 
+function cleanDubLabel(product) {
+  const raw = String(product.family_name || product.name || product.slug || product.digistore24_id || '');
+  return raw
+    .replace(/\[[^\]]+\]/g, ' ')
+    .replace(/\([^)]*\)/g, ' ')
+    .replace(/\b(main|up|down)\s*\d+(\.\d+)?\b/gi, ' ')
+    .replace(/\b(tsl|vsl|sub|bundle|pack|bottles?|bottle|day|days|month|months|free ebooks?|ebooks?|bonus|bonuses)\b/gi, ' ')
+    .replace(/[-–—:]/g, ' ')
+    .replace(/\s+/g, ' ')
+    .trim();
+}
+
 function getKey(product) {
-  return `cf-${slugify(product.slug || product.family_key || product.digistore24_id || product.name)}`.slice(0, 190);
+  const label = cleanDubLabel(product) || String(product.name || product.slug || product.digistore24_id || 'product');
+  const variant = (() => {
+    const source = normalizeText(product.family_name || product.name || product.slug || '');
+    if (/\bmain\s*1\b|\bmain1\b/.test(source)) return 'main1';
+    if (/\bmain\s*2\b|\bmain2\b/.test(source)) return 'main2';
+    if (/\bmain\s*3\b|\bmain3\b/.test(source)) return 'main3';
+    if (/\bup\s*1\b|\bup1\b/.test(source)) return 'up1';
+    if (/\bup\s*2\b|\bup2\b/.test(source)) return 'up2';
+    if (/\bup\s*3\b|\bup3\b/.test(source)) return 'up3';
+    if (/\bdown\s*1\b|\bdown1\b/.test(source)) return 'down1';
+    if (/\bdown\s*2\b|\bdown2\b/.test(source)) return 'down2';
+    if (/\bdown\s*3\b|\bdown3\b/.test(source)) return 'down3';
+    return '';
+  })();
+  const key = slugify([label, variant].filter(Boolean).join('-')) || slugify(String(product.digistore24_id || product.slug || product.name || 'product'));
+  return key.slice(0, 190);
 }
 
 function getRawUrl(product) {
@@ -293,7 +320,9 @@ async function updateDubLink(linkIdOrExternalId, product, existingLink) {
     url: rawUrl,
   };
 
+  const desiredKey = getKey(product);
   if (dubDomain) body.domain = dubDomain;
+  if (desiredKey && String(existingLink?.key || '').trim() !== desiredKey) body.key = desiredKey;
 
   return callDub(`/links/${encodeURIComponent(linkIdOrExternalId)}`, { method: 'PATCH', body });
 }
@@ -437,8 +466,10 @@ async function syncDubLinks(products) {
 
     if (linkRecord) {
       reusedCount += 1;
+      const desiredKey = getKey(product);
       const needsUrlUpdate = String(linkRecord.url || '').trim() !== product._raw_affiliate_url;
-      if (needsUrlUpdate && !dryRun) {
+      const needsKeyUpdate = String(linkRecord.key || '').trim() !== desiredKey;
+      if ((needsUrlUpdate || needsKeyUpdate) && !dryRun) {
         try {
           linkRecord = await updateDubLink(linkRecord.id || `ext_${externalId}`, product, linkRecord);
           updatedCount += 1;

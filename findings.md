@@ -68,8 +68,14 @@
 - The Sarah Nutri reply prompts were tightened to favor brief, warm, human-sounding drafts instead of long AI-style blocks.
 - The Reddit and Quora prompt builders now emit JSON-quoted prompt lines, which prevents the n8n code nodes from breaking on apostrophes like "I've" / "You're".
 - The forum intake webhook now validates Reddit/Quora URLs before drafting; dead or unreachable threads are marked `skip` instead of being treated as reliable.
+- Dub link IDs can be renamed later via `PATCH /links/{linkId}` with a new `key`, so the ugly initial slugs are not permanent.
+- The Discord packet builder now has a fallback product picker so a conservative draft parser does not leave Reddit/Quora cards empty when a relevant tracked product exists.
 - The Digistore blacklist now removes redirect failures like NeuroQuiet `DSB-289081` from the live catalog and keeps them out of future product suggestions until the block clears.
 - The current live forum shortlist for tinnitus/ringing-ears questions now favors non-blacklisted products like EchoXen and Ring Quiet Plus instead of the blocked NeuroQuiet link.
+- The Discord review packet now renders as a clean manual-post card with fields like `Subreddit`, `Question`, `Safety`, `Affiliate`, `Reason`, `Copy/paste reply`, `Helpful resource`, and `Disclosure`.
+- Next session backlog:
+  - harden the Bonsai service wrapper/startup path one more time
+  - add a Reddit archived-post guard so posts showing `New comments cannot be posted and votes cannot be cast.` are skipped before drafting
 
 ## Technical Decisions
 | Decision | Rationale |

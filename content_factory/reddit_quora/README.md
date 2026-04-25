@@ -64,6 +64,13 @@ If Telegram credentials are set, the same review packet is also sent to Telegram
 
 No Reddit or Quora posting API is used.
 
+## Next Session Backlog
+
+Planned follow-ups for the next session:
+
+- Harden the Bonsai service wrapper/startup path one more time.
+- Add Reddit archived-post detection so posts that show `New comments cannot be posted and votes cannot be cast.` are skipped before drafting.
+
 ## Bonsai Container Access
 
 Docker containers cannot reach a host service that is bound only to `127.0.0.1`.

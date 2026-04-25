@@ -309,6 +309,7 @@
   - Added empathetic opening and closing examples to guide the model toward a more personal tone.
   - Added live Reddit/Quora URL validation so dead threads are marked `skip`.
   - Added Digistore blacklist handling so failed redirect products are removed from the live catalog.
+  - Rewrote the Discord review packet so it reads like a structured manual-post card instead of a raw debug dump.
   - Regenerated the forum queue workflow export with the new packet format.
   - Updated the live n8n workflow row in SQLite so the revised Discord-first packet logic is active in the running instance.
   - Updated the forum README with the concise-tone rule and blacklist behavior.
@@ -325,6 +326,28 @@
   - `node --check scripts/build_forum_manual_queue.mjs` passed
   - `workflow_sarah_nutri_forum_manual_queue.json` regenerated successfully
   - SQLite live workflow row updated successfully for `Rz60m7Gr2YYSoDS1`
-  - Final end-to-end forum test succeeded on execution `202`; the webhook returned `{"success":true}` after the live workflow reload
+  - Final end-to-end forum test succeeded on execution `204`; the webhook returned `{"success":true}` after the live workflow reload
+- Evidence:
+  - The saved execution text now starts with `Sarah Nutri Reddit manual post` and includes clean fields such as `Subreddit`, `Question`, `Safety`, and `Copy/paste reply`
 - Error log:
   - Telegram delivery left in the workflow but not used in the current review path
+
+### Phase 11: Dub Cleanup + Packet Fallback
+- **Status:** complete
+- Actions taken:
+  - Shortened Dub keys toward human-readable product-style slugs by renaming the existing key generation path.
+  - Added a packet-level fallback picker so Reddit/Quora review cards can still surface a tracked product when the parser is conservative.
+  - Kept `externalId` reuse intact so link history stays stable even when the slug changes.
+  - Re-ran the live forum smoke test and confirmed the final Reddit and Quora packets are postable.
+- Files created/modified:
+  - `scripts/dub_sync_catalog.mjs`
+  - `scripts/build_forum_manual_queue.mjs`
+  - `task_plan.md`
+  - `findings.md`
+  - `progress.md`
+
+### Phase 12: Next Session Backlog
+- **Status:** pending
+- Next-session items:
+  - Harden Bonsai service startup and wrapper behavior.
+  - Add Reddit archived-post detection so `New comments cannot be posted and votes cannot be cast.` posts are skipped before drafting.
