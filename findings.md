@@ -66,6 +66,10 @@
 - The new Dub sync script writes `raw_affiliate_url` alongside `tracked_affiliate_url`/`dub_short_url` so the forum workflow can fall back to the raw affiliate URL when tracking is unavailable.
 - The forum queue now has a Telegram-ready review branch, but it only emits when `TELEGRAM_BOT_TOKEN` and `TELEGRAM_CHAT_ID` are present in the n8n environment.
 - The Sarah Nutri reply prompts were tightened to favor brief, warm, human-sounding drafts instead of long AI-style blocks.
+- The Reddit and Quora prompt builders now emit JSON-quoted prompt lines, which prevents the n8n code nodes from breaking on apostrophes like "I've" / "You're".
+- The forum intake webhook now validates Reddit/Quora URLs before drafting; dead or unreachable threads are marked `skip` instead of being treated as reliable.
+- The Digistore blacklist now removes redirect failures like NeuroQuiet `DSB-289081` from the live catalog and keeps them out of future product suggestions until the block clears.
+- The current live forum shortlist for tinnitus/ringing-ears questions now favors non-blacklisted products like EchoXen and Ring Quiet Plus instead of the blocked NeuroQuiet link.
 
 ## Technical Decisions
 | Decision | Rationale |

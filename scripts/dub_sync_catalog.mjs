@@ -27,6 +27,7 @@ const dubTagNames = String(process.env.DUB_TAG_NAMES || 'content-factory,digisto
   .filter(Boolean);
 const maxNewLinks = Number(process.env.DUB_MAX_NEW_LINKS || 25);
 const cachePath = 'content_factory/reddit_quora/dub_links.json';
+const blacklistPath = 'content_factory/reddit_quora/digistore24_blacklist.json';
 const catalogPath = 'content_factory/reddit_quora/product_catalog.json';
 const writeCatalog = process.argv.includes('--write-catalog');
 const dryRun = process.argv.includes('--dry-run');
@@ -101,9 +102,10 @@ function getRawUrl(product) {
   return '';
 }
 
-function eligibleForTracking(product) {
+function eligibleForTracking(product, blocklist) {
   return (
     String(product.discovery_state || '') === 'approved_live' &&
+    !isBlockedProduct(product, blocklist) &&
     Boolean(
       String(product.raw_affiliate_url || '').trim() ||
         (String(product.affiliate_url || '').trim() && !isDubLink(product.affiliate_url)) ||
@@ -115,6 +117,130 @@ function eligibleForTracking(product) {
 
 function scoreValue(product) {
   return Number(product.total_score || product.score_breakdown?.total || 0);
+}
+
+function loadBlocklist() {
+  const blocklist = readJson(blacklistPath, {
+    workspace: 'content-factory',
+    version: 1,
+    blocked_products: []
+  });
+  blocklist.blocked_products = Array.isArray(blocklist.blocked_products) ? blocklist.blocked_products : [];
+  return blocklist;
+}
+
+function saveBlocklist(blocklist) {
+  writeJson(blacklistPath, blocklist);
+}
+
+function productBlockKey(product) {
+  return [
+    product.family_key || '',
+    product.slug || '',
+    product.digistore24_id || '',
+    product.name || '',
+    product.family_name || ''
+  ]
+    .map((value) => normalizeText(value))
+    .filter(Boolean)
+    .join('|');
+}
+
+function isBlockedProduct(product, blocklist) {
+  const key = productBlockKey(product);
+  return (blocklist.blocked_products || []).some((entry) => {
+    const entryKey = String(entry.product_key || entry.key || '').trim();
+    return (
+      entryKey === key ||
+      String(entry.slug || '').trim() === String(product.slug || '').trim() ||
+      String(entry.digistore24_id || '').trim() === String(product.digistore24_id || '').trim() ||
+      String(entry.family_name || '').trim() === String(product.family_name || '').trim()
+    );
+  });
+}
+
+function upsertBlockedProduct(blocklist, product, reason, probe = {}) {
+  const record = {
+    product_key: productBlockKey(product),
+    slug: product.slug || '',
+    family_name: product.family_name || product.name || '',
+    digistore24_id: product.digistore24_id || '',
+    vendor_name: product.vendor_name || '',
+    raw_affiliate_url: getRawUrl(product),
+    reason: reason || 'blocked',
+    status: probe.status || 0,
+    final_url: probe.finalUrl || '',
+    detected_at: new Date().toISOString(),
+    source: 'affiliate_url_probe'
+  };
+
+  const index = (blocklist.blocked_products || []).findIndex((entry) =>
+    String(entry.product_key || entry.key || '').trim() === record.product_key ||
+    String(entry.slug || '').trim() === record.slug ||
+    String(entry.digistore24_id || '').trim() === record.digistore24_id
+  );
+
+  if (index >= 0) {
+    blocklist.blocked_products[index] = { ...blocklist.blocked_products[index], ...record };
+  } else {
+    blocklist.blocked_products.push(record);
+  }
+
+  return record;
+}
+
+async function probeAffiliateUrl(product) {
+  const url = getRawUrl(product);
+  if (!url) return { live: false, status: 0, finalUrl: '', reason: 'missing_raw_url' };
+  if (typeof fetch !== 'function') return { live: false, status: 0, finalUrl: url, reason: 'fetch_not_available' };
+
+  const blacklistPhrases = [
+    'blacklisted',
+    'not trustworthy',
+    'redirects to this domain are not possible',
+    'redirect is therefore not possible',
+    'dsb-'
+  ];
+
+  const controller = new AbortController();
+  const timer = setTimeout(() => controller.abort(), 10000);
+  try {
+    const response = await fetch(url, {
+      method: 'GET',
+      redirect: 'follow',
+      signal: controller.signal,
+      headers: {
+        'user-agent': 'Mozilla/5.0 (compatible; SarahNutriBot/1.0)',
+        accept: 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8'
+      }
+    });
+    const text = await response.text().catch(() => '');
+    const haystack = [response.status, response.url, text.slice(0, 5000), url].join(' ').toLowerCase();
+    const blacklisted = blacklistPhrases.find((phrase) => haystack.includes(phrase)) || '';
+    if (!response.ok || blacklisted) {
+      return {
+        live: false,
+        status: response.status,
+        finalUrl: response.url || url,
+        reason: blacklisted || `http_${response.status}`
+      };
+    }
+    return {
+      live: true,
+      status: response.status,
+      finalUrl: response.url || url,
+      reason: 'reachable'
+    };
+  } catch (error) {
+    return {
+      live: false,
+      status: 0,
+      finalUrl: url,
+      reason: error?.name === 'AbortError' ? 'timeout' : String(error?.message || error)
+    };
+  } finally {
+    clearTimeout(timer);
+  }
 }
 
 async function callDub(pathname, { method = 'GET', body } = {}) {
@@ -248,9 +374,9 @@ function mergeCatalogLink(product, linkRecord) {
   };
 }
 
-function buildCandidates(products) {
+function buildCandidates(products, blocklist) {
   return [...products]
-    .filter(eligibleForTracking)
+    .filter((product) => eligibleForTracking(product, blocklist))
     .sort((a, b) => scoreValue(b) - scoreValue(a))
     .map((product) => ({
       ...product,
@@ -263,19 +389,31 @@ function buildCandidates(products) {
 
 async function syncDubLinks(products) {
   const cache = loadCache();
+  const blocklist = loadBlocklist();
   const cacheByExternalId = new Map(cache.links.map((link) => [String(link.externalId || '').trim(), link]));
   const enrichedBySlug = new Map();
-  const candidates = buildCandidates(products);
+  const candidates = buildCandidates(products, blocklist);
   let createdCount = 0;
   let reusedCount = 0;
   let skippedForLimit = 0;
   let updatedCount = 0;
   let writeBlocked = null;
+  let blockedCount = 0;
+  let blocklistChanged = false;
 
   for (const product of candidates) {
     const externalId = product._dub_external_id;
     const cached = cacheByExternalId.get(externalId);
     let linkRecord = cached || null;
+
+    const probe = await probeAffiliateUrl(product);
+    if (!probe.live) {
+      upsertBlockedProduct(blocklist, product, probe.reason, probe);
+      blocklistChanged = true;
+      blockedCount += 1;
+      enrichedBySlug.set(product.slug, null);
+      continue;
+    }
 
     if (writeBlocked && !linkRecord) {
       skippedForLimit += 1;
@@ -345,13 +483,15 @@ async function syncDubLinks(products) {
   }
 
   const enrichedProducts = products.map((product) => {
+    if (isBlockedProduct(product, blocklist)) return null;
     const enriched = enrichedBySlug.get(product.slug);
     if (enriched) return stripInternalFields(enriched);
     if (isDubLink(product.affiliate_url) && product.raw_affiliate_url) return stripInternalFields(product);
     return stripInternalFields({ ...product, raw_affiliate_url: getRawUrl(product) });
-  });
+  }).filter(Boolean);
 
   if (!dryRun) saveCache(cache);
+  if (blocklistChanged && !dryRun) saveBlocklist(blocklist);
 
   return {
     products: enrichedProducts,
@@ -362,6 +502,7 @@ async function syncDubLinks(products) {
       created_links: createdCount,
       updated_links: updatedCount,
       skipped_for_limit: skippedForLimit,
+      blocked_products: blockedCount,
       monthly_budget_remaining: Math.max(0, cache.max_new_links - cache.created_this_month)
     }
     ,
@@ -383,5 +524,6 @@ console.log(`Dub links reused: ${result.summary.reused_links}`);
 console.log(`Dub links created: ${result.summary.created_links}`);
 console.log(`Dub links updated: ${result.summary.updated_links}`);
 console.log(`Dub links skipped due to monthly cap: ${result.summary.skipped_for_limit}`);
+console.log(`Dub products blocked by redirect checks: ${result.summary.blocked_products}`);
 console.log(`Monthly budget remaining: ${result.summary.monthly_budget_remaining}`);
 if (writeCatalog && !dryRun) console.log(`Updated ${catalogPath}`);

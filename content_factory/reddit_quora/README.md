@@ -19,7 +19,7 @@ This package is isolated from the existing Instagram, Facebook, Postiz, and vide
 ## Operating Rules
 
 - Human approval is required before posting.
-- The current fast path is manual posting: n8n drafts, Discord delivers, and Telegram can be enabled for review delivery when `TELEGRAM_BOT_TOKEN` and `TELEGRAM_CHAT_ID` are set.
+- The current fast path is manual posting: n8n drafts, Discord delivers, and Telegram is an optional extra review channel only when `TELEGRAM_BOT_TOKEN` and `TELEGRAM_CHAT_ID` are set.
 - Draft tone should stay brief, personal, warm, and human. No AI-slab paragraph dumps.
 - Max approved Reddit replies per day: 5.
 - Product links are gated by relevance and must include disclosure.
@@ -60,7 +60,7 @@ The workflow sends two review packets in one run:
 - Reddit copy/paste reply.
 - Quora copy/paste answer.
 
-If Telegram credentials are set, the same review packet is also sent to Telegram with the post URL and tracked affiliate link.
+If Telegram credentials are set, the same review packet is also sent to Telegram with the post URL and tracked affiliate link. Otherwise, Discord is the review path.
 
 No Reddit or Quora posting API is used.
 
@@ -202,6 +202,7 @@ Dub plan guardrails:
 - if a product has no Dub link yet, the workflow still falls back to the raw affiliate URL
 - the Dub API key must have write permission for `links`; read-only keys will not create short links
 - the local cache lives at `content_factory/reddit_quora/dub_links.json`
+- blocked Digistore redirects are moved into `content_factory/reddit_quora/digistore24_blacklist.json` and removed from the live catalog
 
 Playwright loader check:
 
@@ -226,6 +227,8 @@ This repo does not require a local `node_modules/playwright`. The sync script ca
 
 The Digistore sync now defaults to Playwright `firefox`, not Chromium. It starts from `https://www.digistore24.com/` and only uses a custom browser executable if `DIGISTORE24_BROWSER_PATH` is explicitly set.
 
+The manual forum queue also checks whether Reddit and Quora URLs are still reachable before drafting. If the thread is dead, the workflow marks it as `skip` instead of pretending it is a live post.
+
 Affiliate links in Discord are only suggested if `product_catalog.json` contains a real `affiliate_url`. For Digistore24 products with a product ID and no URL, the sync helper generates a Promolink in this format:
 
 ```text
@@ -246,6 +249,8 @@ The sync helper now supports two sources:
 - `affiliate_sales_history`: historic affiliate sales fallback
 
 If the UI snapshot exists, it is preferred because it reflects all currently approved affiliations, including products you have not sold yet.
+
+If a Digistore checkout or redirect page reports a blacklist / trust failure such as `DSB-289081`, that product is blocked, written to `digistore24_blacklist.json`, and excluded from the live catalog until the blacklist is cleared.
 
 Current working affiliated-product discovery path:
 

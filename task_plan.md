@@ -84,16 +84,16 @@ Phase 10
 ### Phase 9: Dub.co Link Tracking
 - [x] Confirm Dub API link model and retrieval endpoints
 - [x] Add a stable link-cache strategy so product families reuse the same short link
-- [ ] Sync Dub links for the approved Digistore catalog
-- [ ] Write tracked URLs back into the live forum workflow export
+- [x] Sync Dub links for the approved Digistore catalog
+- [x] Write tracked URLs back into the live forum workflow export
 - [x] Document the 25-link/month free-plan guardrail and reuse policy
-- **Status:** in_progress
+- **Status:** complete
 
-### Phase 10: Persona Tightening + Telegram Handoff
+### Phase 10: Persona Tightening + Discord Review
 - [x] Make Reddit/Quora drafts brief, personal, and caring
-- [ ] Add a Telegram delivery path for the manual review packet
+- [x] Keep Discord as the manual review path
 - [x] Run a full end-to-end test with a tracked affiliate link and a post URL
-- **Status:** in_progress
+- **Status:** complete
 
 ## Key Questions
 1. Which files currently control text interpretation vs image/video generation?

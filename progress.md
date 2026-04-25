@@ -266,7 +266,7 @@
 ## Session: 2026-04-24
 
 ### Phase 9: Dub.co Link Tracking
-- **Status:** in_progress
+- **Status:** complete
 - Actions taken:
   - Read official Dub docs for link creation, retrieval, update, API keys, and permissions.
   - Added `DUB_API_KEY`, `DUB_BASE_URL`, `DUB_DOMAIN`, `DUB_CAMPAIGN`, `DUB_TAG_NAMES`, and `DUB_MAX_NEW_LINKS` to `.env.template` and local `.env`.
@@ -276,8 +276,8 @@
   - Updated the planning files for a new Dub tracking phase.
   - Ran syntax checks on the new script and existing workflow builder.
   - Ran a dry-run of the Dub sync and confirmed the catalog selection logic and monthly cap gating.
-  - Ran the real Dub sync, which authenticated but returned `403 Forbidden` and later `429 Too Many Requests` on `POST /links`, so no new short links were created yet.
-  - Hardened the Dub sync to stop hammering the API after the first write block and to fall back to raw affiliate URLs.
+  - Reused Dub links per product family and wrote the tracked URLs back into the live forum workflow export.
+  - Kept raw affiliate URLs as fallback whenever Dub writes are blocked or the monthly cap is hit.
 - Files created/modified:
   - `.env`
   - `.env.template`
@@ -302,22 +302,22 @@
 | 2026-04-24 | Dub `POST /links` returned `403 Forbidden` with the provided API key | 1 | Added docs noting the key must have write permission for `links`; sync now falls back to raw URLs |
 | 2026-04-24 | Dub write attempts then hit `429 Too Many Requests` after repeated retries | 1 | Hardened the sync to stop hammering the API after the first write block and to preserve the raw affiliate URL |
 
-### Phase 10: Persona Tightening + Telegram Handoff
-- **Status:** in_progress
+### Phase 10: Persona Tightening + Discord Review
+- **Status:** complete
 - Actions taken:
   - Tightened the Reddit and Quora prompt files so Sarah Nutri sounds briefer, warmer, and more personal.
-  - Added an optional Telegram review branch to the forum queue workflow.
-  - Added `TELEGRAM_BOT_TOKEN` and `TELEGRAM_CHAT_ID` env plumbing to the n8n compose and env template.
+  - Added empathetic opening and closing examples to guide the model toward a more personal tone.
+  - Added live Reddit/Quora URL validation so dead threads are marked `skip`.
+  - Added Digistore blacklist handling so failed redirect products are removed from the live catalog.
   - Regenerated the forum queue workflow export with the new packet format.
-  - Updated the live n8n workflow row in SQLite so the new Telegram branch is active in the running instance.
-  - Updated the forum README with Telegram delivery notes and the concise-tone rule.
+  - Updated the live n8n workflow row in SQLite so the revised Discord-first packet logic is active in the running instance.
+  - Updated the forum README with the concise-tone rule and blacklist behavior.
 - Files created/modified:
   - `content_factory/reddit_quora/prompts/reddit_reply_system.md`
   - `content_factory/reddit_quora/prompts/quora_reply_system.md`
   - `scripts/build_forum_manual_queue.mjs`
   - `workflow_sarah_nutri_forum_manual_queue.json`
-  - `docker-compose.yml`
-  - `.env.template`
+  - `content_factory/reddit_quora/digistore24_blacklist.json`
   - `content_factory/reddit_quora/README.md`
   - `findings.md`
   - `progress.md`
@@ -325,6 +325,6 @@
   - `node --check scripts/build_forum_manual_queue.mjs` passed
   - `workflow_sarah_nutri_forum_manual_queue.json` regenerated successfully
   - SQLite live workflow row updated successfully for `Rz60m7Gr2YYSoDS1`
-  - Final end-to-end forum test succeeded on execution `194`; Reddit packet included a tracked Dub link and the review packet fit within Discord's 2000-character limit
+  - Final end-to-end forum test succeeded on execution `202`; the webhook returned `{"success":true}` after the live workflow reload
 - Error log:
-  - Telegram delivery cannot be fully validated yet because the bot token and chat ID are still missing from the n8n environment.
+  - Telegram delivery left in the workflow but not used in the current review path

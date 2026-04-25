@@ -106,6 +106,8 @@ node scripts/build_forum_manual_queue.mjs
 
 The Dub sync writes tracked links back into `product_catalog.json` and keeps the raw Digistore destination in `raw_affiliate_url` for later recovery.
 
+If Digistore returns a blacklist or trust failure for a product redirect, that product is written to `content_factory/reddit_quora/digistore24_blacklist.json` and removed from the live catalog until the block clears.
+
 ## Partnership Source
 
 The correct source of truth for "all products I am affiliated with" is Digistore24's affiliate UI, not affiliate sales history.
@@ -137,6 +139,8 @@ node scripts/build_forum_manual_queue.mjs
 ```
 
 If the partnership snapshot exists, the sync prefers exact UI promolinks from that file over reconstructed history-only links.
+
+The manual forum queue also checks Reddit and Quora thread URLs before drafting. Dead or unreachable posts are marked `skip` instead of pretending they are live.
 
 ## Confirmed API Behavior In This Repo
 
